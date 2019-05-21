@@ -1,0 +1,14 @@
+<tool id="data_manager_proteome_species" name="Define Reference Proteome Species" version="1.0" tool_type="manage_data">
+    <description>fetching</description>
+    <command interpreter="python">data_manager_proteome_species.py "${out_file}"</command>
+    <inputs>
+        <param name="idtag" type="text" label="ID Tag" />
+        <param name="name" type="text" label="Common Name" />
+	<param name="taxid" type="text" label="NCBI Taxonomy ID" />
+	<param name="refseqsciname" type="text" label="RefSeq Scientific Name Abbreviation" />
+	<param name="refseqprefix" type="text" label="RefSeq Filename Prefix" />
+    </inputs>
+    <outputs>
+        <data name="out_file" format="data_manager_json" />
+    </outputs>
+</tool>

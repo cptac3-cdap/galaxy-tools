@@ -1,0 +1,14 @@
+<tool id="data_manager_pulsar_message_queue" name="Provide Pulsar message queue details" version="1.0" tool_type="manage_data">
+    <description>fetching</description>
+    <command interpreter="python">data_manager_pulsar_message_queue.py "${out_file}"</command>
+    <inputs>
+        <param name="url" type="text" label="AMQP URL" >
+	  <sanitizer>
+	    <valid initial="string.printable"/>
+	  </sanitizer>
+        </param>
+    </inputs>
+    <outputs>
+        <data name="out_file" format="data_manager_json" />
+    </outputs>
+</tool>

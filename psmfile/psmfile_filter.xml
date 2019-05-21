@@ -1,0 +1,19 @@
+<tool id="psmfile_filter" name="Filter and reformat MSGF+ data for PSM file" version="1.0">
+    <command interpreter="python">psmfile_filter.py "${input}" "${promsreport}" "${reporterfile}" "${output}" "${threshold}" "${reporters}"</command>
+    <inputs>
+        <param name="input" type="data" format="tabular" label="Input PSM File"/>
+        <param name="reporterfile" type="data" format="tabular" label="Input Reporter Ion File" optional="true"/>
+        <param name="promsreport" type="data" format="proms.txt" label="Input ProMS Report" optional="true"/>
+        <param name="reporters" type="select" label="Isotope Labeling">
+            <option value="">None</option>
+            <option value="itraq4">iTRAQ 4-plex</option>
+            <option value="tmt6">TMT 6-plex</option>
+            <option value="tmt10">TMT 10-plex</option>
+            <option value="tmt11">TMT 11-plex</option>
+        </param>
+        <param name="threshold" type="float" value="1" label="Spectral FDR Threshold (%)"/>
+    </inputs>
+    <outputs> 
+        <data name="output" format="psm" label="${input.name.rsplit('.',1)[0]}.psm"/>
+    </outputs>
+</tool>

@@ -1,0 +1,16 @@
+*** ./up.py	2016-10-05 16:12:06.000000000 -0400
+--- ./up.py	2016-11-09 18:51:35.000000000 -0500
+***************
+*** 343,348 ****
+--- 338,348 ----
+          if directory is None:
+              return []
+  
++	# if there is any (single) backslash in the directory
++	# why isn't single backslash r'\' valid python? Argh!
++ 	if '\\' in directory:
++ 	    # replace each single backslash with a double backslash
++ 	    directory = directory.replace('\\','\\\\')
+          pattern = r"(%s%s\S+)" % (directory, sep)
+          return self.find_pattern_references(pattern)
+  

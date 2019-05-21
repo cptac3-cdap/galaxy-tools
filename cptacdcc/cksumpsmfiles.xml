@@ -1,0 +1,21 @@
+<tool id="psmfilecksum" name="Compute checksums for PSM analysis files" version="1.0">
+    <command>
+       <![CDATA[
+             ln "${specinput}" "${specinput.name}" && 
+             ln "${psminput}" "${psminput.name}" && 
+             ln "${mzidinput}" "${mzidinput.name}" && 
+             ln "${metricsinput}" "${metricsinput.name}" && 
+	     ${__tool_directory__}/../lib/cptacdcc/cksum.sh -f output.cksum . &&
+	     mv -f output.cksum "${output}"
+       ]]>
+    </command>
+    <inputs>
+        <param name="specinput" type="data" format="mzml.gz" label="Input mzML.gz File"/>
+        <param name="psminput" type="data" format="psm" label="Input PSM File"/>
+        <param name="mzidinput" type="data" format="mzid.gz" label="Input mzid.gz File"/>
+        <param name="metricsinput" type="data" format="qcmetrics.tsv" label="Input QCMetrics File"/>
+    </inputs>
+    <outputs> 
+        <data format="cksum" name="output" label="${specinput.name.rsplit('.',2)[0]}.cksum"/>
+    </outputs>
+</tool>

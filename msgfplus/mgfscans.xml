@@ -1,0 +1,24 @@
+<tool id="mgfscans" name="Extract the scan numbers from an MGF file" version="1.0">
+    <command interpreter="python">
+        mgfscans.py ${sort}
+	#if $size.strip()
+ 	    --size ${size}
+	#end if
+	#if $max.strip()
+	    --max ${max}
+	#end if 
+        "${input}" "${output}"</command>
+    <inputs>
+        <param name="input" type="data" format="mgf" label="Input MGF File"/>
+        <param name="sort" type="select" format="text" label="Spectrum to chunk">
+            <option value="--random" selected="True">random</option>
+            <option value="--mw">by precursor mol. wt.</option>
+            <option value="">by scan number</option>
+        </param>
+	<param type="text" name="size" label="Chunk size" value="1000"/>
+	<param type="text" name="max" label="Max. chunks (Default: all)"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="txt" label="${input.name.rsplit('.',1)[0]+'.scan.txt'}"/>
+    </outputs>
+</tool>

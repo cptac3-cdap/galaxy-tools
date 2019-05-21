@@ -1,0 +1,22 @@
+<tool id="cdapreports_sample1" name="Label Spectral Data with Sample Identifiers" version="1.0">
+    <description>
+       Annotate spectral datafiles, with reporter ions and their sample identifiers, for isotope-label workflows, and their sample identifiers, for label-free workflows. 
+    </description>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Fatal error. Non-zero exit code." />
+    </stdio>
+    <command>
+<![CDATA[
+cp -f ${input} data.psm &&
+ln -s ${samples} samples.csv &&
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/sample1 -d data.psm -s samples.csv
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="psmdb" label="PSM Data"/>
+        <param name="samples" type="data" format="csv" label="Sample File"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="psmdb" label="${input.name.rsplit('.',1)[0]}.sample.psm" from_work_dir="data.psm" />
+    </outputs>
+</tool>

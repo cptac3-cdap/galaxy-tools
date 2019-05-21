@@ -1,0 +1,45 @@
+<tool id="filecksums" name="Compute checksums for files" version="1.0">
+    <command>
+       <![CDATA[
+	     #if $input1
+             ln "${input1}" "${input1.name}" && 
+	     #end if 
+	     #if $input2
+             ln "${input2}" "${input2.name}" && 
+	     #end if 
+	     #if $input3
+             ln "${input3}" "${input3.name}" && 
+	     #end if 
+	     #if $input4
+             ln "${input4}" "${input4.name}" && 
+	     #end if 
+	     #if $input5
+             ln "${input5}" "${input5.name}" && 
+	     #end if 
+	     #if $input6
+             ln "${input6}" "${input6.name}" && 
+	     #end if 
+	     #if $input7
+             ln "${input7}" "${input7.name}" && 
+	     #end if 
+	     #if $input8
+             ln "${input8}" "${input8.name}" && 
+	     #end if 
+	     ${__tool_directory__}/../lib/cptacdcc/cksum.sh -f output.cksum . &&
+	     mv -f output.cksum "${output}"
+       ]]>
+    </command>
+    <inputs>
+        <param name="input1" type="data" optional="true" label="Input File 1"/>
+        <param name="input2" type="data" optional="true" label="Input File 2"/>
+        <param name="input3" type="data" optional="true" label="Input File 3"/>
+        <param name="input4" type="data" optional="true" label="Input File 4"/>
+        <param name="input5" type="data" optional="true" label="Input File 5"/>
+        <param name="input6" type="data" optional="true" label="Input File 6"/>
+        <param name="input7" type="data" optional="true" label="Input File 7"/>
+        <param name="input8" type="data" optional="true" label="Input File 8"/>
+    </inputs>
+    <outputs> 
+        <data format="cksum" name="output" label="${input1.name.split('.',1)[0]}.cksum"/>
+    </outputs>
+</tool>

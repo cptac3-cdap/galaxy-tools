@@ -1,0 +1,30 @@
+<tool id="data_manager_pulsar_nodes_local" name="Start Windows Pulsar compute nodes" version="1.0" tool_type="manage_data">
+    <description>compute resources</description>
+    <command interpreter="python">data_manager_pulsar_nodes.py start "${out_file}"</command>
+    <inputs>
+        <conditional name="cond">
+          <param name="type" type="select" label="Source">
+            <option value="aws">Amazon Web Services</option>
+            <option value="manual">Manual Entry</option>
+          </param>
+          <when value="aws">
+            <param name="count" type="integer" value="1" label="Number of Instances" />
+            <param name="winver" type="select" label="Windows Version" >
+	      <option value="2016" selected="true">Windows Server 2016</option>
+	      <option value="2012R2">Windows Server 2012 R2</option>
+	      <option value="2008R2">Windows Server 2008 R2</option>
+	    </param>
+            <param name="keyname" type="text" label="AWS Key Name" />
+            <param name="instancetype" type="text" label="AWS Instance Type" />
+            <param name="subnet" type="text" label="AWS Subnet" />
+            <param name="clustername" type="text" label="Galaxy Cluster Name" />
+          </when>
+          <when value="manual">
+            <param name="ipaddress" type="text" label="IP Address" />
+          </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data name="out_file" format="data_manager_json" />
+    </outputs>
+</tool>

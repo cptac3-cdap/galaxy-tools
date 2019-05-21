@@ -1,0 +1,53 @@
+<tool id="cdapreports_parsnipmayug" name="Gene inference by parsimony with FDR estimation" version="1.0">
+    <description>
+       Infer genes by global parsmiony and estimate gene FDR
+    </description>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Fatal error. Non-zero exit code." />
+    </stdio>
+    <command>
+<![CDATA[
+cp -f ${input} data.psm &&
+NGENE=`awk -F, '{print $2}' ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinMapping/${genemap} | sort -u | wc -l` &&
+echo "Total genes: \$NGENE" &&
+DATA="${input.name.split('.',1)[0]}" &&
+FDR="${specfdr}" &&
+export TMPDIR=\$PWD &&
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/parsnip1 -d data.psm -U ${unique} -T ${specfdr} -C ${speccnt} 
+--tieresolution ${tieresolution} --pepweights ${pepweights} --bygene
+#if $pracc
+  --pracc ${pracc}
+#end if 
+--mode Stats,Dump --itersolve 50 --ttotal 15 --noalignments --extension pars &&
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/mayu --bygene --accessions data.pars.txt --summary \$NGENE data.psm > data.pars.mayu.txt && 
+awk -v F="\$DATA" -v T="\$FDR" '{printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\n",F,T,$4,$5,$6,$7,$8)}' < data.pars.mayu.txt > data.pars.mayu.tsv
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="psmdb" label="PSM Data"/>
+        <param name="unique" type="integer" value="2" label="Unshared/Unique Peptides required per Inferred Gene"/>
+        <param name="specfdr" type="float" value="1.0" label="Spectral FDR Threshold (%) for Peptides"/>
+        <param name="speccnt" type="integer" value="2" label="Spectral Count Threshold for Peptides"/>
+        <param name="pepweights" type="select" label="Lost Peptide Penalty">
+	  <option value="Equal">Equal</option>
+	  <option value="Count">Count</option>
+	  <option value="FDR" >FDR</option>
+	</param>
+        <param name="tieresolution" type="select" label="Tied Rank 1 PSM Resolution">
+	  <option value="Discard">Discard</option>
+	  <option value="Consistent">Consistent</option>
+	  <option value="Keep">Keep</option>
+	  <option value="Group">Group</option>
+	</param>
+        <param name="genemap" type="select" label="Gene-Protein Mapping">
+          <option value="prhuman2gene.csv">Human</option>
+          <option value="prmouse2gene.csv">Mouse</option>
+          <option value="prrat2gene.csv">Rat</option>
+          <option value="prhumanmouse2gene.csv">Human+Mouse</option>
+        </param>
+        <param name="pracc" type="text" value="" label="Gene Name Heuristic"/>
+    </inputs>
+    <outputs>
+        <data name="mayu" format="tabular" label="${input.name.split('.',1)[0]}-${specfdr}.mayu.tsv" from_work_dir="data.pars.mayu.tsv"/>
+    </outputs>
+</tool>

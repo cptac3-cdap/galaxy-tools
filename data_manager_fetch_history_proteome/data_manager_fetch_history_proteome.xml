@@ -1,0 +1,23 @@
+<tool id="data_manager_fetch_history_proteome" name="Reference Proteome (History)" version="1.0" tool_type="manage_data">
+    <description>importing</description>
+    <command interpreter="python">data_manager_fetch_history_proteome.py "${out_file}"</command>
+    <inputs>
+	<param name="display" type="text" label="Display Name" />
+        <param name="source" type="select" label="Source Database">
+            <option value="RefSeq">RefSeq</option>
+            <option value="UniProt">UniProt</option>
+            <option value="Mixed">Mixed</option>
+            <option value="Other">Other</option>
+            <option value="Unknown">Unknown</option>
+        </param>
+        <param name="organism" type="select" label="Organism">
+            <options from_data_table="all_proteome_species" />
+        </param>
+	<param name="id" type="text" label="Database ID" />
+        <param name="input_fasta" type="data" format="fasta" label="FASTA File" multiple="False" optional="False" />
+	<param name="tag" type="text" label="Database Tag Override" />
+    </inputs>
+    <outputs>
+        <data name="out_file" format="data_manager_json"/>
+    </outputs>
+</tool>

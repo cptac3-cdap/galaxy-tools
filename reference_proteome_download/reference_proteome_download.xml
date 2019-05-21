@@ -1,0 +1,28 @@
+<tool id="refprotdownload" name="Download Reference Proteome" version="1.0">
+    <description>
+        Makes reference proteomes available for download.
+    </description>
+    <requirements>
+        <environment_variable name="LC_ALL" action="set_to">C</environment_variable>        
+    </requirements>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Job Failed" />
+    </stdio>
+    <command>
+<![CDATA[
+    cp -f "${all_proteome_source.fields.path}" "${output}"
+]]>
+    </command>
+    <inputs>
+        <param name="all_proteome_source" type="select" label="Source Proteome">
+            <options from_data_table="all_proteome">
+                <column name="name" index="1"/>
+                <column name="value" index="0"/>
+                <column name="path" index="2"/>
+            </options>
+        </param>
+    </inputs>
+    <outputs>
+        <data name="output" format="fasta" label="${all_proteome_source.fields.value}.fasta"/>
+    </outputs>
+</tool>

@@ -1,0 +1,62 @@
+<job_conf>
+    <plugins>
+        <plugin id="pulsar" type="runner" load="galaxy.jobs.runners.pulsar:PulsarLegacyJobRunner" action="replace" match="id"/>
+        <plugin id="pulsar_mq" type="runner" load="galaxy.jobs.runners.pulsar:PulsarMQJobRunner">
+          <param id="amqp_url">amqp://guest:guest@localhost:5672//</param>
+          <param id="galaxy_url">https://XXXXX_REPLACEWITHLOCALIP_XXXXX/</param>
+          <param id="amqp_acknowledge">True</param>
+          <param id="persistence_directory">/tmp</param>
+        </plugin>
+    </plugins>
+    <handlers>
+      <handler>
+        <plugin id="pulsar" action="replace" match="id"/>
+        <plugin id="tasks" action="replace" match="id"/>
+        <plugin id="local" action="replace" match="id"/>
+      </handler>
+    </handlers>
+    <destinations>
+       <destination id="pulsar_dynamic" tags="win_pulsar,windows" runner="dynamic" action="replace" match="id">
+            <param id="type">python</param>
+            <param id="function">pulsar_destinations</param>
+       </destination>
+       <destination id="slurm_cluster_mem1" runner="slurm">
+            <param id="nativeSpecification">--mem=1024</param>
+       </destination>
+       <destination id="slurm_cluster_mem3" runner="slurm">
+            <param id="nativeSpecification">--mem=3072</param>
+       </destination>
+       <destination id="slurm_cluster_mem4" runner="slurm">
+            <param id="nativeSpecification">--mem=4096</param>
+       </destination>
+       <destination id="slurm_cluster_mem6" runner="slurm">
+            <param id="nativeSpecification">--mem=6144</param>
+       </destination>
+       <destination id="slurm_cluster_mem8" runner="slurm">
+            <param id="nativeSpecification">--mem=8192</param>
+       </destination>
+       <destination id="slurm_cluster_mem12" runner="slurm">
+            <param id="nativeSpecification">--mem=12288</param>
+       </destination>
+       <!-- <destination id="pulsar_mq" tags="win_pulsar" runner="pulsar_mq" action="replace" match="id">
+          <param id="default_file_action">remote_transfer</param>
+          <param id="jobs_directory">__PULSAR_JOBS_DIRECTORY__</param>
+        </destination> -->
+    </destinations>
+    <tools>
+        <tool id="absciex_wiff_pulsar" destination="win_pulsar" action="replace" match="id"/>
+        <tool id="msconvert_raw_pulsar" destination="win_pulsar" action="replace" match="id"/>
+        <tool id="msconvert_wiff_pulsar" destination="win_pulsar" action="replace" match="id"/>
+        <tool id="ReAdw4Mascot2_raw_pulsar" destination="win_pulsar" action="replace" match="id"/>
+        <tool id="ProMS_pulsar" destination="win_pulsar" action="replace" match="id"/>
+	<tool id="cptacraw" destination="local_runner" action="replace" match="id"/>
+	<tool id="data_manager_pulsar_nodes_local" destination="local_runner" action="replace" match="id"/>
+	<tool id="data_manager_pulsar_nodes_remove" destination="local_runner" action="replace" match="id"/>
+	<tool id="data_manager_pulsar_nodes_shutdown" destination="local_runner" action="replace" match="id"/>
+	<tool id="data_manager_pulsar_nodes_monitor" destination="local_runner" action="replace" match="id"/>
+        <tool id="cdapreports_pepiontmt10" destination="slurm_cluster_mem12" action="replace" match="id"/>
+        <tool id="cdapreports_tmt10" destination="slurm_cluster_mem12" action="replace" match="id"/>
+        <tool id="msgfplus4" destination="slurm_cluster_mem6" action="replace" match="id"/>
+        <tool id="msgfplus6" destination="slurm_cluster_mem3" action="replace" match="id"/>
+    </tools>
+</job_conf>

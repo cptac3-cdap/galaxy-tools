@@ -1,0 +1,22 @@
+<tool id="data_manager_fetch_uniprot_proteome" name="Reference Proteome (UniProt)" version="1.0" tool_type="manage_data">
+    <description>fetching</description>
+    <command interpreter="python">data_manager_fetch_uniprot_proteome.py "${out_file}"</command>
+    <inputs>
+        <param name="organism" type="select" label="Organism">
+            <options from_data_table="all_proteome_species" />
+        </param>
+        <param name="reviewed" type="select" label="Curation Status:">
+          <option value="reviewed">Reviewed (SwissProt)</option>
+          <option value="all">All (SwissProt+TrEMBL)</option>
+        </param>
+        <param name="proteome" type="select" label="Proteome:">
+          <option value="reference" selected="True">Reference</option>
+          <option value="complete">Complete</option>
+          <option value="all">All</option>
+        </param>
+	<param type="boolean" name="isoforms" truevalue="isoforms" falsevalue="noisoforms" label="Include Isoforms?" checked="True"/>
+    </inputs>
+    <outputs>
+        <data name="out_file" format="data_manager_json"/>
+    </outputs>
+</tool>

@@ -1,0 +1,45 @@
+    <!-- Locations of all proteome files -->
+    <table name="all_proteome_species" comment_char="#">
+        <columns>value, name, taxid, refseqsciname, refseqprefix</columns>
+        <file path="XXXXX_GALAXY_TOOLDATA_XXXXX/all_proteome_species.loc" />
+    </table>
+    <!-- Locations of all proteome files -->
+    <table name="all_proteome" comment_char="#">
+        <columns>value, display_name, file_path</columns>
+        <file path="XXXXX_GALAXY_TOOLDATA_XXXXX/all_proteome.loc" />
+    </table>
+    <!-- Locations of msgfplus_index files -->
+    <table name="msgfplus_index" comment_char="#">
+        <columns>value, display_name, decoy, file_path</columns>
+        <file path="XXXXX_GALAXY_TOOLDATA_XXXXX/msgfplus_index.loc" />
+    </table>
+    <!-- Locations of compress_seq files -->
+    <table name="compress_seq" comment_char="#">
+        <columns>value, display_name, file_path</columns>
+        <file path="XXXXX_GALAXY_TOOLDATA_XXXXX/compress_seq.loc" />
+    </table>
+    <!-- CPTAC-DCC login credentials -->
+    <table name="cptacdcc_login" comment_char="#">
+        <columns>value, display_name, password, transfer</columns>
+        <file path="XXXXX_GALAXY_TOOLDATA_XXXXX/cptacdcc_login.loc" />
+    </table>
+    <!-- Pulsar AMQP URLs -->
+    <table name="amqp_url" comment_char="#">
+        <columns>value</columns>
+        <file path="XXXXX_GALAXY_TOOLDATA_XXXXX/amqp_url.loc" />
+    </table>
+    <!-- Pulsar node events -->
+    <table name="pulsar_node_events" comment_char="#">
+        <columns>value, state, timestamp, stack, cpus</columns>
+        <file path="XXXXX_GALAXY_TOOLDATA_XXXXX/pulsar_nodes.loc" />
+    </table>
+    <!-- Pulsar node events -->
+    <table name="pulsar_node_events_ip" comment_char="#">
+        <columns>value</columns>
+        <file path="XXXXX_GALAXY_TOOLDATA_XXXXX/pulsar_nodes.ip.loc" />
+    </table>
+    <!-- Pulsar node events -->
+    <table name="pulsar_node_events_aws" comment_char="#">
+        <columns>value</columns>
+        <file path="XXXXX_GALAXY_TOOLDATA_XXXXX/pulsar_nodes.aws.loc" />
+    </table>

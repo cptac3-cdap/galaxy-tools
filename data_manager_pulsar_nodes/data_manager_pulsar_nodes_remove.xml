@@ -1,0 +1,29 @@
+<tool id="data_manager_pulsar_nodes_remove" name="Stop Windows Pulsar compute nodes" version="1.0" tool_type="manage_data">
+    <description>compute resources</description>
+    <command interpreter="python">data_manager_pulsar_nodes.py stop "${out_file}"</command>
+    <inputs>
+        <conditional name="cond">
+          <param name="type" type="select" label="Source">
+            <option value="aws">Amazon Web Services</option>
+            <option value="manual">Manual Entry</option>
+          </param>
+          <when value="manual">
+            <param name="ipaddress" type="select" label="IP Address" >
+                <options from_data_table="pulsar_node_events_ip">
+                  <column name="value" index="0"/>
+                </options>
+            </param>
+          </when>
+          <when value="aws">
+            <param name="stack" type="select" label="Stack">
+                <options from_data_table="pulsar_node_events_aws">
+                  <column name="value" index="0"/>
+                </options>
+            </param>
+          </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data name="out_file" format="data_manager_json" />
+    </outputs>
+</tool>

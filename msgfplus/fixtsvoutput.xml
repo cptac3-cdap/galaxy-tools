@@ -1,0 +1,10 @@
+<tool id="fixtsvoutput" name="Fix MSGF+ TSV output after Galaxy merge" version="1.0">
+    <command interpreter="python">
+        fixtsvoutput.py "${input}" "${output}"</command>
+    <inputs>
+        <param name="input" type="data" format="tabular" label="Galaxy-merged MSGF+ TSV file"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="tabular" label="${input.name.rsplit('.',1)[0]+'.tsv'}"/>
+    </outputs>
+</tool>

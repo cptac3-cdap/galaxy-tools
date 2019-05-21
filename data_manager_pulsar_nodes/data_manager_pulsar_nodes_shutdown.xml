@@ -1,0 +1,9 @@
+<tool id="data_manager_pulsar_nodes_shutdown" name="Shutdown all Windows Pulsar compute nodes" version="1.0" tool_type="manage_data">
+    <description>compute resources</description>
+    <command interpreter="python">data_manager_pulsar_nodes.py shutdown "${out_file}"</command>
+    <inputs>
+    </inputs>
+    <outputs>
+        <data name="out_file" format="data_manager_json" />
+    </outputs>
+</tool>

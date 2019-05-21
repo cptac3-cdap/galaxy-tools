@@ -1,0 +1,21 @@
+<tool id="phosphors" name="PhosphoRS" version="1.0">
+    <command>
+    <![CDATA[
+    ${__tool_directory__}/phosphors.sh "${mgfinput.name.rsplit('.',1)[0]}" "${mgfinput}" "${psminput}" "${fragmode}" "${tolerance}" "${topn}" "${relint}" "${psmoutput}" && test -s "${psmoutput}" || exit 1
+    ]]>
+    </command>
+    <inputs>
+        <param name="mgfinput" type="data" format="mgf" label="MGF Spectral Datafile"/>
+	<param name="psminput" type="data" format="psm" label="PSM File"/>
+	<param name="fragmode" type="select" label="Fragmentation mode">
+            <option value="CID">CID</option>
+            <option value="HCD">HCD</option>
+        </param>
+        <param name="tolerance" type="float" value="0.5" label="Fragment match tolerance (Da)"/>
+        <param name="topn" type="float" value="0" label="Use top N peaks (0 to disable)"/>
+        <param name="relint" type="float" value="0" label="Minimum relative intensity (%)"/>
+    </inputs>
+    <outputs> 
+        <data format="psm" name="psmoutput" label="${psminput.name.rsplit('.',1)[0]}.psm"/>
+    </outputs>
+</tool>

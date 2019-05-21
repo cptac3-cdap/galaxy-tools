@@ -1,0 +1,32 @@
+<tool id="qcreport" name="QCReport" version="1.0">
+    <command>
+    <![CDATA[
+    rm -f "${qcmetricsinput.name}" && 
+    cp -f "${qcmetricsinput}" "${qcmetricsinput.name}" &&
+    rm -f "${summaryinput.name}" && 
+    cp -f "${summaryinput}" "${summaryinput.name}" &&
+    rm -f "${peptideinput.name}" && 
+    cp -f "${peptideinput}" "${peptideinput.name}" &&
+    rm -f "${quantinput.name}" && 
+    cp -f "${quantinput}" "${quantinput.name}" &&
+    rm -f "${mayuinput.name}" && 
+    cp -f "${mayuinput}" "${mayuinput.name}" &&
+    rm -f "${htmlreport.name}" && 
+    ${__tool_directory__}/generate_all.sh ${dochecks} "${qcmetricsinput.name}" &&
+    test -s "${htmlreport.name}" && 
+    cp "${htmlreport.name}" "${htmlreport}"
+    || cat debug.log 1>&2 && exit 1
+    ]]>
+    </command>
+    <inputs>
+        <param name="qcmetricsinput" type="data" format="tabular" label="Spectrum File QC Metrics"/>
+        <param name="summaryinput" type="data" format="tabular" label="Protein Summary Report"/>
+        <param name="peptideinput" type="data" format="tabular" label="Peptide Summary Report"/>
+        <param name="quantinput" type="data" format="tabular" label="Quantitation Report"/>
+        <param name="mayuinput" type="data" format="tabular" label="Protein FDR"/>
+        <param name="dochecks" type="boolean" truevalue="--dochecks" falsevalue="" checked="True" label="Do Checks?"/>
+    </inputs>
+    <outputs> 
+        <data format="html" name="htmlreport" label="${qcmetricsinput.name.rsplit('.',1)[0]}.html"/>
+    </outputs>
+</tool>

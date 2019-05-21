@@ -1,0 +1,36 @@
+<tool id="data_manager_compress_seq" name="Sequence Compression for Peptide Scan" version="1.0" tool_type="manage_data">
+    <description>builder</description>
+    <requirements>
+        <environment_variable name="LC_ALL" action="set_to">C</environment_variable>        
+    </requirements>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Job Failed" />
+        <regex match="java.*Exception" level="fatal" description="Java Exception"/> 
+        <regex match="Could not create the Java virtual machine" level="fatal" description="JVM Error"/>
+    </stdio>
+    <command>
+<![CDATA[
+	set -x &&
+        DIR=`dirname "${all_proteome_source.fields.path}"` &&
+        BASE=`basename "${all_proteome_source.fields.path}"` &&
+        rm -rf "\$DIR/compress_seq" &&
+        mkdir -p "\$DIR/compress_seq" &&
+        ln -s "${all_proteome_source.fields.path}" "\$DIR/compress_seq/\$BASE" &&
+	export PYTHONPATH="${__tool_directory__}/../lib/python:\$PYTHONPATH" &&
+	python ${__tool_directory__}/compress_seq.py "\$DIR/compress_seq/\$BASE" &&
+        python ${__tool_directory__}/generate_table_entries.py "${out_file}" "${all_proteome_source.fields.value}" "${all_proteome_source.fields.name}" "\$DIR/compress_seq/\$BASE"
+]]>
+    </command>
+    <inputs>
+        <param name="all_proteome_source" type="select" label="Source Proteome">
+            <options from_data_table="all_proteome">
+	        <column name="name" index="1"/>
+                <column name="value" index="0"/>
+                <column name="path" index="2"/>
+	    </options>
+        </param>
+    </inputs>
+    <outputs>
+        <data name="out_file" format="data_manager_json"/>
+    </outputs>
+</tool>

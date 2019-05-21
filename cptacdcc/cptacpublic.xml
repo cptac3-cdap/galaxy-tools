@@ -1,0 +1,28 @@
+<tool id="cptacpublic" name="Download file from CPTAC public portal" version="1.0">
+    <command interpreter="python">cptacpublic.py "${input}" "${output}" "${md5hash}" "${sha1hash}" "${sizehash}" "${protocol}"</command>
+    <inputs>
+        <param name="input" type="text" label="CPTAC Public Portal path"/>
+	<param name="format" type="select" label="Data type">
+            <option value="raw">RAW</option>
+            <option value="mzml">mzML</option>
+            <option value="mzml.gz">mzML.gz</option>
+            <option value="auto">Auto-detect</option>
+        </param>
+        <param name="md5hash" type="text" label="MD5 Hash"/>
+        <param name="sha1hash" type="text" label="SHA1 Hash"/>
+        <param name="sizehash" type="text" label="Size (bytes)"/>
+        <param name="protocol" type="select" label="Download using">
+            <option value="aspera">Aspera</option>
+            <option value="http">HTTP</option>
+        </param>
+    </inputs>
+    <outputs> 
+        <data format="auto" name="output" label="${input.rsplit('/',1)[1]}">
+	    <change_format>
+                <when input="format" value="raw" format="raw" />
+                <when input="format" value="mzML" format="mzML" />
+                <when input="format" value="mzML.gz" format="mzML.gz" />
+            </change_format>
+        </data>
+    </outputs>
+</tool>

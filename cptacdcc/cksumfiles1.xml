@@ -1,0 +1,18 @@
+<tool id="filecksums1" name="Compute checksums for files" version="1.0">
+    <command>
+       <![CDATA[
+	     #for $f in $files
+		ln "${f.input}" "${f.input.name}" &&
+	     #end for
+	     ${__tool_directory__}/../lib/cptacdcc/cksum.sh -f output.cksum .
+       ]]>
+    </command>
+    <inputs>
+      <repeat name="files" title="File">
+        <param name="input" type="data" label="Input File"/>
+      </repeat>
+    </inputs>
+    <outputs> 
+        <data from_work_dir="output.cksum" format="cksum" name="output" label="${files[0].input.name.split('.',1)[0]}.cksum"/>
+    </outputs>
+</tool>

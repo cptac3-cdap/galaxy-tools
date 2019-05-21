@@ -1,0 +1,35 @@
+<tool id="msconvert_mzml_mzxml" name="MSConvert mzML to mzXML" version="1.0">
+    <description>
+        Spectral file conversion for mzml to mzxml
+    </description>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Job Failed" />
+    </stdio>
+    <command>
+<![CDATA[
+	#set $input_filename="spectra.mzML"
+	#set $output_filename="spectra.mzXML"
+	rm -f '${input_filename}' &&
+	rm -f '${output_filename}' &&
+	ln -s '$i' '${input_filename}' &&
+        msconvertexe=msconvert &&
+        \$msconvertexe --mzXML --outfile '${output_filename}' '${input_filename}'
+]]>
+    </command>
+    <inputs>
+        <param argument="-i" type="data" format="mzml" label="Input Spectra Datafile(s)"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="mzxml" label="${i.name.rsplit('.',1)[0]+'.mzXML'}" from_work_dir="spectra.mzXML" />
+    </outputs>
+    <tests>
+    </tests>
+    <help>
+**What it does**
+
+Convert spectral data.
+
+    </help>
+    <citations>
+    </citations>
+</tool>

@@ -1,0 +1,141 @@
+    <data_manager tool_file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/data_manager_fetch_uniprot_proteome/data_manager_fetch_uniprot_proteome.xml" id="fetch_uniprot_proteome">
+        <data_table name="all_proteome">
+            <output>
+                <column name="value" />
+                <column name="display_name" />
+                <column name="file_path" output_ref="out_file" >
+                    <move type="file">
+                        <source>${file_path}</source>
+                        <target base="XXXXX_GALAXY_TOOLDATA_XXXXX/">proteome/uniprot/${value}/seq/${value}.fasta</target>
+                    </move>
+		    <value_translation>XXXXX_GALAXY_TOOLDATA_XXXXX/proteome/uniprot/${value}/seq/${value}.fasta</value_translation>
+                    <value_translation type="function">abspath</value_translation>
+                </column>
+            </output>
+        </data_table>
+    </data_manager>
+    <data_manager tool_file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/data_manager_fetch_refseq_proteome/data_manager_fetch_refseq_proteome.xml" id="fetch_refseq_proteome">
+        <data_table name="all_proteome">
+            <output>
+                <column name="value" />
+                <column name="display_name" />
+                <column name="file_path" output_ref="out_file" >
+                    <move type="file">
+                        <source>${file_path}</source>
+                        <target base="XXXXX_GALAXY_TOOLDATA_XXXXX/">proteome/refseq/${value}/seq/${value}.fasta</target>
+                    </move>
+		    <value_translation>XXXXX_GALAXY_TOOLDATA_XXXXX/proteome/refseq/${value}/seq/${value}.fasta</value_translation>
+                    <value_translation type="function">abspath</value_translation>
+                </column>
+            </output>
+        </data_table>
+    </data_manager>
+    <data_manager tool_file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/data_manager_fetch_history_proteome/data_manager_fetch_history_proteome.xml" id="fetch_history_proteome">
+        <data_table name="all_proteome">
+            <output>
+                <column name="value" />
+                <column name="display_name" />
+                <column name="file_path" output_ref="out_file" >
+                    <move type="file">
+                        <source>${file_path}</source>
+                        <target base="XXXXX_GALAXY_TOOLDATA_XXXXX/">proteome/history/${value}/seq/${value}.fasta</target>
+                    </move>
+		    <value_translation>XXXXX_GALAXY_TOOLDATA_XXXXX/proteome/history/${value}/seq/${value}.fasta</value_translation>
+                    <value_translation type="function">abspath</value_translation>
+                </column>
+            </output>
+        </data_table>
+    </data_manager>
+    <data_manager tool_file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/data_manager_msgfplus_indexer/data_manager_msgfplus_indexer1.xml" id="msgfplus_indexer1">
+        <data_table name="msgfplus_index">
+            <output>
+                <column name="value" />
+                <column name="display_name" />
+                <column name="decoy" />
+                <column name="file_path" />
+            </output>
+        </data_table>
+    </data_manager>
+    <data_manager tool_file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/data_manager_compress_seq/data_manager_compress_seq.xml" id="compress_seq">
+        <data_table name="compress_seq">
+            <output>
+                <column name="value" />
+                <column name="display_name" />
+                <column name="file_path" />
+            </output>
+        </data_table>
+    </data_manager>
+    <data_manager tool_file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/data_manager_proteome_species/data_manager_proteome_species.xml" id="proteome_species">
+        <data_table name="all_proteome_species">
+            <output>
+                <column name="value" />
+                <column name="name" />
+                <column name="taxid" />
+                <column name="refseqsciname" />
+                <column name="refseqprefix" />
+            </output>
+        </data_table>
+    </data_manager>
+    <data_manager tool_file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/data_manager_cptacdcc_login/data_manager_cptacdcc_login.xml" id="cptacdcc_login">
+        <data_table name="cptacdcc_login">
+            <output>
+                <column name="value" />
+                <column name="display_name" />
+                <column name="password" />
+                <column name="transfer" />
+            </output>
+        </data_table>
+    </data_manager>
+    <data_manager tool_file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/data_manager_pulsar_message_queue/data_manager_pulsar_message_queue.xml" id="amqp_url">
+        <data_table name="amqp_url">
+            <output>
+                <column name="value" />
+            </output>
+        </data_table>
+    </data_manager>
+    <data_manager tool_file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/data_manager_pulsar_nodes/data_manager_pulsar_nodes.xml" id="pulsar_node_start">
+        <data_table name="pulsar_node_events">
+            <output>
+                <column name="value" />
+                <column name="state" />
+                <column name="event" />
+		<column name="stack" />
+		<column name="cpus" />
+            </output>
+        </data_table>
+    </data_manager>
+    <data_manager tool_file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/data_manager_pulsar_nodes/data_manager_pulsar_nodes_slurm.xml" id="pulsar_node_start_slurm">
+        <data_table name="pulsar_node_events">
+            <output>
+                <column name="value" />
+                <column name="state" />
+                <column name="event" />
+		<column name="stack" />
+		<column name="cpus" />
+            </output>
+        </data_table>
+    </data_manager>
+    <data_manager tool_file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/data_manager_pulsar_nodes/data_manager_pulsar_nodes_remove.xml" id="pulsar_node_stop">
+        <data_table name="pulsar_node_events">
+            <output>
+                <column name="value" />
+                <column name="state" />
+                <column name="event" />
+		<column name="stack" />
+		<column name="cpus" />
+            </output>
+        </data_table>
+    </data_manager>
+    <data_manager tool_file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/data_manager_pulsar_nodes/data_manager_pulsar_nodes_shutdown.xml" id="pulsar_node_shutdown">
+        <data_table name="pulsar_node_events">
+            <output>
+                <column name="value" />
+                <column name="state" />
+                <column name="event" />
+		<column name="stack" />
+		<column name="cpus" />
+            </output>
+        </data_table>
+    </data_manager>
+    <data_manager tool_file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/data_manager_pulsar_nodes/data_manager_pulsar_nodes_monitor.xml" id="pulsar_node_monitor">
+    </data_manager>

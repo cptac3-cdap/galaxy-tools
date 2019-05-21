@@ -1,0 +1,50 @@
+<toolbox>
+  <section id="cptac_pcdap" name="CPTAC Proteomics CDAP PSMs" action="replace" match="id">
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cptacdcc/cptacraw.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/ReAdw4Mascot2/ReAdw4Mascot2_pulsar.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msconvert/msconvert_mzml_mzxml_pulsar.xml" /> 
+    <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msconvert/msconvert_mzml_mzxml_absciex_pulsar.xml" /> -->
+    <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/absciex/absciex_pulsar.xml" /> -->
+    <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msgfplus/msgfplus_indexed.xml" />  -->
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msgfplus/mgfscans.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msgfplus/msgfplus_indexed1.xml" /> 
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msgfplus/msgfplus_indexed2.xml" />
+    <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/swath/extract_windows.xml" /> -->
+    <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msgfplus/msgfplus.xml" /> -->
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msgfplus/msgfplus_tsv1.xml" /> 
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msgfplus/fixtsvoutput.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/ProMS/ProMS_pulsar.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/psmfile/psmfile_filter.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/phosphors/phosphors.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/psmfile/mzidreformat.xml" />
+    <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cptacdcc/cptacpublic.xml" /> -->
+    <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cptacdcc/cptacdcc.xml" /> -->
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/qcmetrics/qcmetrics.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cptacdcc/cksumpsmfiles.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cptacdcc/cksumfiles1.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/reference_proteome_download/reference_proteome_download.xml" />
+  </section>                                                                
+  <section id="cptac_pcdap_reports" name="CPTAC Proteomics CDAP Reports" action="replace" match="id">
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/loadall.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/sample.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/labeldecoy.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/peptrypterm.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/proremove.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/genemap.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/orth.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/assayannotate.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/parsnip.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/parsnipmayug.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/mayu.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/mayug.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/genefilt.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/genefilt1.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/proteinsummary.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/peptidesummary.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/proteintmt10.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/proteinspeccnt.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/proteinprecarea.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/pepiontmt10.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/qcreport/qcreport.xml" />
+  </section>
+</toolbox>

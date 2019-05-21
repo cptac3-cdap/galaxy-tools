@@ -1,0 +1,38 @@
+<tool id="cdapreports_protorth1" name="Add/remove genes/proteins representing orthologs." version="1.0">
+    <description>
+       Add/remove faux genes/proteins representing pairs of orthologous genes/proteins.
+    </description>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Fatal error. Non-zero exit code." />
+    </stdio>
+    <command>
+<![CDATA[
+cp -f ${input} data.psm &&
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/protortho1 -d data.psm 
+#if $bygene                                                                                                                                              
+--bygene                                                                                                                                                 
+--orthmap ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinMapping/mousegene2humangene.csv                                                         
+#else                                                                                                                                                    
+--orthmap ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinMapping/rsmouse2rshuman.csv                                                             
+#end if                                                                                                                                                  
+#if $operation_selector.remove                                                                                                                           
+--undo                                                                                                                                                   
+#else                                                                                                                                                    
+--decoyprefix ${operation_selector.decoyprefix}                                                                                                          
+#end if
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="psmdb" label="PSM Data"/>
+        <param name="bygene" type="boolean" truevalue="--bygene" falsevalue="" checked="False" label="Add/Remove Genes, not Proteins"/>
+        <conditional name="operation_selector">
+            <param name="remove" type="boolean" truevalue="--undo" falsevalue="" label="Remove, not Add" checked="False"/>
+            <when value="">
+               <param name="decoyprefix" type="text" value="XXX_" label="Decoy Gene Accession Prefix"/>
+	    </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data name="output" format="psmdb" label="${input.name.rsplit('.',1)[0]}.ortho.psm" from_work_dir="data.psm" />
+    </outputs>
+</tool>

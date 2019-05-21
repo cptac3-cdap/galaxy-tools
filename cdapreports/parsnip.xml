@@ -1,0 +1,59 @@
+<tool id="cdapreports_parsnip" name="Gene/Protein inference by parsimony" version="1.0">
+    <description>
+       Infer genes or proteins by global parsmiony
+    </description>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Fatal error. Non-zero exit code." />
+    </stdio>
+    <command>
+<![CDATA[
+cp -f ${input} data.psm &&
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/parsnip1 -d data.psm -U ${unique} -T ${specfdr} -C ${speccnt} 
+--tieresolution ${tieresolution} --pepweights ${pepweights} ${bygene}
+#if $pracc
+  --pracc ${pracc}
+#end if 
+--mode ${mode} --itersolve 50 --ttotal 15 --noalignments --extension pars > data.pars.log
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="psmdb" label="PSM Data"/>
+	<param name="bygene" type="boolean" truevalue="--bygene" falsevalue="" checked="False" label="Infer Genes, not Proteins"/>
+        <param name="unique" type="integer" value="2" label="Unshared/Unique Peptides required per Inferred Gene/Protein"/>
+        <param name="specfdr" type="float" value="1.0" label="Spectral FDR Threshold (%) for Peptides"/>
+        <param name="speccnt" type="integer" value="2" label="Spectral Count Threshold for Peptides"/>
+        <param name="pepweights" type="select" label="Lost Peptide Penalty">
+	  <option value="Equal">Equal</option>
+	  <option value="Count">Count</option>
+	  <option value="FDR" >FDR</option>
+	</param>
+        <param name="tieresolution" type="select" label="Tied Rank 1 PSM Resolution">
+	  <option value="Discard">Discard</option>
+	  <option value="Consistent">Consistent</option>
+	  <option value="Keep">Keep</option>
+	  <option value="Group">Group</option>
+	</param>
+	<param name="mode" type="select" multiple="true" display="checkboxes" label="Output mode(s)">
+	  <option value="Stats">Statistics</option>
+	  <option value="Matrix">Matrix</option>
+	  <option value="Dump">Dump</option>
+	  <option value="Filter">Filter</option>
+	  <option value="Annotate">Annotate</option>
+	</param>
+        <param name="pracc" type="text" value="" label="Protein/Gene Accession Heuristic"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="psmdb" label="${input.name.rsplit('.',1)[0]}.pars.psm" from_work_dir="data.pars.psm" >
+	    <filter>'Filter' in mode or 'Annotate' in mode</filter>
+        </data>
+        <data name="logfile" format="txt" label="${input.name.rsplit('.',1)[0]}.pars.log" from_work_dir="data.pars.log">
+	    <filter>'Stats' in mode</filter>
+        </data>
+        <data name="matrix" format="csv" label="${input.name.rsplit('.',1)[0]}.pars.csv" from_work_dir="data.pars.csv">
+	    <filter>'Matrix' in mode</filter>
+        </data>
+        <data name="accessions" format="txt" label="${input.name.rsplit('.',1)[0]}.pars.txt" from_work_dir="data.pars.txt">
+	    <filter>'Dump' in mode</filter>
+        </data>
+    </outputs>
+</tool>

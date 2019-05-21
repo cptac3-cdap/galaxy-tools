@@ -1,0 +1,36 @@
+<tool id="ReAdw4Mascot2_raw_pulsar" name="ReAdw4Mascot2 RAW to MGF (Pulsar - Windows)" version="1.0">
+    <description>
+        Spectral file conversion from raw to MGF using ReAdw4Mascot2 (pulsar - Windows)
+    </description>
+    <command>
+<![CDATA[
+  ReAdw4Mascot2.bat "$input" ${input.name} "ms2spectra:$output" "ms1profile:$output1" "reporters:$reportersfile" "${hiaccuracy}" "${reporters}" "${advanced.spsms3}" "${advanced.ms1profile}" "${advanced.version}" dummy
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="raw" label="Input Spectra Datafile(s)"/>
+        <param type="boolean" name="hiaccuracy" truevalue="hiaccuracy" falsevalue="" label="High Accuracy Precursors?" checked="True"/>
+        <param name="reporters" type="select" label="Isotope Labeling">
+            <option value="NoReporters">None</option>
+            <option value="iTRAQ">iTRAQ 4-plex</option>
+            <option value="iTRAQ8">iTRAQ 8-plex</option>
+            <option value="TMT6HCD">TMT 6-plex (HCD)</option>
+            <option value="TMT10HCD">TMT 10-plex (HCD)</option>
+            <option value="TMT11HCD">TMT 11-plex (HCD)</option>
+        </param>
+        <section name="advanced" title="Advanced Options">
+            <param type="boolean" name="ms1profile" truevalue="ms1profile" falsevalue="" label="Extract MS1 Profile Spectra" checked="True"/>
+            <param type="boolean" name="spsms3" truevalue="spsms3" falsevalue="" label="SPS-MS3 reporters" checked="True"/>
+            <param name="version" type="select" label="ReAdw4Mascot2 Version">
+                <option value="ReAdw4Mascot2">2013-03-18a</option>
+                <option value="ReAdw4Mascot_20180322a">2018-03-22a</option>
+                <option value="ReAdw4Mascot_20181214">2018-12-14</option>
+	    </param>
+	</section>
+    </inputs>
+    <outputs>
+        <data name="output" format="mgf" label="${input.name.rsplit('.',1)[0]}.mgf" />
+        <data name="output1" format="mzxml" label="${input.name.rsplit('.',1)[0]}.mzXML" />
+        <data name="reportersfile" format="tabular" label="${input.name.rsplit('.',1)[0]}.reporters.txt" />
+    </outputs>
+</tool>

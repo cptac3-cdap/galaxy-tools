@@ -1,0 +1,16 @@
+<datatype extension="raw" type="galaxy.datatypes.binary:Binary" mimetype="application/octet-stream"  subclass="True" display_in_upload="true"/>
+<datatype extension="wiff" type="galaxy.datatypes.binary:Binary" mimetype="application/octet-stream"  subclass="True" display_in_upload="true"/>
+<datatype extension="wiff.scan" type="galaxy.datatypes.binary:Binary" mimetype="application/octet-stream"  subclass="True" display_in_upload="true"/>
+<datatype extension="psmdb" type="galaxy.datatypes.binary:Binary" mimetype="application/octet-stream"  subclass="True" display_in_upload="true"/>
+<datatype extension="mzml" type="galaxy.datatypes.xml:GenericXml" mimetype="application/xml"  subclass="True" display_in_upload="true"/>
+<datatype extension="mzml.gz" type="galaxy.datatypes.binary:Binary" mimetype="multipart/x-gzip" subclass="True" display_in_upload="true"/>
+<datatype extension="mzxml" type="galaxy.datatypes.xml:GenericXml" mimetype="application/xml"  subclass="True" display_in_upload="true"/>
+<datatype extension="mzxml.gz" type="galaxy.datatypes.binary:Binary" mimetype="multipart/x-gzip " subclass="True" display_in_upload="true"/> 
+<datatype extension="mzid" type="galaxy.datatypes.xml:GenericXml" mimetype="application/xml"  subclass="True" display_in_upload="true"/>
+<datatype extension="mzid.gz" type="galaxy.datatypes.binary:Binary" mimetype="multipart/x-gzip" subclass="True" display_in_upload="true"/>
+<datatype extension="psm" type="galaxy.datatypes.tabular:Tabular" subclass="True" display_in_upload="true"/>
+<datatype extension="cksum" type="galaxy.datatypes.tabular:Tabular" subclass="True" display_in_upload="true"/>
+<datatype extension="proms.txt" type="galaxy.datatypes.data:Text" subclass="True" display_in_upload="true"/>
+<datatype extension="qcmetrics.tsv" type="galaxy.datatypes.tabular:Tabular" subclass="True" display_in_upload="true"/>
+<datatype extension="dfc.tsv" type="galaxy.datatypes.tabular:Tabular" subclass="True" display_in_upload="true"/>
+<datatype extension="swath.tsv" type="galaxy.datatypes.tabular:Tabular" subclass="True" display_in_upload="true"/>

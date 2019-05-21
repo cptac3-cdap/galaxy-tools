@@ -1,0 +1,41 @@
+<tool id="data_manager_msgfplus_indexer1" name="MS-GF+ (v2017.01.27) Proteome Indexer" version="1.0" tool_type="manage_data">
+    <description>builder</description>
+    <requirements>
+        <environment_variable name="LC_ALL" action="set_to">C</environment_variable>        
+    </requirements>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Job Failed" />
+        <regex match="java.*Exception" level="fatal" description="Java Exception"/> 
+        <regex match="Could not create the Java virtual machine" level="fatal" description="JVM Error"/>
+    </stdio>
+    <command>
+<![CDATA[
+	set -x &&
+        msgfjar=${__tool_directory__}/../lib/msgfplus/MSGFPlus-v20170127.jar &&
+        ( [ -f "\$msgfjar" ] || (echo MSGFPlus.jar not found && exit 1)) &&
+        DIR=`dirname "${all_proteome_source.fields.path}"` &&
+        BASE=`basename "${all_proteome_source.fields.path}"` &&
+        rm -rf "\$DIR/msgfplus_index" &&
+        mkdir -p "\$DIR/msgfplus_index" &&
+        ln -s "${all_proteome_source.fields.path}" "\$DIR/msgfplus_index/\$BASE" &&
+        memory="$advanced.memory" &&
+	java -Xms\$memory -Xmx\$memory -cp "\$msgfjar" edu.ucsd.msjava.msdbsearch.BuildSA -d "\$DIR/msgfplus_index/\$BASE" -tda 2 &&
+        python ${__tool_directory__}/generate_table_entries.py "${out_file}" "${all_proteome_source.fields.value}" "${all_proteome_source.fields.name}" "\$DIR/msgfplus_index/\$BASE"
+]]>
+    </command>
+    <inputs>
+        <param name="all_proteome_source" type="select" label="Source Proteome">
+            <options from_data_table="all_proteome">
+	        <column name="name" index="1"/>
+                <column name="value" index="0"/>
+                <column name="path" index="2"/>
+	    </options>
+        </param>
+        <section name="advanced" title="Advanced Options">
+           <param name="memory" label="Max. memory for the JVM" type="text" value="2048M" />
+        </section>
+    </inputs>
+    <outputs>
+        <data name="out_file" format="data_manager_json"/>
+    </outputs>
+</tool>

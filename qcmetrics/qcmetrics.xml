@@ -1,0 +1,21 @@
+<tool id="qcmetrics" name="QCMetrics" version="1.0">
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Job Failed" />
+    </stdio>
+    <command>
+    <![CDATA[
+    rm -f "${mzmlinput.name}" && 
+    ln -s "${mzmlinput}" "${mzmlinput.name}" &&
+    rm -f "${mzidinput.name}" && 
+    ln -s "${mzidinput}" "${mzidinput.name}" &&
+    ${__tool_directory__}/qcmetrics.sh "${mzmlinput.name}" "${mzidinput.name}" "${qcmetrics}"
+    ]]>
+    </command>
+    <inputs>
+        <param name="mzmlinput" type="data" format="mzml,mzml.gz" label="mzML Spectra"/>
+        <param name="mzidinput" type="data" format="mzid,mzid.gz" label="mzIdentML PSMs"/>
+    </inputs>
+    <outputs> 
+        <data format="qcmetrics.tsv" name="qcmetrics" label="${mzmlinput.name.split('.mzML',1)[0]}.qcmetrics.tsv"/>
+    </outputs>
+</tool>

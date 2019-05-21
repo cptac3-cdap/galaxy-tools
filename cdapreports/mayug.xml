@@ -1,0 +1,35 @@
+<tool id="cdapreports_mayug" name="Estimate Gene FDR" version="1.0">
+    <description>
+       Estimate the gene FDR using on decoy annotations.
+    </description>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Fatal error. Non-zero exit code." />
+    </stdio>
+    <command>
+<![CDATA[
+ln -s ${input} data.psm &&
+NGENE=`awk -F, '{print $2}' ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinMapping/${genemap} | sort -u | wc -l` &&
+echo "Total genes: \$NGENE" &&
+DATA="${input.name.split('.',1)[0]}" &&
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/mayu --bygene
+#if $accessions
+ --accessions ${accessions}
+#end if
+--summary \$NGENE data.psm > data.txt && 
+awk -v F="\$DATA" '{printf("%s\t%s\t%s\t%s\t%s\t%s\n",F,$4,$5,$6,$7,$8)}' < data.txt > data.tsv
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="psmdb" label="PSM Data"/>
+        <param name="accessions" type="data" format="txt" optional="True" label="Selected Accessions (Optional, Default: All Accessions)"/>
+        <param name="genemap" type="select" label="Gene-Protein Mapping">
+          <option value="prhuman2gene.csv">Human</option>
+          <option value="prmouse2gene.csv">Mouse</option>
+          <option value="prrat2gene.csv">Rat</option>
+          <option value="prhumanmouse2gene.csv">Human+Mouse</option>
+        </param>
+    </inputs>
+    <outputs>
+        <data name="output" format="tabular" label="${input.name.split('.',1)[0]}.mayu.tsv" from_work_dir="data.tsv" />
+    </outputs>
+</tool>

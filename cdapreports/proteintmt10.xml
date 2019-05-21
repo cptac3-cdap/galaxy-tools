@@ -1,0 +1,28 @@
+<tool id="cdapreports_tmt10" name="Gene/Protein Isotope-Labeling Quantitation" version="1.0">
+    <description>
+       Gene / Protein quanitation by isotope labeling.
+    </description>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Fatal error. Non-zero exit code." />
+    </stdio>
+    <command>
+<![CDATA[
+cp -f ${input} data.psm &&
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_tmt10 ${bygene} --labels ${labels} -d data.psm -o data.tsv ${nocorrection} 
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="psmdb" label="PSM Data"/>
+	<param name="labels" type="select" label="Isotope Labels">
+            <option value="iTRAQ">iTRAQ-4</option>
+            <option value="TMT6">TMT-6</option>
+            <option value="TMT10" selected="true">TMT-10</option>
+            <option value="TMT11">TMT-11</option>
+        </param>
+	<param name="bygene" type="boolean" truevalue="--bygene" falsevalue="" checked="False" label="Gene, not Protein, Quantitation"/>
+	<param name="nocorrection" type="boolean" truevalue="" falsevalue="--nocorrection" checked="True" label="Apply Label Reagent Impurity Correction"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="tabular" label="${input.name.split('.',1)[0]}.${labels.value.lower()}${'' if $nocorrection else '-raw'}.tsv" from_work_dir="data.tsv" />
+    </outputs>
+</tool>

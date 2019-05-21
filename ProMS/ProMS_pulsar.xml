@@ -1,0 +1,49 @@
+<tool id="ProMS_pulsar" name="ProMS MS1 Data Analysis (Pulsar - Windows)" version="1.0">
+    <description>
+        MS1 precursor peak integration data analysis (Pulsar - Windows)
+    </description>
+    <command>
+<![CDATA[
+  ProMS.bat "$input" "$psms" "$output" "${input.name}" "${psms.name}" "$instrument" "$reporters" "$advanced.promsversion" "$advanced.paramversion" dummy
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="mzxml" label="Spectra Datafile"/>
+        <param name="psms" type="data" format="tabular" label="PSM file (MSGF+ TSV Format)" />
+        <param name="instrument" type="select" label="Instrument Type">
+            <option value="ORBI_HCD" selected="true">Orbitrap-HCD</option>
+            <option value="ORBI">Orbitrap</option>
+            <option value="LTQ">LTQ</option>
+            <option value="QTOF">QTOF</option>
+        </param>
+        <param name="reporters" type="select" label="Isotope Labeling">
+            <option value="NoReporters">None</option>
+            <option value="iTRAQ">iTRAQ</option>
+            <option value="TMT" selected="true">TMT</option>
+        </param>
+        <section name="advanced" title="Advanced Options">
+	    <param name="promsversion" type="select" label="ProMS Version">
+		<option value="ProMS.20170706.exe">ProMS.20170706.exe</option>
+		<option value="ProMS.20170502.exe">ProMS.20170502.exe</option>
+		<option value="ProMS_anotherold.exe">ProMS_anotherold.exe</option>
+		<option value="ProMS_curent.exe">ProMS_curent.exe</option>
+		<option value="ProMS.exe">ProMS.exe</option>
+		<option value="ProMS_for_msp1.exe">ProMS_for_msp1.exe</option>
+		<option value="ProMS_for_msp2.exe">ProMS_for_msp2.exe</option>
+		<option value="ProMS_old2.exe" selected="true">ProMS_old2.exe</option>
+		<option value="ProMS_old5.exe">ProMS_old5.exe</option>
+		<option value="ProMS_old.exe">ProMS_old.exe</option>
+		<option value="ProMS.2018-07-11">2018-07-11</option>
+            </param>
+	    <param name="paramversion" type="select" label="Parameter File Version">
+		<option value="ParametersForProMS.txt" selected="true">ParametersForProMS.txt</option>
+		<option value="ParametersForProMS_orig.txt">ParametersForProMS_orig.txt</option>
+		<option value="ParametersForProMS_used1.txt">ParametersForProMS_used1.txt</option>
+		<option value="ParametersForProMS_used_msp.txt">ParametersForProMS_used_msp.txt</option>
+	    </param>
+	</section>
+    </inputs>
+    <outputs>
+        <data name="output" format="proms.txt" label="${input.name.rsplit('.',1)[0]}.proms.txt" />
+    </outputs>
+</tool>

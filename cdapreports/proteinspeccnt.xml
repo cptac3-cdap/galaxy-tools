@@ -1,0 +1,21 @@
+<tool id="cdapreports_speccnt" name="Gene/Protein Spectral Count Quantitation" version="1.0">
+    <description>
+       Gene / Protein spectral count quantiation report.
+    </description>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Fatal error. Non-zero exit code." />
+    </stdio>
+    <command>
+<![CDATA[
+cp -f ${input} data.psm &&
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_spectral_count ${bygene} -d data.psm -o data.tsv
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="psmdb" label="PSM Data"/>
+	<param name="bygene" type="boolean" truevalue="--bygene" falsevalue="" checked="False" label="Gene, not Protein, Summary"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="tabular" label="${input.name.split('.',1)[0]}.spectral_counts.tsv" from_work_dir="data.tsv" />
+    </outputs>
+</tool>

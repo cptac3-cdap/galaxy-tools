@@ -1,0 +1,41 @@
+<tool id="msgfplus3" name="MS-GF+ to TSV" version="1.0">
+    <description>
+        Identifies peptides in tandem mass spectra using the MS-GF+ search engine.
+    </description>
+    <requirements>
+        <environment_variable name="LC_ALL" action="set_to">C</environment_variable>        
+    </requirements>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Job Failed" />
+        <regex match="java.*Exception" level="fatal" description="Java Exception"/> 
+        <regex match="Could not create the Java virtual machine" level="fatal" description="JVM Error"/>
+    </stdio>
+    <command>
+<![CDATA[
+        #set $input_name = "spectrum.mzid"
+        #set $output_name = "spectrum.tsv"
+        rm -f '${input_name}' &&
+        ln -s '$i' '${input_name}' &&
+
+        msgfjar=${__tool_directory__}/../lib/msgfplus/MSGFPlus.jar &&
+        ( [ -f "\$msgfjar" ] || (echo MSGFPlus.jar not found && exit 1)) &&
+
+        memory="$advanced.memory" &&
+        java -cp \$msgfjar -Xms\$memory -Xmx\$memory
+	     edu.ucsd.msjava.ui.MzIDToTsv
+	     -i '$input_name' -showDecoy 1
+        &&
+	( [ -s '$output_name' ] || exit 1 ) &&
+        mv -f '$output_name' '$output'
+]]>
+    </command>
+    <inputs>
+        <param argument="-i" type="data" format="mzid" label="Input MSGF+ mzID File(s)"/>
+        <section name="advanced" title="Advanced Options">
+           <param name="memory" label="Max. memory for the JVM" type="text" value="1024M" />
+        </section>
+    </inputs>
+    <outputs>
+        <data name="output" format="tabular" label="${i.name.rsplit('.',1)[0]+'.tsv'}" from_work_dir="output" />
+    </outputs>
+</tool>

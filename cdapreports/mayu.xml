@@ -1,0 +1,27 @@
+<tool id="cdapreports_mayu" name="Estimate Gene / Protein FDR" version="1.0">
+    <description>
+       Estimate the gene / protein FDR based on decoy annotations.
+    </description>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Fatal error. Non-zero exit code." />
+    </stdio>
+    <command>
+<![CDATA[
+ln -s ${input} data.psm &&
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/mayu ${bygene} 
+#if $accessions
+ --accessions ${accessions}
+#end if
+--summary ${total} data.psm | sed 's/[	 ][	 ]*/	/g' > data.tsv
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="psmdb" label="PSM Data"/>
+	<param name="bygene" type="boolean" truevalue="--bygene" falsevalue="" checked="False" label="Estimate Gene, not Protein, FDR"/>
+        <param name="accessions" type="data" format="txt" optional="True" label="Selected Accessions (Optional, Default: All Accessions)"/>
+	<param name="total" type="integer" value="" label="Total Genes / Proteins"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="tabular" label="${input.name.split('.',1)[0]}.mayu.tsv" from_work_dir="data.tsv" />
+    </outputs>
+</tool>

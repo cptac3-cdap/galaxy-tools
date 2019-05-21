@@ -1,0 +1,42 @@
+<tool id="msconvert_wiff_pulsar" name="MSConvert WIFF (Pulsar - Windows)" version="1.0">
+    <description>
+        Spectral file conversion from wiff.zip to mzML,mzXML,mgf using msconvert (pulsar - Windows)
+    </description>
+    <command>
+<![CDATA[
+  msconvertab.bat "$input" "$input2" "$output" "${input.name}" "${outfmt}" "${centroid}" "${zlib}" "$(advanced.version}"
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="wiff" label="WIFF Datafile(s)"/>
+        <param name="input2" type="data" format="wiff.scan" label="WIFF.SCAN Datafile(s)"/>
+        <param name="outfmt" type="select" label="Output Format">
+            <option value="mzML">mzML</option>
+            <option value="mzML.gz">mzML.gz</option>
+            <option value="mzXML">mzXML</option>
+            <option value="mgf">mgf</option>
+        </param>
+	<param type="boolean" name="centroid" truevalue="centroid" falsevalue="nocentroid" label="Centroid Peaks?" checked="True"/>
+	<param type="boolean" name="zlib" truevalue="zlib" falsevalue="nozlib" label="Compress Peak Data?" checked="True"/>
+        <section name="advanced" title="Advanced Options">
+            <param name="version" type="select" label="ProteoWizard Version">
+                <option value="ProteoWizard" selected="true">3.0.9490</option>
+                <option value="pwiz-vc141-release-3_0_18320_db8142ed4">3.0.18320</option>
+            </param>
+        </section>
+    </inputs>
+    <outputs>
+        <data name="output" format="mzml" label="${input.name.rsplit('.',2)[0]}.${outfmt}" >
+            <change_format>
+                <when input="outfmt" value="mzML.gz" format="mzml.gz" />
+            </change_format>
+            <change_format>
+                <when input="outfmt" value="mzXML" format="mzxml" />
+            </change_format>
+            <change_format>
+                <when input="outfmt" value="mgf" format="mgf" />
+            </change_format>
+	</data>
+	
+    </outputs>
+</tool>
