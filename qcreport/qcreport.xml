@@ -11,6 +11,8 @@
     cp -f "${quantinput}" "${quantinput.name}" &&
     rm -f "${mayuinput.name}" && 
     cp -f "${mayuinput}" "${mayuinput.name}" &&
+    rm -f "${expdesinput.name}" && 
+    cp -f "${expdesinput}" "${expdesinput.name}" &&
     rm -f "${htmlreport.name}" && 
     ${__tool_directory__}/generate_all.sh ${dochecks} "${qcmetricsinput.name}" &&
     test -s "${htmlreport.name}" && 
@@ -24,6 +26,7 @@
         <param name="peptideinput" type="data" format="tabular" label="Peptide Summary Report"/>
         <param name="quantinput" type="data" format="tabular" label="Quantitation Report"/>
         <param name="mayuinput" type="data" format="tabular" label="Protein FDR"/>
+        <param name="expdesinput" type="data" format="csv" label="Sample Mapping File"/> 
         <param name="dochecks" type="boolean" truevalue="--dochecks" falsevalue="" checked="True" label="Do Checks?"/>
     </inputs>
     <outputs> 

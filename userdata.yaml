@@ -1,0 +1,6 @@
+use_ssl: True
+master_prestart_commands:
+  - wget -O - -q http://grg.tn/galaxy-prestart | /bin/sh
+admin_users:
+  - nje5@georgetown.edu
+post_start_script_url: http://grg.tn/galaxy-install

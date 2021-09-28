@@ -6,7 +6,10 @@
           <option value="portalurl">CPTAC Public Portal (HTTPS)</option>
           <option value="dcc">CPTAC DCC (Aspera)</option>
           <option value="dcctr">CPTAC DCC Direct Login (Aspera)</option>
+          <option value="pdc">Proteomic Data Commons</option>
+          <option value="pdcdev">Proteomic Data Commons (DEV)</option>
           <option value="s3">AWS S3 Bucket</option>
+          <option value="rclone">Cloud Storage (rclone)</option>
           <option value="url">Public URL</option>
           <option value="local">Galaxy Filesystem</option>
         </param>
@@ -21,6 +24,6 @@
         <param name="sizehash" type="text" label="Size (bytes)"/>
     </inputs>
     <outputs> 
-        <data format="raw" name="output" label="${input.rsplit('/',1)[1]}"/>
+        <data format="raw" name="output" label="${input.rsplit('/',1)[1].split('?')[0]}"/>
     </outputs>
 </tool>

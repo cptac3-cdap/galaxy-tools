@@ -1,0 +1,13 @@
+<tool id="extract_windows" name="Extract SWATH windows from ProteoWizard mzML.gz file." version="1.0">
+    <command>
+<![CDATA[
+gunzip -c "${input}" | tr '="' '  ' | awk 'BEGIN {S=0; print "LOW\tHIGH"} $7 == "isolation" && $9 =="target" {TARGET=$12; S=S+1} $7 == "isolation" && $9 =="lower" {LOWER=$12; S=S+1} $7 == "isolation" && $9 =="upper" {UPPER=$12; S=S+1} S == 3 {print TARGET-LOWER,TARGET+UPPER; S=0}' | sort -n | uniq | tr ' ' '	' > "${output}"
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="mzml.gz" label="ProteoWizard mzML.gz SWATH File"/>
+    </inputs>
+    <outputs> 
+        <data name="output" format="swath.tsv" label="${input.name.rsplit('.',2)[0]}.swath.tsv"/>
+    </outputs>
+</tool>

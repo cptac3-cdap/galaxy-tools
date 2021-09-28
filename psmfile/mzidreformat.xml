@@ -18,9 +18,9 @@
 	#else if $seqdb == 'xenograft'
 	SEQDB="RefSeq:Human,UniProt:Human,RefSeq:Mouse,UniProt:Mouse" &&
 	#end if
-        ${__tool_directory__}/../lib/cptacdcc/psmextract
+        ${__tool_directory__}/../lib/cptac3-cdap/cptac-mzid/cptacmzid/psmextract.sh
 	     --seqdb "\$SEQDB" --seqdir . --format ${parser} ${input.name}
-        | ${__tool_directory__}/../lib/cptacdcc/textpsm2mzid 2>&1 | fgrep -v HexN | gzip -9 -c > ${output}
+        | ${__tool_directory__}/../lib/cptac3-cdap/cptac-mzid/cptacmzid/textpsm2mzid 2>&1 | fgrep -v HexN | gzip -9 -c > ${output}
 ]]>
     </command>
     <inputs>

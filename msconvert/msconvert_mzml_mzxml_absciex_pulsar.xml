@@ -4,7 +4,7 @@
     </description>
     <command>
 <![CDATA[
-  msconvertab.bat "$input" "$input2" "$output" "${input.name}" "${outfmt}" "${centroid}" "${zlib}" "$(advanced.version}"
+  msconvertab.bat "$input" "$input2" "$output" "${input.name}" "${outfmt}" "${centroid}" "${zlib}" "${advanced.version}"
 ]]>
     </command>
     <inputs>

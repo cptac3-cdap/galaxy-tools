@@ -1,4 +1,4 @@
-<tool id="cdapreports_genefilt" name="Filter genes" version="1.0">
+<tool id="cdapreports_genefilt1" name="Filter genes" version="1.0">
     <description>
        Filter genes by membership in text file (typically genes dumped by parsimony code). First word per line only, no header row. 
     </description>
@@ -9,7 +9,7 @@
 <![CDATA[
 cp -f ${input} data.psm &&
 echo "Gene" > genes.csv &&
-awk '{print \$1}' ${genes} >> genes.csv &&
+awk '{print \$1}' ${genes} | fgrep -v "Gene" >> genes.csv &&
 ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/progrpfilt1 -d data.psm -t Gene -g genes.csv
 ]]>
     </command>

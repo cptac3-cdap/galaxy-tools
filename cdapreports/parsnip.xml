@@ -8,7 +8,13 @@
     <command>
 <![CDATA[
 cp -f ${input} data.psm &&
-${__tool_directory__}/../lib/CPTAC-CDAP-Reports/parsnip1 -d data.psm -U ${unique} -T ${specfdr} -C ${speccnt} 
+#if $specfdrselect
+  SPECFDR=`fgrep SELECTED ${specfdrselect} | awk '{print \$1}'` &&
+#else
+  SPECFDR=${specfdr} &&
+#end if
+echo "Spec. FDR: \$SPECFDR" &&
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/parsnip1 -d data.psm -U ${unique} -T \$SPECFDR -C ${speccnt} 
 --tieresolution ${tieresolution} --pepweights ${pepweights} ${bygene}
 #if $pracc
   --pracc ${pracc}
@@ -40,7 +46,8 @@ ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/parsnip1 -d data.psm -U ${unique
 	  <option value="Filter">Filter</option>
 	  <option value="Annotate">Annotate</option>
 	</param>
-        <param name="pracc" type="text" value="" label="Protein/Gene Accession Heuristic"/>
+    <param name="pracc" type="text" value="" label="Protein/Gene Accession Heuristic"/>
+    <param name="specfdrselect" type="data" format="tabular" optional="true" label="Spec. FDR Selection Result"/>
     </inputs>
     <outputs>
         <data name="output" format="psmdb" label="${input.name.rsplit('.',1)[0]}.pars.psm" from_work_dir="data.pars.psm" >

@@ -28,11 +28,16 @@
 	echo "NumMods=${advanced.num_ptms}" >> Mods.txt &&
         #set $common_mods = str($common_fixed_modifications) + "," + str($common_variable_modifications)
         #for $mod in $common_mods.split(",")
+         #if $mod != "None"
           echo '$mod.replace("_", ",")' >> Mods.txt &&
+         #end if
         #end for
 
         #for $mod in $custom_mods
-          echo '${mod.formula_or_mass},${mod.aa_specificity},${mod.fix_or_opt},${mod.position_specificity},${mod.mod_name}' >> Mods.txt &&
+         #set $aas = str($mod.aa_specificity)
+         #for $aa in $aas.split(",")
+          echo '${mod.formula_or_mass},${aa},${mod.fix_or_opt},${mod.position_specificity},${mod.mod_name}' >> Mods.txt &&
+         #end for
         #end for
 	
         msgfjar=${__tool_directory__}/../lib/msgfplus/MSGFPlus-v20170127.jar &&

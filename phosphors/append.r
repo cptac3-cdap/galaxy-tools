@@ -36,6 +36,7 @@
 
  top=xmlRoot(phospho.xml.output.data)
 
+ # print(phospho.xml.output.data)
  xml_data <- xmlToList(phospho.xml.output.data)
  #node.value=as.list(xml_data[["PhosphoRS_Results"]][["Spectra"]][["Spectra"]])
  
@@ -52,11 +53,11 @@
 	num.spectrum=length(xml_data[[2]])
 	psm.data.extra.column=matrix("", dim(psm.data)[1], 3)
 	psm.data.extra.column[,2] = 0
-	for(s in 1:num.spectrum){
+	for(s in sequence(num.spectrum)){
 	    num.specpeptides = xmlSize(top[[2]][[s]][["Peptides"]])
-	    # specid = xmlToList(top[[2]][[s]])$.attrs[[1]]
+	    specid = xmlToList(top[[2]][[s]])$.attrs[[1]]
 	    # print(c(s,specid,num.specpeptides))
-	    for (pi in 1:num.specpeptides){
+	    for (pi in sequence(num.specpeptides)){
 		 nodes2=top[[2]][[s]][["Peptides"]][[pi]]
 		 PhosphoRSPeptide=""
 		 id.name=xmlToList(nodes2)$.attrs[[1]]
@@ -69,6 +70,7 @@
 		 prev.pos=1
 		 # phospho.val=0
 		 FullyLocalized=0
+		 FullyLocalizedSites = c()
 		 if(length(matched.psm.peptide)==1){
 			for(site in 1:length(xmlToList(top[[2]][[s]][["Peptides"]][["Peptide"]][["SitePrediction"]]))){
 				seq.pos=as.numeric(xmlToList(top[[2]][[s]][["Peptides"]][["Peptide"]][["SitePrediction"]])[[site]][[1]])
@@ -78,19 +80,39 @@
 				# phospho.val=phospho.val+site.prob
 				if(site.prob>=0.99){
 					FullyLocalized=FullyLocalized+1
+					FullyLocalizedSites=c(FullyLocalizedSites,seq.pos)
 				}
 			}
 			if(prev.pos<=nchar(peptide.sequence)){
 				PhosphoRSPeptide=paste(PhosphoRSPeptide, substr(peptide.sequence, prev.pos, nchar(peptide.sequence)), sep="")
 			}
+			FullyLocalizedSites=sort(unique(FullyLocalizedSites))
+
 			nPhospho=lengths(regmatches(matched.psm.peptide[[1]], gregexpr("\\+79.966", matched.psm.peptide[[1]])))
+			modpos=cumsum(sapply(regmatches(matched.psm.peptide[[1]],
+                                                        gregexpr("[+-]?[0-9]+(\\.[0-9]*)?", 
+                                                                  matched.psm.peptide[[1]]), 
+                                                         invert=TRUE),
+                                              nchar))
+			moddel=regmatches(matched.psm.peptide[[1]],
+                                          gregexpr("[+-]?[0-9]+(\\.[0-9]*)?",
+                                                   matched.psm.peptide[[1]]))
+			moddel=sapply(moddel,as.numeric)
+			phospos = c()
+			for (ind in 1:length(moddel)) {
+			    if (abs(moddel[ind]-79.966)<0.01) {
+				phospos = c(phospos,modpos[ind])
+			    }
+                        }
+			phospos=sort(unique(phospos))
 			nSTY=lengths(regmatches(peptide.sequence, gregexpr("[STY]", peptide.sequence)))
-			if (nPhospho == FullyLocalized) {
+			if (nPhospho == FullyLocalized && phospos == FullyLocalizedSites) {
 			    FullyLocalized="Y"
 			} else {
 			    FullyLocalized="N"
 			}
 			if (nSTY == nPhospho) {
+			    FullyLocalized="Y"
 			    PhosphoRSPeptide <- gsub('[100.00]','[100]',PhosphoRSPeptide,fixed=TRUE)
 			}
 			psm.data.extra.column[which(psm.data$ScanNum==scan.num & psm.data$PeptideSequence==matched.psm.peptide),]=c(PhosphoRSPeptide, nPhospho, FullyLocalized)

@@ -3,6 +3,7 @@
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cptacdcc/cptacraw.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/ReAdw4Mascot2/ReAdw4Mascot2_pulsar.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msconvert/msconvert_mzml_mzxml_pulsar.xml" /> 
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msconvert/msconvert_mzml_mzxml_docker_wine.xml" /> 
     <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msconvert/msconvert_mzml_mzxml_absciex_pulsar.xml" /> -->
     <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/absciex/absciex_pulsar.xml" /> -->
     <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msgfplus/msgfplus_indexed.xml" />  -->
@@ -15,6 +16,7 @@
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msgfplus/fixtsvoutput.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/ProMS/ProMS_pulsar.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/psmfile/psmfile_filter.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/psmfile/psmfile_filter1.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/phosphors/phosphors.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/psmfile/mzidreformat.xml" />
     <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cptacdcc/cptacpublic.xml" /> -->
@@ -37,6 +39,7 @@
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/parsnipmayug.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/mayu.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/mayug.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/parsnipfdr.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/genefilt.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/genefilt1.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/proteinsummary.xml" />

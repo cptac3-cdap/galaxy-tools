@@ -25,7 +25,8 @@ if [ -d "$DIR" ]; then
   rm -f "$DIR"/*.{sh,py,tgz}
 fi
 
-( cd lib/cptacdcc; ./cptacdcc_update.sh )
+( cd lib/cptac3-cdap/cptac-dcc/cptacdcc; ./update.sh )
+( cd lib/cptac3-cdap/cptac-mzid/cptacmzid; ./update.sh )
 ( cd lib/CPTAC-CDAP-Reports; ./update.sh )
 
 mkdir -p "$DIR"
@@ -39,6 +40,7 @@ chmod +x "$DIR"/*.sh
 if [ "$LINK" = "1" ]; then
   (cd $DIR/..; rm -f $VERSION1; ln -s $VERSION $VERSION1)
 fi
+rclone copy $DIR cptac-s3:cptac-cdap.georgetown.edu/$VERSION
 
 echo "Folder: $DIR"
 ls -l "$DIR"

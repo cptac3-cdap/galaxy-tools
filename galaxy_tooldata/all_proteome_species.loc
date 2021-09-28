@@ -1,1 +1,7 @@
-/home/nedwards/projects/CPTAC-Galaxy/GalaxyCode/galaxy/tool-data/all_proteome_species.loc
+human	Human	9606	H_sapiens	human
+mouse	Mouse	10090	M_musculus	mouse
+rat	Rat	10116	R_norvegicus	rat
+other	Other			
+contaminant	Contaminant			
+mixed	Mixed			
+unknown	Unknown			

@@ -3,16 +3,18 @@
 # LOCALIP=`wget -q -O - http://169.254.169.254/latest/meta-data/local-ipv4`
 # sed -i "s/XXXXX_REPLACEWITHLOCALIP_XXXXX/$LOCALIP/" /mnt/galaxy/galaxy-app/config/job_conf.xml
 
-mkdir /mnt/galaxy/tmp/scratch
-chmod a+rwxt /mnt/galaxy/tmp/scratch
-ln -s /mnt/galaxy/tmp/scratch /home/ubuntu/galaxy-scratch 
-ln -s /mnt/galaxy/tmp/job_working_directory/000 /home/ubuntu/galaxy-jobs
+if [ ! -d /mnt/galaxy/tmp/scratch ]; then
+  mkdir /mnt/galaxy/tmp/scratch
+  chmod a+rwxt /mnt/galaxy/tmp/scratch
+  ln -s /mnt/galaxy/tmp/scratch /home/ubuntu/galaxy-scratch 
+  ln -s /mnt/galaxy/tmp/job_working_directory/000 /home/ubuntu/galaxy-jobs
+fi
 
 # Install AWS CLI and NetCDF                                                                                   
 apt-get -y update
 apt-get -y install awscli
 apt-get -y install libnetcdf-dev
-apt-get -y install texlive texlive-latex-extra
+# apt-get -y install texlive texlive-latex-extra
 
 # usr.local.lib.R.site-library.tgz
 mkdir -p /usr/local/lib/R/site-library
@@ -24,5 +26,5 @@ wget --no-check-certificate -q -O - "$DOWNLOADURL/usr.local.lib.R.site-library.t
 # EOF
 
 # cp /mnt/galaxy/tools/extratools/lib/pandoc/bin/pandoc* /usr/local/bin
-wget --no-check-certificate -q -O - "$DOWNLOADURL/usr.local.bin.pandoc.tgz" | tar xvzf - -C /usr/local/bin                             
-
+# wget --no-check-certificate -q -O - "$DOWNLOADURL/usr.local.bin.pandoc.tgz" | tar xvzf - -C /usr/local/bin                             
+docker pull chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:latest

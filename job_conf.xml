@@ -21,22 +21,31 @@
             <param id="function">pulsar_destinations</param>
        </destination>
        <destination id="slurm_cluster_mem1" runner="slurm">
-            <param id="nativeSpecification">--mem=1024</param>
+            <param id="nativeSpecification">--mem=1000</param>
        </destination>
        <destination id="slurm_cluster_mem3" runner="slurm">
-            <param id="nativeSpecification">--mem=3072</param>
+            <param id="nativeSpecification">--mem=3000</param>
        </destination>
        <destination id="slurm_cluster_mem4" runner="slurm">
-            <param id="nativeSpecification">--mem=4096</param>
+            <param id="nativeSpecification">--mem=4000</param>
        </destination>
        <destination id="slurm_cluster_mem6" runner="slurm">
-            <param id="nativeSpecification">--mem=6144</param>
+            <param id="nativeSpecification">--mem=6000</param>
        </destination>
        <destination id="slurm_cluster_mem8" runner="slurm">
-            <param id="nativeSpecification">--mem=8192</param>
+            <param id="nativeSpecification">--mem=8000</param>
        </destination>
        <destination id="slurm_cluster_mem12" runner="slurm">
-            <param id="nativeSpecification">--mem=12288</param>
+            <param id="nativeSpecification">--mem=12000</param>
+       </destination>
+       <destination id="slurm_master_only_mem12" runner="slurm">
+            <param id="nativeSpecification">--mem=12000 -w master</param>
+       </destination>
+       <destination id="slurm_master_only_alone" runner="slurm">
+            <param id="nativeSpecification">--nodes=1 --ntasks=3 -w master --exclusive</param>
+       </destination>
+       <destination id="slurm_master_only" runner="slurm">
+            <param id="nativeSpecification">-w master</param>
        </destination>
        <!-- <destination id="pulsar_mq" tags="win_pulsar" runner="pulsar_mq" action="replace" match="id">
           <param id="default_file_action">remote_transfer</param>
@@ -54,9 +63,28 @@
 	<tool id="data_manager_pulsar_nodes_remove" destination="local_runner" action="replace" match="id"/>
 	<tool id="data_manager_pulsar_nodes_shutdown" destination="local_runner" action="replace" match="id"/>
 	<tool id="data_manager_pulsar_nodes_monitor" destination="local_runner" action="replace" match="id"/>
-        <tool id="cdapreports_pepiontmt10" destination="slurm_cluster_mem12" action="replace" match="id"/>
-        <tool id="cdapreports_tmt10" destination="slurm_cluster_mem12" action="replace" match="id"/>
-        <tool id="msgfplus4" destination="slurm_cluster_mem6" action="replace" match="id"/>
+        <tool id="cdapreports_pepiontmt10" destination="slurm_master_only_alone" action="replace" match="id"/>
+        <tool id="cdapreports_tmt10" destination="slurm_master_only_alone" action="replace" match="id"/>
+        <tool id="msgfplus4" destination="slurm_cluster_mem4" action="replace" match="id"/>
         <tool id="msgfplus6" destination="slurm_cluster_mem3" action="replace" match="id"/>
+        <tool id="cdapreports_assayannotate" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_genefilt" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_genefilt" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_genemap" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_labeldecoy" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_loadall" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_mayug" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_mayu" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_protorth1" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_parsnipfdr" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_parsnipmayug" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_parsnip" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_peptides" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_peptrypterm" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_proremove" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_precarea" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_speccnt" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_summary" destination="slurm_master_only" action="replace" match="id"/>
+        <tool id="cdapreports_sample1" destination="slurm_master_only" action="replace" match="id"/>
     </tools>
 </job_conf>

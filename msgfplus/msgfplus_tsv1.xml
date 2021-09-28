@@ -25,6 +25,10 @@
 	     edu.ucsd.msjava.ui.MzIDToTsv
 	     -i '$input_name' -showDecoy 1
         &&
+	python ${__tool_directory__}/fixdoublemassshift.py < '$output_name' > spectrum.tmp
+	&& 
+	mv -f spectrum.tmp '$output_name'
+	&& 
 	( [ -s '$output_name' ] || exit 1 ) &&
         mv -f '$output_name' '$output'
 ]]>

@@ -2,6 +2,10 @@
 
 import sys, os, os.path, csv, re, math
 from collections import defaultdict
+from operator import itemgetter
+
+sys.path.append(os.path.abspath(os.path.join(os.path.split(sys.argv[0])[0],"../lib/python")))
+from peptidescan.PeptideRemapper import PeptideRemapper, FirstWord
 
 infile = sys.argv[1].strip()
 proms = sys.argv[2].strip()
@@ -10,7 +14,11 @@ outfile = sys.argv[4].strip()
 threshold = float(sys.argv[5])/100.0
 opts = dict()
 for arg in sys.argv[6:]:
-    opts[arg] = True
+    if arg.startswith('seqdb:'):
+	opts['seqdb'] = arg[6:]
+    else:
+        opts[arg] = True
+# print(opts)
 
 promsdata = defaultdict(lambda: ('0','0.00000000','0'))
 if proms not in ("None","",None):
@@ -111,6 +119,23 @@ if reporterfile not in ("None","",None):
         data[lmd['prefix']+"TotalAb"] = ("%.6g"%round_to_n(sum(abvals),6)).replace('e+','e+0')        
         reporterdata[targetscan]= data
 
+def barepepseq(pepseq):
+    modpep = re.split(r'([A-Z])',pepseq)
+    barepepseq = ""
+    for i in range(1,len(modpep),2):
+	barepepseq += modpep[i]
+    return barepepseq
+
+pepmap = None
+mappedpeptides = set()
+if opts.get('deglycopeptide') and opts.get('seqdb'):
+    for row in csv.DictReader(open(infile),dialect='excel-tab'):
+	pepseq = row['Peptide']
+	m = re.search(r'N([+-]\d+(\.\d+)?)$',pepseq)
+	if m and abs(float(m.group(1)) - 0.984016) < 1e-2:
+	    mappedpeptides.add(barepepseq(pepseq))
+    pepmap = PeptideRemapper(list(mappedpeptides),opts.get('seqdb'),FirstWord(),preprocess=True)
+
 inrows = csv.DictReader(open(infile),dialect='excel-tab')
 
 simplefieldre = re.compile(r'^(\w+):(\d+(\.\d+)?(eV|\?)?)$')
@@ -143,6 +168,49 @@ def manipulate_rows(rows,qvalthr):
         qvalue = float(qvalue);
         if qvalue > qvalthr:
             continue
+
+	# Special rule for Ubiquitylome analysis, remove any peptide with
+	# K+114.043 at the end (no trypsin digest where GG tag is attached.
+	if opts.get('ubiquityl'):
+	    m = re.search(r'K\+(\d+(\.(\d+)?)?)$',pepseq)
+	    if m and abs(float(m.group(1)) - 114.04927) < 1e-2:
+	        continue
+
+	# Special rule for detatched glycan analysis. This is problematic
+	# since we may not have sufficient sequence context to absolutely
+	# determine whether there is a S or T two characters from site
+	# of deamidation in the protein, if the deamidation site is in
+	# the last or second last position of the peptide sequence. We
+	# can only clean this up properly once we have aligned the
+	# peptide sequence. Nevertheless, we remove any peptide with
+	# deamidation on N that does not have an S or T in the right spot.
+	if opts.get('deglycopeptide'):
+	    proteins = []
+	    if barepepseq(pepseq) in mappedpeptides:
+		for pracc,laa,raa in map(itemgetter(0,2,5),pepmap.proteins(barepepseq(pepseq))):
+		    proteins.append((pracc,laa,raa))
+            else:
+	        for pr in r['Protein'].split(';'):
+		    m = re.search(r'^(.*)[(]pre=([A-Z-]*),post=([A-Z-]*)[)]$',pr)
+	            assert m
+		    proteins.append((m.group(1),m.group(2),m.group(3)))
+
+	    keptproteins = []
+	    for pracc,laa,raa in proteins:
+		pepseq1 = pepseq + raa
+		modpep = re.split(r'([A-Z])',pepseq1)
+		bad = False
+		for i in range(1,len(modpep)-4,2):
+		    if modpep[i] == "N" and modpep[i+1] and abs(float(modpep[i+1]) - 0.984016) < 1e-2:
+			if modpep[i+4] not in "ST":
+			    bad = True
+		if not bad:
+		    keptproteins.append((pracc,laa,raa))
+	    
+	    if len(keptproteins) == 0:
+		continue
+
+            r['Proteins'] = ";".join(["%s(pre=%s,post=%s)"%(pracc,laa[-1],raa[0]) for pracc,laa,raa in keptproteins])
 
         if scan == lastscan:
             rank += 1

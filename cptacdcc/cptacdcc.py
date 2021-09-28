@@ -4,7 +4,8 @@ import sys, os, os.path
 import subprocess, hashlib, shutil, urllib
 
 base = os.path.split(os.path.split(os.path.abspath(sys.argv[0]))[0])[0]
-cptacdccbase = os.path.join(base,'lib','cptacdcc')
+cptacdccbase = os.path.join(base,'lib','cptac3-cdap','cptac-dcc','cptacdcc')
+# cptacdccbase = os.path.join(base,'lib','cptacdcc')
 
 input,output,md5hash,sha1hash,sizehash,user,tooldata = sys.argv[1:8]
 

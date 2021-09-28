@@ -2,14 +2,16 @@
     <command>
        <![CDATA[
 	     #for $f in $files
-		ln "${f.input}" "${f.input.name}" &&
+	        #if $f.input
+		    ln "${f.input}" "${f.input.name}" &&
+		#end if
 	     #end for
-	     ${__tool_directory__}/../lib/cptacdcc/cksum.sh -f output.cksum .
+	     ${__tool_directory__}/../lib/cptac3-cdap/cptac-dcc/cptacdcc/cksum.sh -f output.cksum .
        ]]>
     </command>
     <inputs>
       <repeat name="files" title="File">
-        <param name="input" type="data" label="Input File"/>
+        <param name="input" type="data" optional="true" label="Input File"/>
       </repeat>
     </inputs>
     <outputs> 

@@ -5,7 +5,7 @@
              ln "${psminput}" "${psminput.name}" && 
              ln "${mzidinput}" "${mzidinput.name}" && 
              ln "${metricsinput}" "${metricsinput.name}" && 
-	     ${__tool_directory__}/../lib/cptacdcc/cksum.sh -f output.cksum . &&
+	     ${__tool_directory__}/../lib/cptac3-cdap/cptac-dcc/cptacdcc/cksum.sh -f output.cksum . &&
 	     mv -f output.cksum "${output}"
        ]]>
     </command>

@@ -1,0 +1,57 @@
+<tool id="cdapreports_parsnipfdr" name="Spec. FDR est. for gene inference by parsimony with bounded gene FDR" version="1.0">
+    <description>
+       Estimate spec. FDR so that gene inference by global parsmiony will result in bounded gene FDR
+    </description>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Fatal error. Non-zero exit code." />
+    </stdio>
+    <command>
+<![CDATA[
+cp -f ${input} data.psm &&
+export TMPDIR=\$PWD &&
+NGENE=`awk -F, '{print $2}' ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinMapping/${genemap} | sort -u | wc -l` &&
+echo "Total genes: \$NGENE" &&
+echo "nprot \$NGENE" >> params.txt &&
+echo "targetprotfdr ${targetprotfdr}" >> params.txt &&
+echo "specfdrprecision ${specfdrprecision}" >> params.txt &&
+echo "unique ${unique}" >> params.txt &&
+echo "speccnt ${speccnt}" >> params.txt &&
+echo "tieresolution ${tieresolution}" >> params.txt &&
+echo "pepweights ${pepweights}" >> params.txt &&
+echo "initspecfdr ${initspecfdr}" >> params.txt &&
+#if $pracc
+  echo "pracc ${pracc}" >> params.txt &&
+#end if
+python ${__tool_directory__}/parsnipfdr.py data.psm params.txt
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="psmdb" label="PSM Data"/>
+        <param name="targetprotfdr" type="float" value="1.0" label="Target Gene FDR (%)"/>
+        <param name="initspecfdr" type="float" value="1.0" label="Spec. FDR intial value"/>
+        <param name="specfdrprecision" type="integer" value="3" label="Spec. FDR decimal places"/>
+        <param name="unique" type="integer" value="2" label="Unshared/Unique Peptides required per Inferred Gene"/>
+        <param name="speccnt" type="integer" value="2" label="Spectral Count Threshold for Peptides"/>
+        <param name="pepweights" type="select" label="Lost Peptide Penalty">
+	  <option value="Equal">Equal</option>
+	  <option value="Count">Count</option>
+	  <option value="FDR" >FDR</option>
+	</param>
+        <param name="tieresolution" type="select" label="Tied Rank 1 PSM Resolution">
+	  <option value="Discard">Discard</option>
+	  <option value="Consistent">Consistent</option>
+	  <option value="Keep">Keep</option>
+	  <option value="Group">Group</option>
+	</param>
+        <param name="genemap" type="select" label="Gene-Protein Mapping">
+          <option value="prhuman2gene.csv">Human</option>
+          <option value="prmouse2gene.csv">Mouse</option>
+          <option value="prrat2gene.csv">Rat</option>
+          <option value="prhumanmouse2gene.csv">Human+Mouse</option>
+        </param>
+        <param name="pracc" type="text" value="" label="Gene Name Heuristic"/>
+    </inputs>
+    <outputs>
+        <data name="mayu" format="tabular" label="${input.name.rsplit('.',1)[0]}.mayu.tsv" from_work_dir="data.mayu.tsv"/>
+    </outputs>
+</tool>

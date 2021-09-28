@@ -4,7 +4,8 @@ import sys, os, os.path, csv, subprocess
 
 inputfile = sys.argv[1]
 samplefile = sys.argv[2]
-loaderargs = sys.argv[3:-1]
+labeldb = sys.argv[3]
+loaderargs = sys.argv[4:-1]
 tooldatapath = sys.argv[-1]
 
 tooldir = os.path.split(os.path.abspath(sys.argv[0]))[0]
@@ -26,7 +27,7 @@ dfc = DatafileCollection(credentials=credentials)
 dfc.read(inputfile)
 
 if samplefile and samplefile != "None":
-    args = [ "python", mksamp, samplefile ] 
+    args = [ "python", mksamp, samplefile, labeldb] 
     proc = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False)
     files = "\n".join(f['filename'] for f in dfc) + "\n"
     stdout,stderr = proc.communicate(files)

@@ -122,6 +122,59 @@ cat >>/mnt/cm/cm/controllers/root.py <<EOF
         return json.dumps(dict_feed)
 EOF
 
+# Modify /mnt/cm/cm/services/apps/jobmanagers/slurminfo.py 
+# to report the requested node (so we can tell if the master only is requested). 
+
+sed -i 's/%T %S %R/%T %S %R %n/' /mnt/cm/cm/services/apps/jobmanagers/slurminfo.py 
+
+sed -i '/reason = /r /dev/stdin' /mnt/cm/cm/services/apps/jobmanagers/slurminfo.py <<EOF
+                try:
+                    reqnode = job.split()[3].lower()
+                except IndexError:
+                    reqnode = None
+EOF
+sed -i 's/time_job_entered_state, /time_job_entered_state, "req_node": reqnode, /' /mnt/cm/cm/services/apps/jobmanagers/slurminfo.py
+
+# Modify /mnt/cm/cm/services/autoscale.py
+# Don't count master only jobs as queued/running for the purpose of adding workers...
+
+sed -i '/Helper methods/r /dev/stdin' /mnt/cm/cm/services/autoscale.py <<EOF
+
+    def master_only_jobs(self):
+        q_jobs = self.get_queue_jobs()
+        return len(q_jobs.get('queued_for_master_only',[])) > 0
+
+    def anyhost_jobs(self):
+        q_jobs = self.get_queue_jobs()
+        return len(q_jobs.get('queued',[])) > 0
+
+EOF
+
+# sed -i '/num_instances_to_add, instance_type/r /dev/stdin' /mnt/cm/cm/services/autoscale.py <<EOF
+#        if self.master_only_jobs() and not self.anyhost_jobs() and not self.app.manager.master_exec_host:
+#             self.app.manager.toggle_master_as_exec_host()
+#         if self.anyhost_jobs() and self.app.manager.worker_instances > 0 and self.app.manager.master_exec_host:
+#             self.app.manager.toggle_master_as_exec_host()
+# EOF
+
+sed -i '/queued_jobs = \[\]/r /dev/stdin' /mnt/cm/cm/services/autoscale.py <<EOF
+        master_queued_jobs = []
+        master_running_jobs = []
+EOF
+
+sed -i '/queued_jobs.append/r /dev/stdin' /mnt/cm/cm/services/autoscale.py <<EOF
+                    if job.get('req_node') == 'master':
+                        elapsed = queued_jobs.pop(-1)
+                        master_queued_jobs.append(elapsed)
+EOF
+sed -i '/running_jobs.append/r /dev/stdin' /mnt/cm/cm/services/autoscale.py <<EOF
+                    if job.get('req_node') == 'master':
+                        elapsed = running_jobs.pop(-1)
+                        master_running_jobs.append(elapsed)
+EOF
+
+sed -i 's/queued_jobs,/queued_jobs, "queued_for_master_only": master_queued_jobs, "running_on_master_only": master_running_jobs,/' /mnt/cm/cm/services/autoscale.py
+
 #
 # Determine the URL for all downloaded resources...
 #

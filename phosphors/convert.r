@@ -107,7 +107,8 @@
 					peak.list.list.1=unlist(lapply(1:dim(peak.list.df)[1], function(n){paste0(peak.list.df[n, ], collapse=":")}))
 					peak.list.list.2=paste0(peak.list.list.1, collapse=",")
 				 
-					aa.pos.info=rep(0, nchar(peptide.sequence))
+					aa.pos.info=rep('0', nchar(peptide.sequence))
+                    nmods = 0
 					k=0
 					for(j in 1:length(peptide.sequence.values)){
 						s=peptide.sequence.values[j]
@@ -119,16 +120,17 @@
 							index=which(modification.mass.table[,2]==nucleotide & 
 							modification.mass.table[,3]==as.numeric(substr(mv,2,nchar(mv))))
 							aa.pos.info[k]=modification.mass.table[index, 1]#index[1]
+                            nmods = nmods+1
 						}
 					}
 					## very important, need to redefine the N terminal if mode definition changes
-					n.terminal=if(substr(matched.psm.peptide, 1, 4)=="+144"){4}else if(substr(matched.psm.peptide, 1, 3)=="+42"){6}else{0}
+					n.terminal=if(substr(matched.psm.peptide, 1, 4)=="+144"){4} else if(substr(matched.psm.peptide, 1, 3)=="+42"){6} else if(substr(matched.psm.peptide, 1, 4)=="+229"){8} else{0}
 					modification.info=paste(c(n.terminal, ".", paste(aa.pos.info, sep=""), ".0"), collapse="")
 					
 					# condition 1: remove empty phosphorylation
 					num.phospho.site=strcount(peptide.sequence, c("S", "T", "Y"), "")
 					if(num.phospho.site!=0){
-						if(sum(aa.pos.info)>0){
+						if(nmods>0){
 							#if(length(which(unique.id.name.list==id.name))==0){
 							if(putSpectrum==TRUE){
 								xml$addTag("Spectrum", attrs=c(ID=id.name, PrecursorCharge=precursorcharge, ActivationTypes=activationtypes), close=FALSE)
