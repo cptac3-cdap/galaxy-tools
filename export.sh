@@ -2,6 +2,7 @@
 # ( cd galaxy_tooldata; rsync -a --include '*/' --include '**/seq/*.fasta' --exclude '*' --prune-empty-dirs ~/projects/CPTAC-Galaxy/GalaxyCode/galaxy/tool-data/proteome/ proteome )
 VERSION=`cat VERSION`
 VERSION1=`echo "$VERSION" | sed 's/\.[^.]*$//'`
+VERSION2=`echo "$VERSION" | sed 's/^.*-//'`
 DIR=/data/www/html/software/downloads/Galaxy/$VERSION
 FORCE=0
 LINK=0
@@ -41,6 +42,7 @@ if [ "$LINK" = "1" ]; then
   (cd $DIR/..; rm -f $VERSION1; ln -s $VERSION $VERSION1)
 fi
 rclone copy $DIR cptac-s3:cptac-cdap.georgetown.edu/$VERSION
+gh release create "Galaxy-Tools-$VERSION2" -t "Galaxy-Tools-$VERSION2" $DIR/*.{sh,tgz,py}
 
 echo "Folder: $DIR"
 ls -l "$DIR"
