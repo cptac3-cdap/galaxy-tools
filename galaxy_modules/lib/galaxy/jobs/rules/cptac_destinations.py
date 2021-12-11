@@ -78,7 +78,7 @@ def pulsar_destinations(app, tool_id, job):
      finally:
           joblock.release()
 
-     params = dict(url="https://%s:8913/"%(newip,),
+     params = dict(url="http://%s:8913/"%(newip,),
                    private_token="CPTAC_WinPulsar")
 
      return JobDestination(runner="pulsar", params=params)

@@ -38,6 +38,7 @@ $SUDOGALAXY rsync -av galaxy_config/ $GALAXY_CONFIG
 
 sh lib/scripts/xmlinsert.sh tool_conf.xml $GALAXY_TOOLS/extratools/tool_conf.xml
 sh lib/scripts/xmlinsert.sh job_conf.xml $GALAXY_TOOLS/extratools/job_conf.xml
+$SUDO cp -f /tmp/job_conf.xml.new /mnt/cm/cm/conftemplates/job_conf.xml
 sh lib/scripts/insert.sh datatypes_conf.xml "/registration" $GALAXY_TOOLS/extratools/datatypes_conf.xml
 sh lib/scripts/insert.sh data_manager_conf.xml "/data_managers" $GALAXY_TOOLS/extratools/data_manager_conf.xml
 sh lib/scripts/insert.sh tool_data_table_conf.xml "/tables" $GALAXY_TOOLS/extratools/tool_data_table_conf.xml
@@ -47,6 +48,7 @@ for t in all_proteome_species all_proteome msgfplus_index compress_seq cptacdcc_
 done
 
 $SUDOGALAXY sh lib/scripts/setconfig.sh "$GALAXY_CONFIG/galaxy.ini" data_manager_config_file "$GALAXY_CONFIG/data_manager_conf.xml"
+$SUDOGALAXY sh lib/scripts/setconfig.sh "$GALAXY_CONFIG/galaxy.ini" datatypes_config_file "$GALAXY_CONFIG/datatypes_conf.xml"
 $SUDOGALAXY sh lib/scripts/setconfig.sh "$GALAXY_CONFIG/galaxy.ini" use_interactive False
 $SUDOGALAXY sh lib/scripts/setconfigifmissing.sh "$GALAXY_CONFIG/galaxy.ini" id_secret `python -c 'import time; print time.time()' | md5sum | cut -f 1 -d ' '`
 $SUDOGALAXY sh lib/scripts/setconfig.sh "$GALAXY_CONFIG/galaxy.ini" require_login True
@@ -68,4 +70,4 @@ else
   KY=""
 fi
 ( cd $GALAXY_APPROOT; $SUDOGALAXY $GALAXY_APPROOT/.venv/bin/python $GALAXY_TOOLS/extratools/lib/scripts/adduser.py "$AD" "$PW" $KY) 
-( cd $GALAXY_APPROOT; $SUDOGALAXY ./rolling_restart.sh  ) 
+( cd $GALAXY_APPROOT; $SUDOGALAXY ./rolling_restart.sh  ) &

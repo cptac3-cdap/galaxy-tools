@@ -5,7 +5,7 @@
     <command detect_errors="exit_code">
 <![CDATA[
 cp -f ${labels[0].input} "${labels[0].input.name.rsplit('/',1)[-1]}" &&
-python ${__tool_directory__}/loadall.py ${input} "${sample}" "${labels[0].input.name.rsplit('/',1)[-1]}" -t ${psmthresh} -l ${peplen} -r ${maxrank} ${alignments_selector.alignments} 
+python3 ${__tool_directory__}/loadall.py ${input} "${sample}" "${labels[0].input.name.rsplit('/',1)[-1]}" -t ${psmthresh} -l ${peplen} -r ${maxrank} ${alignments_selector.alignments} 
 #if $alignments_selector.alignments == "--alignments Load"
 --pracc ${alignments_selector.pracc} 
 #end if

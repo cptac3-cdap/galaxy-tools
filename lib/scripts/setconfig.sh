@@ -9,5 +9,7 @@ VALUE1=`echo "$VALUE" | sed "s/\//\\\\\\\\\//g"`
 if grep -q -s "^#*$FIELD *=" "$FILE"; then
   sed -i "s/^#*$FIELD *=.*\$/$FIELD = $VALUE1/" "$FILE"
 else
-  echo "$FIELD = $VALUE" >> "$FILE"
+  sed -i '/^admin_users/r /dev/stdin' $FILE <<EOF
+$FIELD = $VALUE
+EOF
 fi

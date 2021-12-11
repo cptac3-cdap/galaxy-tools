@@ -55,6 +55,8 @@ def recursive_insert(r0,r1):
         if 'match' in ele1.attrib:
             del ele1.attrib['match']
 	if action == 'merge':
+	    for k in ele1.attrib:
+		ele0.attrib[k] = ele1.attrib[k]
 	    recursive_insert(ele0,ele1)
 	elif action == 'replace':
 	    replace_element(r0,ele0,ele1)

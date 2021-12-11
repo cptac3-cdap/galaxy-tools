@@ -15,7 +15,7 @@
         <plugin id="local" action="replace" match="id"/>
       </handler>
     </handlers>
-    <destinations>
+    <destinations default="slurm_cluster">
        <destination id="pulsar_dynamic" tags="win_pulsar,windows" runner="dynamic" action="replace" match="id">
             <param id="type">python</param>
             <param id="function">pulsar_destinations</param>

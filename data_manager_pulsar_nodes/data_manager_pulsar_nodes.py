@@ -78,7 +78,7 @@ def createstack_(image,instance,az,vpc,subnet,keyname,clname,amqpurl,dlurl,templ
     if clname:
         stackname = "-".join(["WinPulsar",clname,str(counter),timestamp])
     else:
-        stackname = "-".join(["WinPulsar",clname,str(counter),timestamp])
+        stackname = "-".join(["WinPulsar",str(counter),timestamp])
     counter += 1
     cmd = [ "aws", "cloudformation", "create-stack", "--stack-name",
             stackname, "--disable-rollback", "--template-body",
@@ -105,7 +105,7 @@ def geturl():
 	for l in open(os.path.expanduser('~/.urls')):
 	    sl = l.replace('=',' ').split()
 	    if sl[1] == 'DOWNLOADURL':
-		return sl[2].strip() + '/WinPulsar'
+		return sl[2].strip().strip('"') + '/WinPulsar'
     except IOError:
 	pass
     return None
@@ -117,8 +117,11 @@ def getclname():
     try:
 	for l in open(os.path.expanduser('~/.awsmd')):
 	    sl = l.split(None,1)
-	    if sl[0] == 'cluster_name:':
-		return sl[1].strip()
+	    if sl[0] == 'user-data:':
+                for l1 in sl[1].split('\\n'):
+                    sl1 = l1.split(None,1)
+                    if len(sl1) > 1 and sl1[0] == 'cluster_name:':
+                        return sl1[1].strip()
     except IOError:
 	pass
     return None

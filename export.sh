@@ -41,8 +41,11 @@ chmod +x "$DIR"/*.sh
 if [ "$LINK" = "1" ]; then
   (cd $DIR/..; rm -f $VERSION1; ln -s $VERSION $VERSION1)
 fi
-rclone copy $DIR cptac-s3:cptac-cdap.georgetown.edu/$VERSION
-gh release create "Galaxy-Tools-$VERSION2" -t "Galaxy-Tools-$VERSION2" $DIR/*.{sh,tgz,py}
+rclone copy -v $DIR cptac-s3:cptac-cdap.georgetown.edu/$VERSION
+gh release delete "Galaxy-Tools-$VERSION2" -y
+git push --delete origin "refs/tags/Galaxy-Tools-$VERSION2"
+git tag --delete "Galaxy-Tools-$VERSION2"
+gh release create "Galaxy-Tools-$VERSION2" -t "Galaxy-Tools-$VERSION2" --notes "" $DIR/*.{sh,tgz,py}
 
 echo "Folder: $DIR"
 ls -l "$DIR"
