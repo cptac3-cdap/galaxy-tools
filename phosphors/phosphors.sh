@@ -12,6 +12,7 @@ CONVERTR="$BASE/convert.r"
 APPENDR="$BASE/append.r"
 PHOSPHORSJAR="$BASE/phosphoRS.jar"
 MASSTABLE="$BASE/phosphors.masstable.txt"
+MZML=$BASE/../lib/cptac3-cdap/cptac-mzid/cptacmzid/mzml
 
 # For Edwards lab installation of R and java
 export PATH="/tools/bin:$PATH"
@@ -30,7 +31,13 @@ OUTPUT="$8"
 
 MGFFILE1="$BASENAME.mgf"
 rm -f "$BASENAME".{mgf,xml,phospho.xml,phospho.complete.txt}
-ln -s "$MGFFILE" "$MGFFILE1"
+
+
+case "$MGFFILE" in 
+  *.mgf) ln -s "$MGFFILE" "$MGFFILE1";;
+  *.mzml.gz) $MZML write_mgf "$MGFFILE" > "$MGFFILE1";;
+  *.mzml) $MZML write_mgf "$MGFFILE" > "$MGFFILE1";;
+esac
 
 date
 "$RSCRIPT" "$CONVERTR" "$MGFFILE1" "$PSMFILE" "$MASSTABLE" "$FRAGMODE" "$TOLERANCE" "$TOPN" "$RELINT" || exit 1

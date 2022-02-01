@@ -22,6 +22,7 @@
             <param name="version" type="select" label="ProteoWizard Version">
                 <option value="ProteoWizard" selected="true">3.0.9490</option>
                 <option value="pwiz-vc141-release-3_0_18320_db8142ed4">3.0.18320</option>
+                <option value="pwiz-vc142-release-3_0_22031_3c93331">3.0.22031</option>
             </param>
         </section>
     </inputs>
