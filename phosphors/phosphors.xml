@@ -1,11 +1,22 @@
 <tool id="phosphors" name="PhosphoRS" version="1.0">
     <command>
     <![CDATA[
-    ${__tool_directory__}/phosphors.sh "${mgfinput.name.rsplit('.',1)[0]}" "${mgfinput}" "${psminput}" "${fragmode}" "${tolerance}" "${topn}" "${relint}" "${psmoutput}" && test -s "${psmoutput}" || exit 1
+    #if $mgfinput.name.lower().endswith('.mzml')
+      ln -s $mgfinput $mgfinput.name &&
+      #set $mgfinput1 = $mgfinput.name[:-5]+'.mgf'
+      ${__tool_directory__}/../lib/cptac3-cdap/cptac-mzid/cptacmzid/mzml write_mgf $mgfinput.name > $mgfinput1 &&
+    #elif $mgfinput.name.lower().endswith('.mzml.gz')
+      ln -s $mgfinput $mgfinput.name &&
+      #set $mgfinput1 = $mgfinput.name[:-8]+'.mgf'
+      ${__tool_directory__}/../lib/cptac3-cdap/cptac-mzid/cptacmzid/mzml write_mgf $mgfinput.name > $mgfinput1 &&
+    #else
+      #set $mgfinput1 = $mgfinput
+    #end if 
+    ${__tool_directory__}/phosphors.sh "${psminput.name.rsplit('.',1)[0]}" "${mgfinput1}" "${psminput}" "${fragmode}" "${tolerance}" "${topn}" "${relint}" "${psmoutput}" && test -s "${psmoutput}" || exit 1
     ]]>
     </command>
     <inputs>
-        <param name="mgfinput" type="data" format="mgf" label="MGF Spectral Datafile"/>
+        <param name="mgfinput" type="data" format="mgf,mzml,mzml.gz" label="Spectral Datafile"/>
 	<param name="psminput" type="data" format="psm" label="PSM File"/>
 	<param name="fragmode" type="select" label="Fragmentation mode">
             <option value="CID">CID</option>

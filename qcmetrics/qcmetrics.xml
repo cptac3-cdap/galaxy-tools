@@ -5,7 +5,7 @@
     <command>
     <![CDATA[
     rm -f "${mzmlinput.name}" && 
-    ln -s "${mzmlinput}" "${mzmlinput.name}" &&
+    gunzip -c "${mzmlinput}" | fgrep -v '<cvParam cvRef="MS" accession="MS:1002732" ' | gzip -c > "${mzmlinput.name}" &&
     rm -f "${mzidinput.name}" && 
     ln -s "${mzidinput}" "${mzidinput.name}" &&
     ${__tool_directory__}/qcmetrics.sh "${mzmlinput.name}" "${mzidinput.name}" "${qcmetrics}"

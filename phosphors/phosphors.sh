@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# set -x
 if [ $# -lt 6 ]; then
   echo "Usage: phosphors.sh <basename> <mgffile> <psmfile> [CID|HCD] <tolerance> <topn> <relintpercent> <outpsmfile>" 1>&2
   exit 1;
@@ -12,7 +13,6 @@ CONVERTR="$BASE/convert.r"
 APPENDR="$BASE/append.r"
 PHOSPHORSJAR="$BASE/phosphoRS.jar"
 MASSTABLE="$BASE/phosphors.masstable.txt"
-MZML=$BASE/../lib/cptac3-cdap/cptac-mzid/cptacmzid/mzml
 
 # For Edwards lab installation of R and java
 export PATH="/tools/bin:$PATH"
@@ -30,14 +30,11 @@ RELINT="$7"
 OUTPUT="$8"
 
 MGFFILE1="$BASENAME.mgf"
-rm -f "$BASENAME".{mgf,xml,phospho.xml,phospho.complete.txt}
-
-
-case "$MGFFILE" in 
-  *.mgf) ln -s "$MGFFILE" "$MGFFILE1";;
-  *.mzml.gz) $MZML write_mgf "$MGFFILE" > "$MGFFILE1";;
-  *.mzml) $MZML write_mgf "$MGFFILE" > "$MGFFILE1";;
-esac
+rm -f "$BASENAME".{xml,phospho.xml,phospho.complete.txt}
+if [ "$MGFFILE1" != "$MGFFILE" ]; then
+  rm -f "$MGFFILE1"
+  ln -s "$MGFFILE" "$MGFFILE1"
+fi
 
 date
 "$RSCRIPT" "$CONVERTR" "$MGFFILE1" "$PSMFILE" "$MASSTABLE" "$FRAGMODE" "$TOLERANCE" "$TOPN" "$RELINT" || exit 1

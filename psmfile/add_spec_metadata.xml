@@ -1,0 +1,20 @@
+<tool id="addspecmd" name="Add spectral metadata to PSM file" version="1.0">
+    <stdio>
+       <exit_code range="1:" level="fatal" description="Job Failed" />
+       <regex match="^Traceback " level="fatal" description="Python Exception"/>
+    </stdio>
+    <command>
+<![CDATA[
+    rm -f ${spectra.name} &&
+	ln -s ${spectra} ${spectra.name} &&
+    ${__tool_directory__}/../lib/cptac3-cdap/cptac-mzid/cptacmzid/mzml add_spec_metadata ${spectra.name} ${input} > ${output}
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="psm" label="PSM File"/>
+        <param name="spectra" type="data" format="mzml,mzml.gz" label="Spectra File"/>
+    </inputs>
+    <outputs> 
+        <data name="output" format="psm" label="${input.name}"/>
+    </outputs>
+</tool>

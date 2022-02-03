@@ -107,7 +107,7 @@ if reporterfile not in ("None","",None):
         abfract = tofloat(r[p])
         data = dict()
         if max(abvals) == 0:
-            assert dmzhwhm.count('?') == len(dmzhwhm) and abfract == None
+            assert dmzhwhm.count('?') == len(dmzhwhm) and abfract in None
             for t,abi,di in zip(lmd['tags'],ab,dmzhwhm):
                 data[lmd['prefix']+t] = abi
         else:
@@ -235,6 +235,7 @@ def manipulate_rows(rows,qvalthr):
 	     rest = ""; filter = ""
         r['Filter'] = filter.strip()
 	# print r['ScanNum']
+        ppvals = None
         for keyval in rest.split():
             # print repr(keyval)
             m = simplefieldre.search(keyval)
@@ -484,6 +485,8 @@ def manipulate_rows(rows,qvalthr):
 
 	if r['FileName'].endswith('.mgf'):
             r['FileName'] = (r['FileName'][:-3]+'raw')
+	elif r['FileName'].endswith('.mzML'):
+            r['FileName'] = (r['FileName'][:-4]+'raw')
 
         yield r
 
