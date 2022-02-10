@@ -5,7 +5,11 @@
     <command>
     <![CDATA[
     rm -f "${mzmlinput.name}" && 
-    gunzip -c "${mzmlinput}" | fgrep -v '<cvParam cvRef="MS" accession="MS:1002732" ' | gzip -c > "${mzmlinput.name}" &&
+    #if $mzmlinput.name.endswith('.gz')
+      gunzip -c "${mzmlinput}" | fgrep -v '<cvParam cvRef="MS" accession="MS:1003029" ' | gzip -c > "${mzmlinput.name}" &&
+    #else
+      cat "${mzmlinput}" | fgrep -v '<cvParam cvRef="MS" accession="MS:1003029" ' > "${mzmlinput.name}" &&
+    #end if
     rm -f "${mzidinput.name}" && 
     ln -s "${mzidinput}" "${mzidinput.name}" &&
     ${__tool_directory__}/qcmetrics.sh "${mzmlinput.name}" "${mzidinput.name}" "${qcmetrics}"

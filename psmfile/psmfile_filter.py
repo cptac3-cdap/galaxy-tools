@@ -99,7 +99,7 @@ if reporterfile not in ("None","",None):
         abfract = tofloat(r[p])
         data = dict()
         if max(abvals) == 0:
-            assert dmzhwhm.count('?') == len(dmzhwhm) and abfract in None
+            assert dmzhwhm.count('?') == len(dmzhwhm) and abfract == None
             for t,abi,di in zip(lmd['tags'],ab,dmzhwhm):
                 data[lmd['prefix']+t] = abi
         else:

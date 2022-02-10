@@ -13,17 +13,16 @@ exec >/tmp/prestart.log 2>&1
 # No need for sudo, we are root at this point
 #
 
-# Configure SWAP file for the instance...
-# if [ ! -f /mnt/10GB.swap ]; then
-#   # dd if=/dev/zero of=/mnt/10GB.swap count=1024 bs=10485760
-#   fallocate -l 10G /mnt/10GB.swap
-#   chmod 600 /mnt/10GB.swap
-#   mkswap /mnt/10GB.swap
-#   cat >>/etc/fstab <<EOF
-# /mnt/10GB.swap  none  swap  sw 0  0
-# EOF
-# fi
-# swapon -a
+Configure SWAP file for the instance...
+if [ ! -f /mnt/15GB.swap ]; then
+  fallocate -l 15G /mnt/15GB.swap
+  chmod 600 /mnt/15GB.swap
+  mkswap /mnt/15GB.swap
+  cat >>/etc/fstab <<EOF
+/mnt/15GB.swap  none  swap  sw 0  0
+EOF
+fi
+swapon -a
 
 #
 # sshd configuration
@@ -66,6 +65,9 @@ if [ ! -f "/root/.ssh/instance_selfsigned_key.pem" ]; then
   yes "" | openssl req -x509 -nodes -days 3650 -newkey rsa:4096 -keyout /root/.ssh/instance_selfsigned_key.pem -out /root/.ssh/instance_selfsigned_cert.pem
   chmod 440 /root/.ssh/instance_selfsigned_key.pem
 fi
+
+SLURMCONFIG=/mnt/cm/cm/conftemplates/slurm.conf
+sed -i 's/CR_CPU/CR_CPU_Memory/' $SLURMCONFIG
 
 # No need to reload service...
 # /usr/sbin/service nginx reload
