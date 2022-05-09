@@ -11,6 +11,7 @@
 <datatype extension="psm" type="galaxy.datatypes.tabular:Tabular" subclass="True" display_in_upload="true"/>
 <datatype extension="cksum" type="galaxy.datatypes.tabular:Tabular" subclass="True" display_in_upload="true"/>
 <datatype extension="proms.txt" type="galaxy.datatypes.data:Text" subclass="True" display_in_upload="true"/>
+<datatype extension="precab.tsv" type="galaxy.datatypes.tabular:Tabular" subclass="True" display_in_upload="true"/>
 <datatype extension="qcmetrics.tsv" type="galaxy.datatypes.tabular:Tabular" subclass="True" display_in_upload="true"/>
 <datatype extension="dfc.tsv" type="galaxy.datatypes.tabular:Tabular" subclass="True" display_in_upload="true"/>
 <datatype extension="swath.tsv" type="galaxy.datatypes.tabular:Tabular" subclass="True" display_in_upload="true"/>

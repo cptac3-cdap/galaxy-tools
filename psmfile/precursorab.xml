@@ -1,0 +1,28 @@
+<tool id="OpenMS_PrecursorAbundance" name="OpenMS Precursor Abundance" version="1.0">
+    <description>
+        MS1 precursor peak integration data analysis using the OpenMS FeatureFinderIdentification tool.
+    </description>
+    <stdio>
+       <exit_code range="1:" level="fatal" description="Job Failed" />
+    </stdio>
+    <command>
+  <![CDATA[
+    rm -f "${input.name}" && 
+    ln -s "${input}" "${input.name}" &&
+    rm -f "${psms.name}" &&
+    ln -s "${psms}" "${psms.name}" &&
+    ${__tool_direcotry__}/openms_featfinderid.sh ${input.name} ${psms.name} ${instrument} ${output}
+    ]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="mzml,mzml.gz" label="Spectra Datafile (mzML Format)"/>
+        <param name="mzmlinput" type="data" format="mzid,mzid.gz" label="PSMs (MS-GF+ mzIdentML Format)" />
+        <param name="instrument" type="select" label="Instrument Type">
+            <option value="HIRESMS1" selected="true">Orbitrap</option>
+            <option value="HIRESMS1"                >Q Exactive</option>
+        </param>
+    </inputs>
+    <outputs>
+        <data name="output" format="tabular" label="${input.name.rsplit('.mzml',1)[0]}.precab.tsv" />
+    </outputs>
+</tool>

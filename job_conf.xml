@@ -15,7 +15,7 @@
         <plugin id="local" action="replace" match="id"/>
       </handler>
     </handlers>
-    <destinations default="slurm_cluster">
+    <destinations default="slurm_cluster_mem3">
        <destination id="pulsar_dynamic" tags="win_pulsar,windows" runner="dynamic" action="replace" match="id">
             <param id="type">python</param>
             <param id="function">pulsar_destinations</param>
@@ -45,10 +45,10 @@
             <param id="nativeSpecification">--mem=12000 -w master</param>
        </destination>
        <destination id="slurm_master_only_alone" runner="slurm">
-            <param id="nativeSpecification">--nodes=1 --ntasks=3 -w master --exclusive</param>
+            <param id="nativeSpecification">--nodes=1 --ntasks=3 -w master --mem=3000 --exclusive</param>
        </destination>
        <destination id="slurm_master_only" runner="slurm">
-            <param id="nativeSpecification">-w master</param>
+            <param id="nativeSpecification">-w master --mem=3000</param>
        </destination>
        <!-- <destination id="pulsar_mq" tags="win_pulsar" runner="pulsar_mq" action="replace" match="id">
           <param id="default_file_action">remote_transfer</param>

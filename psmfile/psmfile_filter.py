@@ -12,8 +12,28 @@ opts = dict()
 for arg in sys.argv[6:]:
     opts[arg] = True
 
-promsdata = defaultdict(lambda: ('0','0.00000000','0'))
+proms_format = None
 if proms not in ("None","",None):
+    proms_format = True
+    firstword = open(proms).read(128).split()[0]
+    if firstword == "Scan":
+        proms_format = False
+
+if proms_format == False:
+    promsdata = defaultdict(lambda: ('0','0.00000000','0'))
+    maxarea = 0
+    for row in csv.DictReader(open(proms),dialect='excel-tab'):
+        scan = int(row['Scan'])
+        area = row['Area']
+        rt = row['RT']
+        if float(area) > maxarea:
+	    maxarea = float(area)
+        promsdata[scan] = (area,None,rt)
+    for scan in promsdata:
+        promsdata[scan] = (promsdata[scan][0],"%.8f"%(float(promsdata[scan][0])/maxarea,),promsdata[scan][2])
+
+if proms_format == True:
+    promsdata = defaultdict(lambda: ('0','0.00000000','0'))
     h = open(proms)
     sec7 = False
     for l in h:
