@@ -8,21 +8,21 @@
     <command>
   <![CDATA[
     rm -f "${input.name}" && 
-    ln -s "${input}" "${input.name}" &&
+    cp -f "${input}" "${input.name}" &&
     rm -f "${psms.name}" &&
-    ln -s "${psms}" "${psms.name}" &&
-    ${__tool_direcotry__}/openms_featfinderid.sh ${input.name} ${psms.name} ${instrument} ${output}
+    cp -f "${psms}" "${psms.name}" &&
+    ${__tool_directory__}/openms_featfinderid.sh ${input.name} ${psms.name} ${instrument} ${output}
     ]]>
     </command>
     <inputs>
         <param name="input" type="data" format="mzml,mzml.gz" label="Spectra Datafile (mzML Format)"/>
-        <param name="mzmlinput" type="data" format="mzid,mzid.gz" label="PSMs (MS-GF+ mzIdentML Format)" />
+        <param name="psms" type="data" format="mzid,mzid.gz" label="PSMs (MS-GF+ mzIdentML Format)" />
         <param name="instrument" type="select" label="Instrument Type">
             <option value="HIRESMS1" selected="true">Orbitrap</option>
             <option value="HIRESMS1"                >Q Exactive</option>
         </param>
     </inputs>
     <outputs>
-        <data name="output" format="tabular" label="${input.name.rsplit('.mzml',1)[0]}.precab.tsv" />
+        <data name="output" format="precab.tsv" label="${input.name.rsplit('.mzML',1)[0]}.precab.tsv" />
     </outputs>
 </tool>

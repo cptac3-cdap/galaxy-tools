@@ -30,4 +30,5 @@ fi
 
 # cp /mnt/galaxy/tools/extratools/lib/pandoc/bin/pandoc* /usr/local/bin
 # wget --no-check-certificate -q -O - "$DOWNLOADURL/usr.local.bin.pandoc.tgz" | tar xvzf - -C /usr/local/bin                             
-# docker pull chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:latest &
+docker pull chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:latest &
+docker pull openswath/openswath:latest &

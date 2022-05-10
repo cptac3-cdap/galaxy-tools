@@ -26,6 +26,11 @@ if proms_format == False:
         scan = int(row['Scan'])
         area = row['Area']
         rt = row['RT']
+        status = int(row['Status'].split()[0])
+        if status != 0:
+            continue
+        if float(area) <= 0:
+            continue
         if float(area) > maxarea:
 	    maxarea = float(area)
         promsdata[scan] = (area,None,rt)

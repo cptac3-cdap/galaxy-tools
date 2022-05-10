@@ -23,10 +23,19 @@ USER="`id -u`:`id -g`"
 DOCKER="docker run -u $USER -v `pwd`:/data/ --rm"
 
 $DOCKER openswath/openswath:latest IDFileConverter -in "$MZID" -out "$BASE.idXML" -mz_file "$MZML"
+if [ $? -ne 0 ]; then
+  exit 1
+fi
 $DOCKER openswath/openswath:latest FeatureFinderIdentification -in "$MZML" -id "$BASE.idXML" -out "$BASE.featureXML" $FEATFINDER
+if [ $? -ne 0 ]; then
+  exit 1
+fi
 
 rm -f "$BASE.idXML"
 
-python $DIR/featxml.py "$BASE.featureXML" | sort -n > "$OUT"
+$DIR/../lib/cptac3-cdap/cptac-mzid/cptacmzid/featxml "$BASE.featureXML" | sort -n > "$OUT"
+if [ $? -ne 0 ]; then
+  exit 1
+fi
 
 rm -f "$BASE.featureXML"
