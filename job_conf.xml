@@ -68,8 +68,8 @@
 	<tool id="data_manager_pulsar_nodes_monitor" destination="local_runner" action="replace" match="id"/>
         <tool id="msgfplus4" destination="slurm_cluster_mem5" action="replace" match="id"/>
         <tool id="msgfplus6" destination="slurm_cluster_mem3" action="replace" match="id"/>
-        <tool id="OpenMS_PrecursorAbundance" destination="slurm_cluster_mem4" action="replace" match="id"/>
-        <tool id="msconvert_raw_docker_wine" destination="slurm_cluster_mem4" action="replace" match="id"/>
+        <tool id="OpenMS_PrecursorAbundance" destination="slurm_cluster_mem5" action="replace" match="id"/>
+        <tool id="msconvert_raw_docker_wine" destination="slurm_cluster_mem3" action="replace" match="id"/>
         <tool id="cdapreports_pepiontmt10" destination="slurm_master_only_alone" action="replace" match="id"/>
         <tool id="cdapreports_tmt10" destination="slurm_master_only_alone" action="replace" match="id"/>
         <tool id="cdapreports_assayannotate" destination="slurm_master_only" action="replace" match="id"/>
