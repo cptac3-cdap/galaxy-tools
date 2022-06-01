@@ -2,10 +2,11 @@
 
 set -x
 
-MZML="$1"
-MZID="$2"
-INST="$3"
-OUT="$4"
+TAG="$1"
+MZML="$2"
+MZID="$3"
+INST="$4"
+OUT="$5"
 
 DIR=`dirname $0`
 
@@ -22,7 +23,7 @@ esac
 USER="`id -u`:`id -g`"
 DOCKER="docker run -u $USER -v `pwd`:/data/ --rm"
 
-$DOCKER openswath/openswath:latest IDFileConverter -in "$MZID" -out "$BASE.idXML" -mz_file "$MZML"
+$DOCKER openswath/openswath:$TAG IDFileConverter -in "$MZID" -out "$BASE.idXML" -mz_file "$MZML"
 if [ $? -ne 0 ]; then
   exit 1
 fi

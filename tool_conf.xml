@@ -4,13 +4,14 @@
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/ReAdw4Mascot2/ReAdw4Mascot2_pulsar.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msconvert/msconvert_mzml_mzxml_pulsar.xml" /> 
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msconvert/msconvert_mzml_mzxml_docker_wine.xml" /> 
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msconvert/msconvert_dia_docker_wine.xml" /> 
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/swath/extract_windows.xml" />
     <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msconvert/msconvert_mzml_mzxml_absciex_pulsar.xml" /> -->
     <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/absciex/absciex_pulsar.xml" /> -->
     <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msgfplus/msgfplus_indexed.xml" />  -->
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msgfplus/mgfscans.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msgfplus/msgfplus_indexed1.xml" /> 
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msgfplus/msgfplus_indexed2.xml" />
-    <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/swath/extract_windows.xml" /> -->
     <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msgfplus/msgfplus.xml" /> -->
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msgfplus/msgfplus_tsv1.xml" /> 
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/msgfplus/fixtsvoutput.xml" />

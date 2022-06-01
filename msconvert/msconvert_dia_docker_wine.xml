@@ -1,0 +1,41 @@
+<tool id="msconvert_raw_dia_docker_wine" name="MSConvert DIA RAW (Wine - Docker)" version="1.0">
+    <description>
+        Spectral file conversion from raw to mzML using msconvert for DIA spectra (using Docker-based Wine to run Windows binary)
+    </description>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Job Failed" />
+    </stdio>
+    <command>
+<![CDATA[
+  cp -f ${input} ${input.name} &&
+  chmod a+w . &&
+  #if $outfmt.value.endswith('.gz')
+  docker run -v `pwd`:/data/ --rm chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:${advanced.tag} wine msconvert --64 ${centroid} ${simAsSpectra} ${demultiplex} ${zlib} --${outfmt.value.split('.',1)[0]} --gzip /data/${input.name} &&
+  #else
+  docker run -v `pwd`:/data/ --rm chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:${advanced.tag} wine msconvert --64 ${centroid} ${simAsSpectra} ${demultiplex} ${zlib} --${outfmt.split('.',1)[0]} /data/${input.name} &&
+  #end if
+  cp -f ${input.name.rsplit('.',1)[0]}.${outfmt} ${output}
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="raw" label="Input Spectra Datafile(s)"/>
+        <param name="outfmt" type="select" label="Output Format">
+            <option value="mzML">mzML</option>
+            <option value="mzML.gz">mzML.gz</option>
+        </param>
+	<param type="boolean" name="centroid" truevalue="--filter 'peakPicking true 1-'" falsevalue="" label="Centroid Peaks?" checked="True"/>
+	<param type="boolean" name="simAsSpectra" truevalue="--simAsSpectra" falsevalue="" label="SIM as Spectra?" checked="True"/>
+	<param type="boolean" name="demultiplex" truevalue="--filter 'demultiplex optimization=overlap_only'" falsevalue="" label="Demultiplex overlapping windows?" checked="True"/>
+	<param type="boolean" name="zlib" truevalue="--zlib" falsevalue="" label="Compress Peak Data?" checked="True"/>
+        <section name="advanced" title="Advanced Options">
+	    <param name="tag" label="Docker Container Tag" type="text" value="latest" help="See: &lt;A href='https://hub.docker.com/r/chambm/pwiz-skyline-i-agree-to-the-vendor-licenses/tags?page=1&amp;ordering=last_updated'&gt;Docker Hub&lt;/A&gt;."/>
+        </section>
+    </inputs>
+    <outputs>
+        <data name="output" format="mzml" label="${input.name.rsplit('.',1)[0]}.${outfmt}" >
+            <change_format>
+                <when input="outfmt" value="mzML.gz" format="mzml.gz" />
+            </change_format>
+	</data>
+    </outputs>
+</tool>
