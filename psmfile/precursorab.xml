@@ -22,7 +22,7 @@
             <option value="HIRESMS1"                >Q-Exactive</option>
         </param>
         <section name="advanced" title="Advanced Options">
-            <param name="tag" label="Docker Container Tag" type="text" value="latest" help="See: &lt;A href='https://hub.docker.com/r/openswath/openswath/tags?page=1&amp;ordering=last_updated'&gt;Docker Hub&lt;/A&gt;."/>
+            <param name="tag" label="Docker Container Tag" type="text" value="latest" help="See: &lt;A href='https://github.com/openms/OpenMS/pkgs/container/openms-executables/versions?filters%5Bversion_type%5D=tagged'&gt;GitHub Container Repository&lt;/A&gt;."/>
         </section>
     </inputs>
     <outputs>
