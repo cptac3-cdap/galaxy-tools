@@ -22,8 +22,9 @@ esac
 
 USER="`id -u`:`id -g`"
 DOCKER="docker run -u $USER -v `pwd`:/data/ --rm"
-
-$DOCKER openswath/openswath:$TAG IDFileConverter -in "$MZID" -out "$BASE.idXML" -mz_file "$MZML"
+CONTAINER=ghcr.io/openms/openms-executables
+$DOCKER ${CONTAINER}:$TAG IDFileConverter -in "$MZID" -out "$BASE.idXML" -mz_file "$MZML"
+# $DOCKER openswath/openswath:$TAG IDFileConverter -in "$MZID" -out "$BASE.idXML" -mz_file "$MZML"
 if [ $? -ne 0 ]; then
   exit 1
 fi
