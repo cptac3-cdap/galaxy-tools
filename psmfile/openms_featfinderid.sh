@@ -23,12 +23,12 @@ esac
 USER="`id -u`:`id -g`"
 DOCKER="docker run -u $USER -v `pwd`:/data/ --rm"
 CONTAINER=ghcr.io/openms/openms-executables
-$DOCKER ${CONTAINER}:$TAG IDFileConverter -in "$MZID" -out "$BASE.idXML" -mz_file "$MZML"
+$DOCKER ${CONTAINER}:$TAG IDFileConverter -in "/data/$MZID" -out "/data/$BASE.idXML" -mz_file "/data/$MZML"
 # $DOCKER openswath/openswath:$TAG IDFileConverter -in "$MZID" -out "$BASE.idXML" -mz_file "$MZML"
 if [ $? -ne 0 ]; then
   exit 1
 fi
-$DOCKER openswath/openswath:latest FeatureFinderIdentification -in "$MZML" -id "$BASE.idXML" -out "$BASE.featureXML" $FEATFINDER
+$DOCKER ${CONTAINER}:$TAG FeatureFinderIdentification -in "/data/$MZML" -id "/data/$BASE.idXML" -out "/data/$BASE.featureXML" $FEATFINDER
 if [ $? -ne 0 ]; then
   exit 1
 fi
