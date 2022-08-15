@@ -5,6 +5,9 @@
     <stdio>
         <exit_code range="1:" level="fatal" description="Job Failed" />
     </stdio>
+    <requirements>
+        <container type="docker">chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:${advanced.tag}</container>              
+    </requirements>
     <command>
 <![CDATA[
   cp -f ${input} ${input.name} &&

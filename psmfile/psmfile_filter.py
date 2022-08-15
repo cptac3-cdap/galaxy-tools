@@ -19,8 +19,8 @@ if proms not in ("None","",None):
     if firstword == "Scan":
         proms_format = False
 
+promsdata = defaultdict(lambda: ('0','0.00000000','0'))
 if proms_format == False:
-    promsdata = defaultdict(lambda: ('0','0.00000000','0'))
     maxarea = 0
     for row in csv.DictReader(open(proms),dialect='excel-tab'):
         scan = int(row['Scan'])

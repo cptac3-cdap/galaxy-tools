@@ -5,13 +5,16 @@
     <stdio>
        <exit_code range="1:" level="fatal" description="Job Failed" />
     </stdio>
+    <requirements>
+        <container type="docker">ghcr.io/openms/openms-executables:${advanced.tag}</container>
+    </requirements>
     <command>
   <![CDATA[
     rm -f "${input.name}" && 
     cp -f "${input}" "${input.name}" &&
     rm -f "${psms.name}" &&
     cp -f "${psms}" "${psms.name}" &&
-    ${__tool_directory__}/openms_featfinderid.sh ${advanced.tag} ${input.name} ${psms.name} ${instrument} ${output}
+    ${__tool_directory__}/openms_featfinderid.sh ghcr.io/openms/openms-executables:${advanced.tag} ${input.name} ${psms.name} ${instrument} ${output}
     ]]>
     </command>
     <inputs>

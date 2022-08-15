@@ -31,7 +31,8 @@ fi
 # cp /mnt/galaxy/tools/extratools/lib/pandoc/bin/pandoc* /usr/local/bin
 # wget --no-check-certificate -q -O - "$DOWNLOADURL/usr.local.bin.pandoc.tgz" | tar xvzf - -C /usr/local/bin                             
 # docker pull openswath/openswath:latest
-
-( sleep 1800; \
-  docker pull chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:latest ; \
-  docker pull ghcr.io/openms/openms-executables:latest; ) < /dev/null >/dev/null 2>&1 &
+# ( sleep 1800; \
+#   docker pull chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:latest ; \
+#   docker pull ghcr.io/openms/openms-executables:latest; ) < /dev/null >/dev/null 2>&1 &
+# docker rmi f90a2b8ee21f
+docker rmi chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:latest
