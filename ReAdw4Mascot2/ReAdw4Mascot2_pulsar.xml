@@ -17,6 +17,8 @@
             <option value="TMT6HCD">TMT 6-plex (HCD)</option>
             <option value="TMT10HCD">TMT 10-plex (HCD)</option>
             <option value="TMT11HCD">TMT 11-plex (HCD)</option>
+            <option value="TMT16HCD">TMT 16-plex (HCD)</option>
+            <option value="TMT18HCD">TMT 18-plex (HCD)</option>
         </param>
         <section name="advanced" title="Advanced Options">
             <param type="boolean" name="ms1profile" truevalue="ms1profile" falsevalue="" label="Extract MS1 Profile Spectra" checked="True"/>
