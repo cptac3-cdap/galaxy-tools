@@ -26,6 +26,8 @@ ${nocorrection}
             <option value="TMT6">TMT-6</option>
             <option value="TMT10" selected="true">TMT-10</option>
             <option value="TMT11">TMT-11</option>
+            <option value="TMT16">TMT-16</option>
+            <option value="TMT18">TMT-18</option>
         </param>
 	<conditional name="report_selector">
 	    <param name="report" type="select" label="Report type">

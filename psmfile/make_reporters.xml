@@ -12,8 +12,10 @@
     <inputs>
         <param name="spectra" type="data" format="mzml.gz" label="Spectra File"/>
         <param name="labels" type="select" label="Isobaric Labels">
-	      <option value="TMT11" selected="True">TMT11</option>
 	      <option value="TMT10">TMT10</option>
+	      <option value="TMT11" selected="True">TMT11</option>
+	      <option value="TMT16">TMT16</option>
+	      <option value="TMT18">TMT18</option>
 	      <option value="iTRAQ">iTRAQ</option>
         </param>                                                                                               
     </inputs>

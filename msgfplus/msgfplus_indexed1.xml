@@ -120,6 +120,8 @@
             <option value="225.155833_K_fix_any_TMT6plex">TMT 2-plex K</option>
             <option value="229.162932_*_fix_N-term_TMT6plex">TMT 6-or-10-plex N-term</option>
             <option value="229.162932_K_fix_any_TMT6plex">TMT 6-or-10-plex K</option>
+            <option value="304.207146_*_fix_N-term_TMTpro">TMTPro 16-or-18-plex N-term</option>
+            <option value="304.207146_K_fix_any_TMTpro">TMTPro 16-or-18-plex K</option>
             <sanitizer invalid_char=""><valid initial="string.printable"><add value="["/><add value="]"/><add value=","/><add value="-"/></valid><mapping initial="none"></mapping></sanitizer>
         </param>
         <param name="common_variable_modifications" type="select" label="Common Variable Modifications" multiple="true" help="Can occur anywhere on the peptide sequence; adds additional error to search score. Hold the appropriate key while clicking to select multiple items">

@@ -18,6 +18,8 @@ ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_tmt10 ${bygene} --labels $
             <option value="TMT6">TMT-6</option>
             <option value="TMT10" selected="true">TMT-10</option>
             <option value="TMT11">TMT-11</option>
+            <option value="TMT16">TMT-16</option>
+            <option value="TMT18">TMT-18</option>
         </param>
 	<param name="bygene" type="boolean" truevalue="--bygene" falsevalue="" checked="False" label="Gene, not Protein, Quantitation"/>
 	<param name="nocorrection" type="boolean" truevalue="" falsevalue="--nocorrection" checked="True" label="Apply Label Reagent Impurity Correction"/>

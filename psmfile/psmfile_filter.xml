@@ -10,6 +10,8 @@
             <option value="tmt6">TMT 6-plex</option>
             <option value="tmt10">TMT 10-plex</option>
             <option value="tmt11">TMT 11-plex</option>
+            <option value="tmt16">TMT 16-plex</option>
+            <option value="tmt18">TMT 18-plex</option>
         </param>
         <param name="threshold" type="float" value="1" label="Spectral FDR Threshold (%)"/>
     </inputs>
