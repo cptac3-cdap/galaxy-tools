@@ -53,6 +53,7 @@
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/proteintmt10.1.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/proteinspeccnt.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/proteinprecarea.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/pepiontmt10.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/pepiontmt10.1.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/qcreport/qcreport.xml" />
   </section>
