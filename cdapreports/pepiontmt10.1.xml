@@ -1,0 +1,78 @@
+<tool id="cdapreports_pepiontmt10" name="Peptide Ion Isotope-Labeling Quantitation" version="1.1">
+    <description>
+       Peptide ion quanitation by isotope labeling.
+    </description>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Fatal error. Non-zero exit code." />
+    </stdio>
+    <command>
+<![CDATA[
+cp -f ${input} data.psm &&
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_peptideion_tmt10 -d data.psm -o data.tsv --report ${report_selector.report} --labels ${labels}
+#if $report_selector.report in ('Phosphopeptide','PhosphositeCombination')
+    ${report_selector.localized}
+    ${report_selector.specific}
+#end if 
+#if $report_selector.report in ('Glycopeptide','GlycositeCombination','Acetylpeptide','AcetylsiteCombination','Ubiquitylpeptide','UbiquitylsiteCombination')
+    ${report_selector.specific}
+#end if 
+${nocorrection} ${checkcorrection}
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="psmdb" label="PSM Data"/>
+        <param name="labels" type="select" label="Isotope Labels">
+            <option value="iTRAQ">iTRAQ-4</option>
+            <option value="TMT6">TMT-6</option>
+            <option value="TMT10" selected="true">TMT-10</option>
+            <option value="TMT11">TMT-11</option>
+            <option value="TMT16">TMT-16</option>
+            <option value="TMT18">TMT-18</option>
+        </param>
+	<conditional name="report_selector">
+	    <param name="report" type="select" label="Report type">
+		<option value="Peptide">Peptide (Sequence)</option>
+		<option value="PeptideForm">Peptide w/ Mods</option>
+		<option value="Phosphopeptide">Phosphopeptide</option>
+		<option value="PhosphositeCombination">Phosphosite</option>
+		<option value="Glycopeptide">Glycopeptide</option>
+		<option value="GlycositeCombination">Glycosite</option>
+		<option value="Acetylpeptide">Acetylpeptide</option>
+		<option value="AcetylsiteCombination">Acetylsite</option>
+		<option value="Ubiquitylpeptide">Ubiquitylpeptide</option>
+		<option value="UbiquitylsiteCombination">Ubiquitylsite</option>
+            </param>
+	    <when value="Phosphopeptide">
+	        <param name="localized" type="boolean" truevalue="--localized" falsevalue="" checked="True" label="Consider fully localized phosphopeptides only"/>
+	        <param name="specific" type="boolean" truevalue="--specific" falsevalue="" checked="True" label="Consider fully specific tryptic petpides only"/>
+	    </when>
+	    <when value="PhosphositeCombination">
+	        <param name="localized" type="boolean" truevalue="--localized" falsevalue="" checked="True" label="Consider fully localized phosphopeptides only"/>
+	        <param name="specific" type="boolean" truevalue="--specific" falsevalue="" checked="True" label="Consider fully specific tryptic petpides only"/>
+	    </when>
+	    <when value="Glycopeptide">
+	        <param name="specific" type="boolean" truevalue="--specific" falsevalue="" checked="True" label="Consider fully specific tryptic petpides only"/>
+	    </when>
+	    <when value="GlycositeCombination">
+	        <param name="specific" type="boolean" truevalue="--specific" falsevalue="" checked="True" label="Consider fully specific tryptic petpides only"/>
+	    </when>
+	    <when value="Acetylpeptide">
+	        <param name="specific" type="boolean" truevalue="--specific" falsevalue="" checked="True" label="Consider fully specific tryptic petpides only"/>
+	    </when>
+	    <when value="AcetylsiteCombination">
+	        <param name="specific" type="boolean" truevalue="--specific" falsevalue="" checked="True" label="Consider fully specific tryptic petpides only"/>
+	    </when>
+	    <when value="Ubiquitylpeptide">
+	        <param name="specific" type="boolean" truevalue="--specific" falsevalue="" checked="True" label="Consider fully specific tryptic petpides only"/>
+	    </when>
+	    <when value="UbiquitylsiteCombination">
+	        <param name="specific" type="boolean" truevalue="--specific" falsevalue="" checked="True" label="Consider fully specific tryptic petpides only"/>
+	    </when>
+        </conditional>
+	<param name="nocorrection" type="boolean" truevalue="" falsevalue="--nocorrection" checked="True" label="Apply Label Reagent Impurity Correction"/>
+	<param name="checkcorrection" type="boolean" truevalue="" falsevalue="--checkcorrection" checked="True" label="Check Reagent Correction before use"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="tabular" label="${input.name.split('.',1)[0]}.${'phosphopeptide' if $report_selector.report == 'Phosphopeptide' else ('phosphosite' if $report_selector.report == 'PhosphositeCombination' else ('peptide' if $report_selector.report == 'Peptide' else ('acetylsite' if $report_selector.report == 'AcetylsiteCombination' else ('acetylpeptide' if $report_selector.report == 'Acetylpeptide' else ('ubiquitylpeptide' if $report_selector.report == 'Ubiquitylpeptide' else ('ubiquitylsite' if $report_selector.report == 'UbiquitylsiteCombination' else ('glycosite' if $report_selector.report == 'GlycositeCombination' else ('glycopeptide' if $report_selector.report == 'Glycopeptide' else 'peptiform'))))))))}.${labels.value.lower()}${'' if $nocorrection else '-raw'}.tsv" from_work_dir="data.tsv" />
+    </outputs>
+</tool>

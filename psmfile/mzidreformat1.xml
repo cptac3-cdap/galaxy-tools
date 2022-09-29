@@ -1,0 +1,49 @@
+<tool id="mzidreformat" name="Reformat PSM file as CPTAC mzid." version="1.1">
+    <stdio>
+       <exit_code range="1:" level="fatal" description="Job Failed" />
+       <regex match="^Traceback " level="fatal" description="Python Exception"/>
+    </stdio>
+    <command>
+<![CDATA[
+	export TMPDIR=`pwd` &&
+	ln -s ${spectra} ${spectra.name} &&
+	ln -s ${input} ${input.name} &&
+	python ${__tool_directory__}/fixseqdb.py ${__tool_directory__}/${advanced.seqconfig} ${__tool_data_path__} > seqdb.ini &&
+	#if $seqdb == 'human'
+	SEQDB="RefSeq:Human,UniProt:Human" &&
+	#else if $seqdb == 'mouse'
+	SEQDB="RefSeq:Mouse,UniProt:Mouse" &&
+	#else if $seqdb == 'rat'
+	SEQDB="RefSeq:Rat,UniProt:Rat" &&
+	#else if $seqdb == 'xenograft'
+	SEQDB="RefSeq:Human,UniProt:Human,RefSeq:Mouse,UniProt:Mouse" &&
+	#end if
+        ${__tool_directory__}/../lib/cptac3-cdap/cptac-mzid/cptacmzid/psmextract.sh
+	     --seqdb "\$SEQDB" --seqdir . --format ${parser} ${input.name} --cdap "${advanced.cdapversion}"
+        | ${__tool_directory__}/../lib/cptac3-cdap/cptac-mzid/cptacmzid/textpsm2mzid 2>&1 | fgrep -v HexN | gzip -9 -c > ${output}
+]]>
+    </command>
+    <inputs>
+        <param name="spectra" type="data" format="mzml.gz" label="Spectra File"/>
+        <param name="input" type="data" format="tabular" label="PSM File"/>
+        <param name="seqdb" type="select" label="Reference Proteome(s)">
+	    <option value="human">Human</option>
+	    <option value="mouse">Mouse</option>
+	    <option value="rat">Rat</option>
+	    <option value="xenograft">Human-Mouse Xenograft</option>
+        </param>                                                                                               
+	<param type="boolean" name="parser" truevalue="CDAP_NISTPSM_CPTAC2_WITH_DECOYS" falsevalue="CDAP_NISTPSM_CPTAC2" label="Include Decoys?" checked="False"/>
+        <section name="advanced" title="Advanced Options">
+            <param name="cdapversion" type="text" label="CDAP Version" value="1.1"/>
+            <param name="seqconfig" type="select" label="Reference Proteome Config">
+                <option value="seqdb.20170629.ini" selected="True">2017-06-29</option>
+                <option value="seqdb.20171204.ini">2017-12-04</option>
+                <option value="seqdb.20180717.ini">2018-07-17</option>
+                <option value="seqdb.20181215.ini">2018-12-15</option>
+            </param>                                                                                             
+        </section>
+    </inputs>
+    <outputs> 
+        <data name="output" format="mzid.gz" label="${spectra.name.rsplit('.',2)[0]}.mzid.gz"/>
+    </outputs>
+</tool>
