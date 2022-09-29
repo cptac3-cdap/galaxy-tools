@@ -27,7 +27,7 @@ dfc = DatafileCollection(credentials=credentials)
 dfc.read(inputfile)
 
 if samplefile and samplefile != "None":
-    args = [ "python", mksamp, samplefile, labeldb] 
+    args = [ mksamp, samplefile, labeldb ] 
     proc = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False)
     files = "\n".join(f['filename'] for f in dfc) + "\n"
     stdout,stderr = proc.communicate(files.encode())
