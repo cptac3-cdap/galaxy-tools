@@ -23,7 +23,7 @@ ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_tmt10 ${bygene} --labels $
         </param>
 	<param name="bygene" type="boolean" truevalue="--bygene" falsevalue="" checked="False" label="Gene, not Protein, Quantitation"/>
 	<param name="nocorrection" type="boolean" truevalue="" falsevalue="--nocorrection" checked="True" label="Apply Label Reagent Impurity Correction"/>
-	<param name="checkcorrection" type="boolean" truevalue="" falsevalue="--checkcorrection" checked="True" label="Check Reagent Correction before use"/>
+	<param name="checkcorrection" type="boolean" truevalue="--checkcorrection" falsevalue="" checked="True" label="Check Corrected Label Intensities"/>
     </inputs>
     <outputs>
         <data name="output" format="tabular" label="${input.name.split('.',1)[0]}.${labels.value.lower()}${'' if $nocorrection else '-raw'}.tsv" from_work_dir="data.tsv" />
