@@ -105,7 +105,7 @@ def execute(args):
     return process.returncode
 
 simplefieldre = re.compile(r'^(\w+):[(]?(\d+(\.\d+)?(eV|\?)?)[)]?$')
-labelfieldre = re.compile(r'^(TMT10|TMT11|TMT6|iTRAQ4)_')
+labelfieldre = re.compile(r'^(TMT10|TMT11|TMT16|TMT18|TMT6|iTRAQ4)_')
 
 def extract_reporters_from_TITLE(title,precursor_as_scan=False):
     labeling = None; ab = None; dmzhwhm = None; abfract = None

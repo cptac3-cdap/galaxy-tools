@@ -8,7 +8,7 @@
     <command>
 <![CDATA[
 cp -f ${input} data.psm &&
-${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_tmt10 ${bygene} --labels ${labels} -d data.psm -o data.tsv ${nocorrection} ${checkcorrection}
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_tmt10 ${bygene} --labels ${labels} -d data.psm -o data.tsv ${nocorrection} ${correction}
 ]]>
     </command>
     <inputs>
@@ -19,11 +19,17 @@ ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_tmt10 ${bygene} --labels $
             <option value="TMT10" selected="true">TMT-10</option>
             <option value="TMT11">TMT-11</option>
             <option value="TMT16">TMT-16</option>
+            <option value="TMT16+2">TMT-16+2</option>
             <option value="TMT18">TMT-18</option>
         </param>
 	<param name="bygene" type="boolean" truevalue="--bygene" falsevalue="" checked="False" label="Gene, not Protein, Quantitation"/>
 	<param name="nocorrection" type="boolean" truevalue="" falsevalue="--nocorrection" checked="True" label="Apply Label Reagent Impurity Correction"/>
-	<param name="checkcorrection" type="boolean" truevalue="--checkcorrection" falsevalue="" checked="True" label="Check Corrected Label Intensities"/>
+	<param name="correction" type="select" label="Label Reagent Impurity Correction Strategy">
+            <option value="LS">Linear Solve (Original Strategy)</option>
+            <option value="LS+Check">Linear Solve + Value Cleanup</option>
+            <option value="NNLS">Non-Negative Least Squares</option>
+            <option value="NNLS+Check" selected="true">Non-Negative Least Squares + Value Cleanup</option>
+        </param>
     </inputs>
     <outputs>
         <data name="output" format="tabular" label="${input.name.split('.',1)[0]}.${labels.value.lower()}${'' if $nocorrection else '-raw'}.tsv" from_work_dir="data.tsv" />
