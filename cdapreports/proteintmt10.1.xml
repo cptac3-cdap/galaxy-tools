@@ -8,7 +8,7 @@
     <command>
 <![CDATA[
 cp -f ${input} data.psm &&
-${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_tmt10 ${bygene} --labels ${labels} -d data.psm -o data.tsv ${nocorrection} ${correction}
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_tmt10 ${bygene} --labels ${labels} -d data.psm -o data.tsv ${nocorrection} --correction ${correction}
 ]]>
     </command>
     <inputs>
@@ -25,6 +25,7 @@ ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_tmt10 ${bygene} --labels $
 	<param name="bygene" type="boolean" truevalue="--bygene" falsevalue="" checked="False" label="Gene, not Protein, Quantitation"/>
 	<param name="nocorrection" type="boolean" truevalue="" falsevalue="--nocorrection" checked="True" label="Apply Label Reagent Impurity Correction"/>
 	<param name="correction" type="select" label="Label Reagent Impurity Correction Strategy">
+            <option value="None">None</option>
             <option value="LS">Linear Solve (Original Strategy)</option>
             <option value="LS+Check">Linear Solve + Value Cleanup</option>
             <option value="NNLS">Non-Negative Least Squares</option>
