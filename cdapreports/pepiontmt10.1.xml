@@ -25,7 +25,9 @@ ${nocorrection} --correction ${correction}
             <option value="iTRAQ">iTRAQ-4</option>
             <option value="TMT6">TMT-6</option>
             <option value="TMT10" selected="true">TMT-10</option>
+            <option value="TMT10+2">TMT-10+2</option>
             <option value="TMT11">TMT-11</option>
+            <option value="TMT11+2">TMT-11+2</option>
             <option value="TMT16">TMT-16</option>
             <option value="TMT16+2">TMT-16+2</option>
             <option value="TMT18">TMT-18</option>
