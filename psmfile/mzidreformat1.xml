@@ -20,7 +20,8 @@
 	#end if
         ${__tool_directory__}/../lib/cptac3-cdap/cptac-mzid/cptacmzid/psmextract.sh
 	     --seqdb "\$SEQDB" --seqdir . --format ${parser} ${input.name} --cdap "${advanced.cdapversion}"
-        | ${__tool_directory__}/../lib/cptac3-cdap/cptac-mzid/cptacmzid/textpsm2mzid 2>&1 | fgrep -v HexN | gzip -9 -c > ${output}
+        | ${__tool_directory__}/../lib/cptac3-cdap/cptac-mzid/cptacmzid/textpsm2mzid 2>&1 | fgrep -v HexN | gzip -9 -c > ${output} &&
+         test "`zfgrep '</SpectrumIdentificationItem>' ${output} | wc -l`" = "`fgrep -v QueryPrecursorMz ${input} | wc -l`"
 ]]>
     </command>
     <inputs>

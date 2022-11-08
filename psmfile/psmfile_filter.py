@@ -87,8 +87,8 @@ for l in labeling_metadata.splitlines():
     nextratags = 0
     if ',' in row['label']:
         nextratags = int(row['label'].split(',')[1])
-    row['fulltags'] = [ row['prefix'] + t for t in row['tags'][:-nextratags] ] + \
-                      [ re.sub(r'[0-9]','X',row['prefix']) + t for t in row['tags'][-nextratags:] ]
+    row['fulltags'] = [ row['prefix'] + t for t in row['tags'][:(len(row['tags'])-nextratags)] ] + \
+                      [ re.sub(r'[0-9]','X',row['prefix']) + t for t in row['tags'][len(row['tags'])-nextratags:] ]
     row['ntags'] = len(row['tags'])
     labelingmd[row['option']] = row
 
