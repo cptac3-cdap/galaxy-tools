@@ -28,7 +28,7 @@ MZIDGZ="$2"
 MSGF=`getmzidversion "MS-GF+" $MZIDGZ`
 CPTAC_CDAP=`getmzidversion "CPTAC-CDAP" $MZIDGZ`
 CPTAC_DCC_MZID=`getmzidversion "CPTAC-DCC:mzIdentML" $MZIDGZ`
-PWIZ2=`getmzidversion "ProteomeWizard" $MZIDGZ`
+PWIZ2=`getmzidversion "ProteoWizard" $MZIDGZ`
 
 MSGFID="$3"
 SEQDB=`fgrep '<SearchDatabase ' $MSGFID | sed -e 's/^.*location="//' -e 's/" .*$//' -e 's/^.*\///'`
@@ -40,6 +40,6 @@ echo "CPTAC-MZID:" $CPTAC_MZID
 echo "CPTAC-DCC mzIdentML:" $CPTAC_DCC_MZID
 echo "CPTAC CDAP:" $CPTAC_CDAP
 echo "msconvert ProteoWizard:" $PWIZ1
-echo "text2psm ProteoWizard:" $PWIZ2
+echo "textpsm2mzid ProteoWizard:" $PWIZ2
 echo "MS-GF+:" $MSGF
 echo "Search Database:" $SEQDB
