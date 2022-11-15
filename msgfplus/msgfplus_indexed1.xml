@@ -69,8 +69,10 @@
             -n $advanced.n
             -addFeatures $advanced.addFeatures 
 	    -verbose 1" &&
-        echo "\$CMD" > '$stdout' && 
-        head Mods.txt >> '$stdout' &&
+        echo "COMMAND-LINE: \$CMD" > '$stdout' && 
+        echo "MODS:" >> '$stdout' &&
+        cat Mods.txt >> '$stdout' &&
+        echo "" >> '$stdout' &&
         \$CMD | tee -a '$stdout' && 
 	test -s '$output_name' && 
 	mv -f '$output_name' '$output'

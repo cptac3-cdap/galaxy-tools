@@ -41,7 +41,7 @@ MSGFID="$3"
 SEQDB=`fgrep '<SearchDatabase ' $MSGFID | sed -e 's/^.*location="//' -e 's/" .*$//' -e 's/^.*\///'`
 
 MSGFLOG="$4"
-MSGFCMD=`head -n 1 $MSGFLOG`
+MSGFCMD=`grep "^COMMAND-LINE: " $MSGFLOG | sed 's/^[^ ]* //'`
 
 echo "CPTAC-Galaxy:" $CPTAC_GALAXY
 echo "CPTAC-Tools:" $CPTAC_TOOLS
