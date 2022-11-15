@@ -4,12 +4,13 @@
     </stdio>
     <command>
     <![CDATA[
-    sh ${__tool_directory__}/psmversion.sh "${mzmlinput}" "${mzidinput}" "${msgfidinput}" > "${psmversion}"
+    sh ${__tool_directory__}/psmversion.sh "${mzmlinput}" "${mzidinput}" "${msgfidinput}" "${msgfloginput}" > "${psmversion}"
     ]]>
     </command>
     <inputs>
         <param name="mzmlinput" type="data" format="mzml,mzml.gz" label="mzML Spectra"/>
         <param name="msgfidinput" type="data" format="mzid,mzid.gz" label="MS-GF+ PSMs"/>
+        <param name="msgfloginput" type="data" format="txt" label="MS-GF+ Logfile"/>
         <param name="mzidinput" type="data" format="mzid,mzid.gz" label="mzIdentML PSMs"/>
     </inputs>
     <outputs> 

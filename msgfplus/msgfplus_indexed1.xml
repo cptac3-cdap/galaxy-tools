@@ -48,7 +48,7 @@
 	  TDA=1 &&
 	#end if
 	memory="$advanced.memory" &&
-        java -Xmx\$memory -jar \$msgfjar
+        CMD="java -Xmx\$memory -jar \$msgfjar
             -s '$input_name'
             -d '${seqdb.fields.path}'
             -thread \${GALAXY_SLOTS:-1}
@@ -68,7 +68,10 @@
             -maxCharge $advanced.maxCharge
             -n $advanced.n
             -addFeatures $advanced.addFeatures 
-	    -verbose 1 | tee -a '$stdout' && 
+	    -verbose 1" &&
+        echo "$CMD" > '$stdout' && 
+        head Mods.txt >> '$stdout' &&
+        $CMD | tee -a '$stdout' && 
 	test -s '$output_name' && 
 	mv -f '$output_name' '$output'
 ]]>
