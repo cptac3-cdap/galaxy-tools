@@ -20,8 +20,33 @@ for arg in sys.argv[6:]:
         opts[arg] = True
 # print(opts)
 
-promsdata = defaultdict(lambda: ('0','0.00000000','0'))
+proms_format = None
 if proms not in ("None","",None):
+    proms_format = True
+    firstword = open(proms).read(128).split()[0]
+    if firstword == "Scan":
+        proms_format = False
+
+promsdata = defaultdict(lambda: ('0','0.00000000','0'))
+if proms_format == False:
+    maxarea = 0
+    for row in csv.DictReader(open(proms),dialect='excel-tab'):
+        scan = int(row['Scan'])
+        area = row['Area']
+        rt = row['RT']
+        status = int(row['Status'].split()[0])
+        if status != 0:
+            continue
+        if float(area) <= 0:
+            continue
+        if float(area) > maxarea:
+	    maxarea = float(area)
+        promsdata[scan] = (area,None,rt)
+    for scan in promsdata:
+        promsdata[scan] = (promsdata[scan][0],"%.8f"%(float(promsdata[scan][0])/maxarea,),promsdata[scan][2])
+
+if proms_format == True:
+    promsdata = defaultdict(lambda: ('0','0.00000000','0'))
     h = open(proms)
     sec7 = False
     for l in h:
@@ -49,7 +74,12 @@ itraq     iTRAQ    iTRAQ    114 115 116 117
 itraq4    iTRAQ    iTRAQ    114 115 116 117
 tmt6      TMT6     TMT6-    126 127 128 129 130 131
 tmt10     TMT10    TMT10-   126 127N 127C 128N 128C 129N 129C 130N 130C 131
+tmt10+2   TMT10,+2 TMT10-   126 127N 127C 128N 128C 129N 129C 130N 130C 131 131C 132N
 tmt11     TMT11    TMT11-   126C 127N 127C 128N 128C 129N 129C 130N 130C 131N 131C
+tmt11+2   TMT11,+2 TMT11-   126C 127N 127C 128N 128C 129N 129C 130N 130C 131N 131C 132N 132C
+tmt16     TMT16    TMT16-   126C 127N 127C 128N 128C 129N 129C 130N 130C 131N 131C 132N 132C 133N 133C 134N              
+tmt16+2   TMT16,+2 TMT16-   126C 127N 127C 128N 128C 129N 129C 130N 130C 131N 131C 132N 132C 133N 133C 134N 134C 135N
+tmt18     TMT18    TMT18-   126C 127N 127C 128N 128C 129N 129C 130N 130C 131N 131C 132N 132C 133N 133C 134N 134C 135N    
 """
 
 labelingmd = dict()
@@ -62,6 +92,11 @@ for l in labeling_metadata.splitlines():
         continue
     row = dict(zip(headers,l.split(None,3)))
     row['tags'] = row['tags'].split()
+    nextratags = 0
+    if ',' in row['label']:
+        nextratags = int(row['label'].split(',')[1])
+    row['fulltags'] = [ row['prefix'] + t for t in row['tags'][:(len(row['tags'])-nextratags)] ] + \
+                      [ re.sub(r'[0-9]','X',row['prefix']) + t for t in row['tags'][len(row['tags'])-nextratags:] ]
     row['ntags'] = len(row['tags'])
     labelingmd[row['option']] = row
 
@@ -108,11 +143,11 @@ if reporterfile not in ("None","",None):
         data = dict()
         if max(abvals) == 0:
             assert dmzhwhm.count('?') == len(dmzhwhm) and abfract == None
-            for t,abi,di in zip(lmd['tags'],ab,dmzhwhm):
-                data[lmd['prefix']+t] = abi
+            for t,abi,di in zip(lmd['fulltags'],ab,dmzhwhm):
+                data[t] = abi
         else:
-            for t,abi,di in zip(lmd['tags'],ab,dmzhwhm):
-                data[lmd['prefix']+t] = "%s/%s"%(abi,di)
+            for t,abi,di in zip(lmd['fulltags'],ab,dmzhwhm):
+                data[t] = "%s/%s"%(abi,di)
             data[lmd['prefix']+"FractionOfTotalAb"] = abfract
         data[lmd['prefix']+"Abundance"] = abvals
         data[lmd['prefix']+"dMz/HWHM"] = dmzhwhmvals
@@ -421,6 +456,7 @@ def manipulate_rows(rows,qvalthr):
             if k in r:
                 r[v] = r[k]
 
+        abvals = []; dmzhwhmvals = []; ppvals = None;
         if reporterdata:
             if r['ScanNum'] in reporterdata:
                 lmd = labelingmd[opts['labeling']]
@@ -429,8 +465,8 @@ def manipulate_rows(rows,qvalthr):
                 dmzhwhmvals = reporterdata[r['ScanNum']][lmd['prefix']+'dMz/HWHM']
             else:
                 lmd = labelingmd[opts['labeling']]
-                for t in lmd['tags']:
-                    r[lmd['prefix']+t] = 0
+                for t in lmd['fulltags']:
+                    r[t] = 0
                 r[lmd['prefix']+'TotalAb'] = 0
                 abvals = [0]*len(lmd['tags']); dmzhwhmvals = [];
 
@@ -540,8 +576,8 @@ if proms not in ("None","",None):
 # Append Reporter Ion headers at the end
 if opts.get('labeling'):
     lmd = labelingmd[opts['labeling']]
-    for t in lmd['tags']:
-        outheaders.append(lmd['prefix']+t)
+    for t in lmd['fulltags']:
+        outheaders.append(t)
     outheaders.append(lmd['prefix']+'Flags')
     outheaders.append(lmd['prefix']+'FractionOfTotalAb')
     outheaders.append(lmd['prefix']+'TotalAb')
