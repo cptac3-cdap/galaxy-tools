@@ -69,7 +69,7 @@
             -n $advanced.n
             -addFeatures $advanced.addFeatures 
 	    -verbose 1" &&
-        echo "COMMAND-LINE: \$CMD" > '$stdout' && 
+        echo "COMMAND-LINE: \$CMD" | sed -e 's%$input_name%<spectra>%' -e 's%${seqdb.fields.path}%<seqdb>%' > '$stdout' && 
         echo "MODS:" >> '$stdout' &&
         cat Mods.txt >> '$stdout' &&
         echo "" >> '$stdout' &&
