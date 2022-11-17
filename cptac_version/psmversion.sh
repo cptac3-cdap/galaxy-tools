@@ -39,6 +39,7 @@ UNIPROT=`getmziddbversion "UniProt:Human" $MZIDGZ`
 
 MSGFID="$3"
 SEQDB=`fgrep '<SearchDatabase ' $MSGFID | sed -e 's/^.*location="//' -e 's/" .*$//' -e 's/^.*\///'`
+SPEC=`fgrep '<SpectraData ' $MSGFID | sed -e 's/^.*location="//' -e 's/" .*$//' -e 's/^.*\///'`
 
 MSGFLOG="$4"
 MSGFCMD=`grep "^COMMAND-LINE: " $MSGFLOG | sed 's/^[^ ]* //'`
@@ -53,6 +54,7 @@ echo "msconvert ProteoWizard:" $PWIZ1
 echo "textpsm2mzid ProteoWizard:" $PWIZ2
 echo "MS-GF+:" $MSGF
 echo "Search Database:" $SEQDB
+echo "Spectra File:" $SPEC
 echo "MS-GF+ CMD:" $MSGFCMD
 echo "mzIdentML RefSeq:" $REFSEQ
 echo "mzIdentML UniProt:" $UNIPROT
