@@ -63,6 +63,7 @@
         <tool id="ProMS_pulsar" destination="win_pulsar" action="replace" match="id"/>
 	<tool id="cptacraw" destination="local_runner" action="replace" match="id"/>
 	<tool id="psmversions" destination="local_runner" action="replace" match="id"/>
+	<tool id="mzmlversions" destination="local_runner" action="replace" match="id"/>
 	<tool id="data_manager_pulsar_nodes_local" destination="local_runner" action="replace" match="id"/>
 	<tool id="data_manager_pulsar_nodes_remove" destination="local_runner" action="replace" match="id"/>
 	<tool id="data_manager_pulsar_nodes_shutdown" destination="local_runner" action="replace" match="id"/>

@@ -20,20 +20,20 @@ def getdccfile(path,filename):
     if os.path.exists(filename):
         os.unlink(filename)
     args = [os.path.join(cptacdccbase,'cptacdcc.sh'),
-	    '-q',
-	    'get',
-	    os.path.join(path,filename)
-	    ]
+            '-q',
+            'get',
+            os.path.join(path,filename)
+            ]
     attempt = 0
     while attempt < maxattempts:
         attempt += 1
         retcode = subprocess.call(args,stdin=None,shell=False)
         if retcode == 0 and os.path.exists(filename):
             break
-        print >>sys.stderr, "DCC Path: %s, Failed Attempt: %d"%(os.path.join(path,filename),attempt)
+        print("DCC Path: %s, Failed Attempt: %d"%(os.path.join(path,filename),attempt),file=sys.stderr)
         time.sleep(10)
     if retcode != 0 or not os.path.exists(filename):
-        print >>sys.stderr, "DCC Path: %s, Download Failed."%(os.path.join(path,filename),)
+        print("DCC Path: %s, Download Failed."%(os.path.join(path,filename),),file=sys.stderr)
     assert(retcode == 0)
     assert(os.path.exists(filename))
 
@@ -41,20 +41,20 @@ def getdcctrfile(path,filename):
     if os.path.exists(filename):
         os.unlink(filename)
     args = [os.path.join(cptacdccbase,'cptactransfer.sh'),
-	    '-q',
-	    'get',
-	    os.path.join(path,filename)
-	    ]
+            '-q',
+            'get',
+            os.path.join(path,filename)
+            ]
     attempt = 0
     while attempt < maxattempts:
         attempt += 1
         retcode = subprocess.call(args,stdin=None,shell=False)
         if retcode == 0 and os.path.exists(filename):
             break
-        print >>sys.stderr, "DCC XFER Path: %s, Failed Attempt: %d"%(os.path.join(path,filename),attempt)
+        print("DCC XFER Path: %s, Failed Attempt: %d"%(os.path.join(path,filename),attempt),file=sys.stderr)
         time.sleep(10)
     if retcode != 0 or not os.path.exists(filename):
-        print >>sys.stderr, "DCC XFER Path: %s, Download Failed."%(os.path.join(path,filename),)
+        print("DCC XFER Path: %s, Download Failed."%(os.path.join(path,filename),),file=sys.stderr)
     assert(retcode == 0)
     assert(os.path.exists(filename))
 
@@ -62,42 +62,42 @@ def getportalfile(path,filename):
     if os.path.exists(filename):
         os.unlink(filename)
     args = [os.path.join(cptacdccbase,'cptacpublic.sh'),
-	    '--accept',
-	    '-q',
-	    'get',
-	    os.path.join(path,filename)
-	    ]
+            '--accept',
+            '-q',
+            'get',
+            os.path.join(path,filename)
+            ]
     attempt = 0
     while attempt < maxattempts:
         attempt += 1
         retcode = subprocess.call(args,stdin=None,shell=False)
         if retcode == 0 and os.path.exists(filename):
             break
-        print >>sys.stderr, "CPTAC Portal Path: %s, Failed Attempt: %d"%(os.path.join(path,filename),attempt)
+        print("CPTAC Portal Path: %s, Failed Attempt: %d"%(os.path.join(path,filename),attempt),file=sys.stderr)
         time.sleep(10)
     if retcode != 0 or not os.path.exists(filename):
-        print >>sys.stderr, "CPTAC Portal Path: %s, Download Failed."%(os.path.join(path,filename),)
+        print("CPTAC Portal Path: %s, Download Failed."%(os.path.join(path,filename),),file=sys.stderr)
     assert(retcode == 0)
     assert(os.path.exists(filename))
 
 def geturlfile(url,filename):
     if os.path.exists(filename):
-	os.unlink(filename)
+        os.unlink(filename)
     attempt = 0                                                                                               
     while attempt < maxattempts:                                                                              
         attempt += 1                                                                                          
-	exception = False
-	try:
-            urllib.urlretrieve(url,filename)
+        exception = False
+        try:
+            urllib.request.urlretrieve(url,filename)
             if os.path.exists(filename):                                                         
                 break
-	except Exception, e:
-	    traceback.print_exc()
-	    exception = True
-        print >>sys.stderr, "URL: %s, Failed Attempt: %d"%(url,attempt)
+        except Exception as e:
+            traceback.print_exc()
+            exception = True
+        print("URL: %s, Failed Attempt: %d"%(url,attempt),file=sys.stderr)
         time.sleep(10)
     if exception or not os.path.exists(filename):                                                          
-        print >>sys.stderr, "URL: %s, Download Failed."%(url,)
+        print("URL: %s, Download Failed."%(url,),file=sys.stderr)
     assert(os.path.exists(filename))    
     assert(not exception)
 
@@ -105,11 +105,11 @@ def getrclonefile(remote,path,filename):
     if os.path.exists(filename):
         os.unlink(filename)
     args = [os.path.join(rclonebase,'rclone.sh'),
-	    remote,os.path.join(path,filename),
-	    ]
+            remote,os.path.join(path,filename),
+            ]
     retcode = subprocess.call(args,stdin=None,shell=False)
     if retcode != 0 or not os.path.exists(filename):
-	print >>sys.stderr, "rclone download failed: %s:%s"%(remote,os.path.join(path,filename),)
+        print("rclone download failed: %s:%s"%(remote,os.path.join(path,filename),),file=sys.stderr)
     assert(retcode == 0)
     assert(os.path.exists(filename))
 
@@ -117,11 +117,11 @@ def gets3file(path,filename):
     if os.path.exists(filename):
         os.unlink(filename)
     args = [os.path.join(rclonebase,'s3.sh'),
-	    os.path.join(path,filename),
-	    ]
+            os.path.join(path,filename),
+            ]
     retcode = subprocess.call(args,stdin=None,shell=False)
     if retcode != 0 or not os.path.exists(filename):
-	print >>sys.stderr, "S3 download failed: %s"%(os.path.join(path,filename),)
+        print("S3 download failed: %s"%(os.path.join(path,filename),),file=sys.stderr)
     assert(retcode == 0)
     assert(os.path.exists(filename))
 
@@ -138,14 +138,14 @@ def getpdcfile(studyid,fileid,filename,resource):
     if resource == "pdc":
         pdc = PDC()
     elif resource == "pdcdev":
-	pdc = PDCDEV()
+        pdc = PDCDEV()
     else:
-	raise RuntimeError("Bad PDC resource string: %s."%(resource,))
+        raise RuntimeError("Bad PDC resource string: %s."%(resource,))
     thefile = None
     for f in pdc._filesPerStudy(study_id=studyid,file_name=filename):
-	if f['file_name'] == filename:
-	    thefile = f
-	    break
+        if f['file_name'] == filename:
+            thefile = f
+            break
     assert thefile , "Can't find PDC file: study_id=%s file_id=%s filename=%s"%(studyid,fileid,filename)
     signedurl = thefile['signedUrl']
     geturlfile(signedurl,filename)
@@ -155,11 +155,11 @@ def gethash(filename):
     sha1hash = hashlib.sha1()
     h = open(filename,'rb')
     while True:
-	buffer = h.read(8192)
-	if not buffer:
-	    break
-	md5hash.update(buffer)
-	sha1hash.update(buffer)
+        buffer = h.read(8192)
+        if not buffer:
+            break
+        md5hash.update(buffer)
+        sha1hash.update(buffer)
     h.close()
     size = os.path.getsize(filename)
     md5hash = md5hash.hexdigest().lower()
@@ -169,14 +169,14 @@ def gethash(filename):
 if resource in ("dcc","dcctr"):
     transfer = 0
     if resource == "dcctr":
-	transfer = 1
+        transfer = 1
     password = None
     h = open(os.path.join(tooldata,"cptacdcc_login.loc"))
     for l in h:
         sl = l.strip().split('\t')
         if sl[0] == user and int(sl[3]) == transfer:
             password = sl[2]
-	    break
+            break
     h.close()
     assert password != None, "Cannot find password for username %s in CPTAC DCC credentials"%(user,)
     if not transfer:
@@ -184,11 +184,11 @@ if resource in ("dcc","dcctr"):
     else:
         inifile = "cptactransfer.ini"
     wh = open(inifile,'w')
-    print >>wh, """
+    print("""
 [Portal]
 User = %s
 Password = %s
-"""%(user,password.replace('%','%%'))
+"""%(user,password.replace('%','%%')),file=wh)
     wh.close()
 
     dccpath,filename = os.path.split(input)
@@ -248,9 +248,9 @@ elif resource.split('/')[0] == "rclone":
     if '/' in resource:
         resource,remote = resource.split('/',1)
     elif ':' in input:
-	remote,input = input.split(':',1)
+        remote,input = input.split(':',1)
     else:
-	raise RuntimeError("Can't determine rclone remote")
+        raise RuntimeError("Can't determine rclone remote")
     dccpath,filename = os.path.split(input)
     getrclonefile(remote,dccpath,filename)
     md5,sha1,size = gethash(filename)
