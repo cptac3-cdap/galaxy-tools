@@ -40,7 +40,7 @@ if samplefile and samplefile != "None":
     wh.close()
 
 for f in dfc:
-    args = [ "python", cptacraw, f['resource'], f['filepath'], 
+    args = [ "python3", cptacraw, f['resource'], f['filepath'], 
 	     f['filename'], f['md5hash'], f['sha1hash'], f['sizehash'], 
 	     f['username'], tooldatapath ]
     retcode = subprocess.call(args, stdin=None, shell=False)
