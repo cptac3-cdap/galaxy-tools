@@ -1,0 +1,16 @@
+<tool id="mzmlversions" name="mzML Analysis Versions" version="1.0">
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Job Failed" />
+    </stdio>
+    <command>
+    <![CDATA[
+    sh ${__tool_directory__}/mzmlversion.sh "${mzmlinput}" > "${mzmlversion}"
+    ]]>
+    </command>
+    <inputs>
+        <param name="mzmlinput" type="data" format="mzml,mzml.gz" label="mzML Spectra"/>
+    </inputs>
+    <outputs> 
+        <data format="txt" name="mzmlversion" label="${mzmlinput.name.split('.mzML',1)[0]}.versions.log"/>
+    </outputs>
+</tool>

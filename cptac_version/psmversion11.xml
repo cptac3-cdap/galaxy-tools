@@ -1,0 +1,28 @@
+<tool id="psmversions" name="PSM Analysis Versions" version="1.1">
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Job Failed" />
+    </stdio>
+    <command>
+    <![CDATA[
+    sh ${__tool_directory__}/psmversion11.sh "${mzmlinput}" "${mzidinput}" "${msgfidinput}" "${msgfloginput}" 
+    #for $l in $extralines:
+      #if $l 
+       "${l.line}"
+      #end if
+    #end for
+    > "${psmversion}"
+    ]]>
+    </command>
+    <inputs>
+        <param name="mzmlinput" type="data" format="mzml,mzml.gz" label="mzML Spectra"/>
+        <param name="msgfidinput" type="data" format="mzid,mzid.gz" label="MS-GF+ PSMs"/>
+        <param name="msgfloginput" type="data" format="txt" label="MS-GF+ Logfile"/>
+        <param name="mzidinput" type="data" format="mzid,mzid.gz" label="mzIdentML PSMs"/>
+        <repeat name="extralines" title="Extra versions">
+          <param name="line" optional="true" label="Version line:"/>
+        </repeat>
+    </inputs>
+    <outputs> 
+        <data format="txt" name="psmversion" label="${mzmlinput.name.split('.mzML',1)[0]}.versions.log"/>
+    </outputs>
+</tool>
