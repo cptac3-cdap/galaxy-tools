@@ -6,7 +6,7 @@
     <![CDATA[
     sh ${__tool_directory__}/psmversion11.sh "${mzmlinput}" "${mzidinput}" "${msgfidinput}" "${msgfloginput}" 
     #for $l in $extralines:
-      #if $l 
+      #if $l and $l.line.strip():
        "${l.line}"
       #end if
     #end for
@@ -19,7 +19,7 @@
         <param name="msgfloginput" type="data" format="txt" label="MS-GF+ Logfile"/>
         <param name="mzidinput" type="data" format="mzid,mzid.gz" label="mzIdentML PSMs"/>
         <repeat name="extralines" title="Extra versions">
-          <param name="line" optional="true" label="Version line:"/>
+          <param name="line" type="text" optional="true" label="Version line:"/>
         </repeat>
     </inputs>
     <outputs> 
