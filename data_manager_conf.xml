@@ -81,8 +81,9 @@
             <output>
                 <column name="value" />
                 <column name="display_name" />
+                <column name="username" />
                 <column name="password" />
-                <column name="transfer" />
+                <column name="site" />
             </output>
         </data_table>
     </data_manager>

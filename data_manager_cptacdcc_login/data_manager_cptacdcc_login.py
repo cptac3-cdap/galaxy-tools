@@ -30,10 +30,11 @@ def main():
     filename = args[0]
     params = from_json_string( open( filename ).read() )
 
-    data_table_entry = dict(display_name=params['param_dict']['user'], 
+    data_table_entry = dict(username=params['param_dict']['user'],
                             password=params['param_dict']['password'],
-                            value=params['param_dict']['user'],
-			    transfer=str(int(params['param_dict'].get('transfer',0))))
+                            value=params['param_dict']['user']+"@"+params['param_dict']['site'],
+                            display_name=params['param_dict']['user']+"@"+params['param_dict']['site'],
+			    site=params['param_dict']['site'])
  
     data_manager_dict = add_data_table_entry( {}, 'cptacdcc_login', data_table_entry )
 

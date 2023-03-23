@@ -14,7 +14,7 @@
 	<param name="user" type="select" label="CPTAC-DCC User">
             <options from_data_table="cptacdcc_login">
                 <column name="display_name" index="1"/>
-                <column name="value" index="0"/>
+                <column name="username" index="0"/>
             </options>
         </param>
     </inputs>

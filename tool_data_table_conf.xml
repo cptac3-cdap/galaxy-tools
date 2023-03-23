@@ -20,7 +20,7 @@
     </table>
     <!-- CPTAC-DCC login credentials -->
     <table name="cptacdcc_login" comment_char="#">
-        <columns>value, display_name, password, transfer</columns>
+        <columns>value, display_name, username, password, site</columns>
         <file path="XXXXX_GALAXY_TOOLDATA_XXXXX/cptacdcc_login.loc" />
     </table>
     <!-- Pulsar AMQP URLs -->

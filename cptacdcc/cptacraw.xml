@@ -2,22 +2,23 @@
     <command interpreter="python3">cptacraw.py "${resource}" "${input}" "${output}" "${md5hash}" "${sha1hash}" "${sizehash}" "${user}" "${__tool_data_path__}" </command>
     <inputs>
 	<param name="resource" type="select" label="Resource">
-          <option value="portal">CPTAC Public Portal (Aspera)</option>
-          <option value="portalurl">CPTAC Public Portal (HTTPS)</option>
+          <!-- <option value="portal">CPTAC Public Portal (Aspera)</option> -->
+          <!-- <option value="portalurl">CPTAC Public Portal (HTTPS)</option> -->
           <option value="dcc">CPTAC DCC (Aspera)</option>
           <option value="dcctr">CPTAC DCC Direct Login (Aspera)</option>
           <option value="pdc">Proteomic Data Commons</option>
           <option value="pdcdev">Proteomic Data Commons (DEV)</option>
+          <option value="panorama">PanoramaWeb</option>
           <option value="s3">AWS S3 Bucket</option>
           <option value="rclone">Cloud Storage (rclone)</option>
           <option value="url">Public URL</option>
           <option value="local">Galaxy Filesystem</option>
         </param>
-	<param name="user" type="text" label="CPTAC-DCC User"/>
+	<param name="user" type="text" label="CPTAC-DCC / Other Username">
+            <sanitizer sanitize="false"/>
+        </param>
         <param name="input" type="text" label="Path/URL">
-          <sanitizer>
-            <valid initial="string.printable"/>
-          </sanitizer>
+            <sanitizer sanitize="false"/>
         </param>
         <param name="md5hash" type="text" label="MD5 Hash"/>
         <param name="sha1hash" type="text" label="SHA1 Hash"/>

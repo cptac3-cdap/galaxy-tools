@@ -1,7 +1,9 @@
 #!/bin/env python27
 
 import sys, os, os.path
-import subprocess, hashlib, shutil, urllib, time, traceback
+import subprocess, hashlib, shutil, time, traceback
+import urllib.request
+from urllib.parse import quote as urlquote
 
 
 base = os.path.split(os.path.split(os.path.abspath(sys.argv[0]))[0])[0]
@@ -125,6 +127,18 @@ def gets3file(path,filename):
     assert(retcode == 0)
     assert(os.path.exists(filename))
 
+def getpanoramafile(url,filename,user,password):
+    if os.path.exists(filename):
+        os.unlink(filename)
+    url = 'https://%s:%s@panoramaweb.org/_webdav/'%(urlquote(user),urlquote(password)) + urlquote(url).lstrip('/')
+    args = ["/usr/bin/wget","-q","-O",filename,url]
+    # print(args,file=sys.stderr)
+    retcode = subprocess.call(args,stdin=None,shell=False)
+    if retcode != 0 or not os.path.exists(filename):
+        print("Panorama download failed: %s"%(url,),file=sys.stderr)
+    assert(retcode == 0)
+    assert(os.path.exists(filename))
+
 def getlocalfile(path,filename):
     if os.path.exists(filename):
         os.unlink(filename)
@@ -171,13 +185,21 @@ if resource in ("dcc","dcctr"):
     if resource == "dcctr":
         transfer = 1
     password = None
+    password1 = None
     h = open(os.path.join(tooldata,"cptacdcc_login.loc"))
     for l in h:
         sl = l.strip().split('\t')
-        if sl[0] == user and int(sl[3]) == transfer:
-            password = sl[2]
+        if sl[2] == user and sl[4] == resource:
+            password = sl[3]
             break
+        elif not user.strip() and sl[4] == resource:
+            assert password1 == None, "More than one account for ressource %s"%(resource,)
+            password1 = sl[3]
+            user1 = sl[2]
     h.close()
+    if not password and password1:
+        password = password1
+        user = user1
     assert password != None, "Cannot find password for username %s in CPTAC DCC credentials"%(user,)
     if not transfer:
         inifile = "cptacdcc.ini"
@@ -227,6 +249,33 @@ elif resource == "url":
 
     dccpath,filename = os.path.split(input)
     geturlfile(dccpath+"/"+filename,filename)
+    md5,sha1,size = gethash(filename)
+    assert(md5hash == "" or md5hash == md5), "File MD5 and provided MD5 do not match: %s"%(input)
+    assert(sha1hash == "" or sha1hash == sha1), "File SHA1 and provided SHA1 do not match: %s"%(input)
+    assert(sizehash == "" or sizehash == size), "File size and provided size do not match: %s"%(input)
+    shutil.move(filename,output)
+
+elif resource == "panorama":
+
+    password = None
+    password1 = None
+    h = open(os.path.join(tooldata,"cptacdcc_login.loc"))
+    for l in h:
+        sl = l.strip().split('\t')
+        if sl[2] == user and sl[4] == resource:
+            password = sl[3]
+            break
+        elif not user.strip() and sl[4] == resource:
+            assert password1 == None, "More than one account for ressource %s"%(resource,)
+            password1 = sl[3]
+            user1 = sl[2]
+    h.close()
+    if not password and password1:
+        password = password1
+        user = user1
+    assert password != None, "Cannot find password for username %s in Panorama credentials"%(user,)
+    dccpath,filename = os.path.split(input)
+    getpanoramafile(input,filename,user,password)
     md5,sha1,size = gethash(filename)
     assert(md5hash == "" or md5hash == md5), "File MD5 and provided MD5 do not match: %s"%(input)
     assert(sha1hash == "" or sha1hash == sha1), "File SHA1 and provided SHA1 do not match: %s"%(input)

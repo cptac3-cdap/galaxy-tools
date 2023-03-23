@@ -40,8 +40,8 @@ def gethash(filename):
 h = open(os.path.join(tooldata,"cptacdcc_login.loc"))
 for l in h:
     sl = l.strip().split('\t',2)
-    if sl[0] == user:
-	password = sl[2]
+    if sl[2] == user and sl[4] == "dcc":
+	password = sl[3]
 h.close()
 wh = open("cptacdcc.ini",'w')
 print >>wh, """

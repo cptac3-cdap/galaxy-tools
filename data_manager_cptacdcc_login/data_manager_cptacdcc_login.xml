@@ -1,14 +1,18 @@
-<tool id="data_manager_cptacdcc_login" name="Provide CPTAC-DCC login credentials" version="1.0" tool_type="manage_data">
+<tool id="data_manager_cptacdcc_login" name="Provide CPTAC-DCC and other login credentials" version="1.0" tool_type="manage_data">
     <description>fetching</description>
     <command interpreter="python">data_manager_cptacdcc_login.py "${out_file}"</command>
     <inputs>
-        <param name="user" type="text" label="Username" />
-	<param name="password" type="text" label="Password" >
-	  <sanitizer>
-	    <valid initial="string.printable"/>
-	  </sanitizer>
+        <param name="user" type="text" label="Username" >
+            <sanitizer sanitize="false"/>
         </param>
-	<param type="boolean" name="transfer" truevalue="1" falsevalue="0" label="Direct Login?" checked="False"/>
+	<param name="password" type="text" label="Password">
+            <sanitizer sanitize="false"/>
+        </param>
+        <param name="site" type="select" label="Credential type">
+              <option value="dcc" selected="True">CPTAC-DCC Website</option>
+              <option value="dcctr">CPTAC-DCC Transfer Server Direct Login</option>
+              <option value="panorama">Panorama</option>
+        </param>
     </inputs>
     <outputs>
         <data name="out_file" format="data_manager_json" />
