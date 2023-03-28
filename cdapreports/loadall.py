@@ -17,9 +17,9 @@ credentials = dict()
 h = open(os.path.join(tooldatapath,"cptacdcc_login.loc"))
 for l in h:
     sl = l.strip().split('\t')
-    credentials[sl[0]] = dict(username=sl[0],
-			      password=sl[2],
-			      transfer=(int(sl[3])==1))
+    credentials[sl[0]] = dict(username=sl[2],
+			      password=sl[3],
+			      site=sl[4])
 
 from dfcollection import DatafileCollection
 
