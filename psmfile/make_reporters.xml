@@ -6,7 +6,7 @@
     <command>
 <![CDATA[
 	ln -s ${spectra} ${spectra.name} &&
-    ${__tool_directory__}/../lib/cptac3-cdap/cptac-mzid/cptacmzid/mzml write_reporters ${spectra.name} $labels > ${output}
+    ${__tool_directory__}/../lib/cptac3-cdap/cptac-mzid/cptacmzid/mzml write_reporters ${spectra.name} $ms3$labels > ${output}
 ]]>
     </command>
     <inputs>
@@ -18,6 +18,7 @@
 	      <option value="TMT18">TMT18</option>
 	      <option value="iTRAQ">iTRAQ</option>
         </param>                                                                                               
+        <param name="ms3" type='boolean' truevalue="MS3-" falsevalue="" label="MS3 Reporters" checked="False">
     </inputs>
     <outputs> 
         <data name="output" format="tabular" label="${spectra.name.rsplit('.',2)[0]}.reporters.txt"/>
