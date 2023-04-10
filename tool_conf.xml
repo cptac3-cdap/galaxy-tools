@@ -18,6 +18,7 @@
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/ProMS/ProMS_pulsar.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/psmfile/precursorab.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/psmfile/make_reporters.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/psmfile/make_reporters1.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/psmfile/psmfile_filter.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/psmfile/psmfile_filter1.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/psmfile/add_spec_metadata.xml" />
