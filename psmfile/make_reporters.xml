@@ -6,7 +6,7 @@
     <command>
 <![CDATA[
 	ln -s ${spectra} ${spectra.name} &&
-    ${__tool_directory__}/../lib/cptac3-cdap/cptac-mzid/cptacmzid/mzml write_reporters ${spectra.name} $ms3$labels > ${output}
+    ${__tool_directory__}/../lib/cptac3-cdap/cptac-mzid/cptacmzid/mzml write_reporters ${spectra.name} $labels > ${output}
 ]]>
     </command>
     <inputs>
