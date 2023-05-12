@@ -24,18 +24,14 @@ def uniprot_check(idtag,name,taxid,proteome,reviewed,isoforms):
     idstr = {'source': 'uniprot','idtag': idtag}
     if reviewed == 'reviewed':
         desc.append("SwissProt")
-        urlargs['query'].add('reviewed:yes')
+        urlargs['query'].add('reviewed:true')
         idstr['reviewed'] = 'reviewed'
     elif reviewed == 'all':
         desc.append("UniProt")
     else:
         raise RuntimeError("Bad reviewed parameter value")
     desc.append(name)
-    if proteome == 'complete':
-        desc.append("Complete")
-        urlargs['query'].add('keyword:KW-0181')
-        idstr['proteome'] = 'complete'
-    elif proteome == 'reference':
+    if proteome == 'reference':
         desc.append("Reference")
         urlargs['query'].add('keyword:KW-1185')
         idstr['proteome'] = 'reference'
@@ -45,7 +41,7 @@ def uniprot_check(idtag,name,taxid,proteome,reviewed,isoforms):
         raise RuntimeError("Bad proteome parameter value")
     if isoforms == 'isoforms':
         desc.append('with Isoforms')
-        urlargs['include'] = 'yes'
+        urlargs['includeIsoform'] = 'true'
         idstr['isoforms'] = 'isoforms'
     elif isoforms == 'noisoforms':
         pass
@@ -53,7 +49,7 @@ def uniprot_check(idtag,name,taxid,proteome,reviewed,isoforms):
         raise RuntimeError("Bad isoforms parameter value")
     try:
         taxid = int(taxid)
-        urlargs['query'].add('organism:%d'%taxid)
+        urlargs['query'].add('organism_id:%d'%taxid)
     except (ValueError, TypeError):
         raise RuntimeError("Invalid taxonomy id value")
     idstr['datestr'] = datetime.datetime.now().strftime("%Y%m%d")
@@ -65,9 +61,9 @@ def uniprot_check(idtag,name,taxid,proteome,reviewed,isoforms):
 
 def uniprot_download(idtag,name,taxid,proteome,reviewed,isoforms,targetdir):
     idstr,desc,urlargs,jsonargs = uniprot_check(idtag,name,taxid,proteome,reviewed,isoforms)
-    urlargs['force'] = 'yes'
+    urlargs['force'] = 'true'
     urlargs['format'] = 'fasta'
-    urlargs['compress'] = 'yes'
+    urlargs['compressed'] = 'true'
 
     fasta_filename = os.path.join(targetdir,idstr+".fasta")
 
@@ -76,8 +72,8 @@ def uniprot_download(idtag,name,taxid,proteome,reviewed,isoforms,targetdir):
     assert (not os.path.exists(fasta_filename))
     fasta_writer = open( fasta_filename, 'wb' )
 
-    url = "http://www.uniprot.org/uniprot/?"+urlencode(urlargs)
-    # print url
+    url = "https://rest.uniprot.org/uniprotkb/stream?"+urlencode(urlargs)
+    print url
     
     downloader = urllib2.urlopen(url)
     decompressor = zlib.decompressobj(16+zlib.MAX_WBITS) 

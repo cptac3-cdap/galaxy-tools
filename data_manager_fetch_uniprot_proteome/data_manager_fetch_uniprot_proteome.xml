@@ -11,7 +11,6 @@
         </param>
         <param name="proteome" type="select" label="Proteome:">
           <option value="reference" selected="True">Reference</option>
-          <option value="complete">Complete</option>
           <option value="all">All</option>
         </param>
 	<param type="boolean" name="isoforms" truevalue="isoforms" falsevalue="noisoforms" label="Include Isoforms?" checked="True"/>
