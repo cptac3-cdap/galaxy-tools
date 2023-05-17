@@ -6,6 +6,7 @@
         <param name="source" type="select" label="Source Database">
             <option value="RefSeq">RefSeq</option>
             <option value="UniProt">UniProt</option>
+            <option value="Gencode">Gencode</option>
             <option value="Mixed">Mixed</option>
             <option value="Other">Other</option>
             <option value="Unknown">Unknown</option>

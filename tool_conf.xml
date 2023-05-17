@@ -25,6 +25,7 @@
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/phosphors/phosphors.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/psmfile/mzidreformat.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/psmfile/mzidreformat1.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/psmfile/mzidreformat2.xml" />
     <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cptacdcc/cptacpublic.xml" /> -->
     <!-- <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cptacdcc/cptacdcc.xml" /> -->
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/qcmetrics/qcmetrics.xml" />
