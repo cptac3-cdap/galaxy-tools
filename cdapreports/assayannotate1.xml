@@ -9,7 +9,7 @@
 <![CDATA[
 cp -f ${input} data.psm &&
 ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_assay_annotate1 data.psm 
-#if advanced.assaydate.strip() != ""
+#if $advanced.assaydate.strip() != ""
 ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinAnnotation/CPTAC_Assays-${advanced.assaydate}.csv
 #else
 ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinAnnotation/CPTAC_Assays.csv

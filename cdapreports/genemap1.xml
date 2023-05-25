@@ -9,7 +9,7 @@
 <![CDATA[
 cp -f ${input} data.psm &&
 ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/genemap1 -d data.psm -g 
-#if advanced.genemapdate.strip() != ""
+#if $advanced.genemapdate.strip() != ""
 ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinMapping/${genemap}-${advanced.genemapdate}.csv
 #else
 ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinMapping/${genemap}.csv
