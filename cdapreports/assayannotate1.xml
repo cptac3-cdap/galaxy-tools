@@ -1,0 +1,28 @@
+<tool id="cdapreports_assayannotate" name="Annotate Genes, Proteins, and Peptides with CPTAC Assays" version="1.1">
+    <description>
+       Annotate genes, proteins, and peptides with CPTAC assay identifiers.
+    </description>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Fatal error. Non-zero exit code." />
+    </stdio>
+    <command>
+<![CDATA[
+cp -f ${input} data.psm &&
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_assay_annotate1 data.psm 
+#if advanced.assaydate.strip() != ""
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinAnnotation/CPTAC_Assays-${advanced.assaydate}.csv
+#else
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinAnnotation/CPTAC_Assays.csv
+#end if
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="psmdb" label="PSM Data"/>
+        <section name="advanced" title="Advanced Options">
+            <param name="assaydate" label="Assay Annotations Version" value=""/>
+        </section>
+    </inputs>
+    <outputs>
+        <data name="output" format="psmdb" label="${input.name.rsplit('.',1)[0]}.assays.psm" from_work_dir="data.psm" />
+    </outputs>
+</tool>

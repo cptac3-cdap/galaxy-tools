@@ -27,6 +27,7 @@ python3 ${__tool_directory__}/loadall.py ${input} "${sample}" "${labels[0].input
             <when value="--alignments Load">
                 <param name="pracc" type="select" label="Protein Accessions">
                     <option value="Auto" selected="True">Auto</option>
+                    <option value="GencodeENSPRefSeqUniProtIsoformCPTAC4Contaminant">GencodeENSPRefSeqUniProtIsoformCPTAC4Contaminant</option>
                     <option value="RefSeqUniProtIsoformBroadArtifact">RefSeqUniProtIsoformBroadArtifact</option>
                     <option value="RefSeqUniProtIsoform">RefSeqUniProtIsoform</option>
                     <option value="RefSeq">RefSeq</option>
