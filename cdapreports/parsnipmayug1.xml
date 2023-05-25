@@ -53,7 +53,7 @@ awk -v F="\$DATA" -v T="\$FDR" '{printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\n",F,T,$4,$5
         </param>
         <param name="pracc" type="text" value="" label="Gene Name Heuristic"/>
         <section name="advanced" title="Advanced Options">
-            <param name="genemapdate" label="Gene-Protein Mapping Version" value=""/>
+            <param name="genemapdate" label="Gene-Protein Mapping Version" type="text" value=""/>
         </section>
     </inputs>
     <outputs>

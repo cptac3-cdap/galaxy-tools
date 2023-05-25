@@ -57,7 +57,7 @@ python ${__tool_directory__}/parsnipfdr.py data.psm params.txt
         </param>
         <param name="pracc" type="text" value="" label="Gene Name Heuristic"/>
 	<section name="advanced" title="Advanced Options">
-            <param name="genemapdate" label="Gene-Protein Mapping Version" value=""/>
+            <param name="genemapdate" label="Gene-Protein Mapping Version" type="text" value=""/>
         </section>
     </inputs>
     <outputs>

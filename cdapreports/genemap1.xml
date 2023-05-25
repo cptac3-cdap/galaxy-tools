@@ -27,7 +27,7 @@ ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinMapping/${genemap}.csv
 	</param>
         <param name="decoyprefix" type="text" value="XXX_" label="Decoy Gene Accession Prefix"/>
         <section name="advanced" title="Advanced Options">
-            <param name="genemapdate" label="Gene-Protein Mapping Version" value=""/>
+            <param name="genemapdate" label="Gene-Protein Mapping Version" type="text" value=""/>
         </section>
     </inputs>
     <outputs>

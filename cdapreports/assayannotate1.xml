@@ -19,7 +19,7 @@ ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinAnnotation/CPTAC_Assays.c
     <inputs>
         <param name="input" type="data" format="psmdb" label="PSM Data"/>
         <section name="advanced" title="Advanced Options">
-            <param name="assaydate" label="Assay Annotations Version" value=""/>
+            <param name="assaydate" label="Assay Annotations Version" type="text" value=""/>
         </section>
     </inputs>
     <outputs>

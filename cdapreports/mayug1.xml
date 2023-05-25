@@ -35,7 +35,7 @@ awk -v F="\$DATA" '{printf("%s\t%s\t%s\t%s\t%s\t%s\n",F,$4,$5,$6,$7,$8)}' < data
           <option value="prhumanmouse2gene">Human+Mouse</option>
         </param>
         <section name="advanced" title="Advanced Options">
-            <param name="genemapdate" label="Gene-Protein Mapping Version" value=""/>
+            <param name="genemapdate" label="Gene-Protein Mapping Version" type="text" value=""/>
         </section>
     </inputs>
     <outputs>
