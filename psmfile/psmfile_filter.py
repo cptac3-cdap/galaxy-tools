@@ -152,6 +152,9 @@ simplefieldre = re.compile(r'^(\w+):(\d+(\.\d+)?(eV|\?)?)$')
 
 ambigscans = set()
 
+haveprecarea = False
+havePhosphoRSPeptide = False
+
 # These fields are renamed in psm file format...
 headermapping = """
 #SpecFile           FileName
@@ -456,6 +459,11 @@ def manipulate_rows(rows,qvalthr):
 	elif r['FileName'].endswith('.mzML'):
             r['FileName'] = (r['FileName'][:-4]+'raw')
 
+        if r.get("PrecusorArea"):
+             haveprecarea = True
+        if r.get("PhosphoRSPeptide"):
+             havePhosphoRSPeptide = True
+
         yield r
 
 def setambig(scans,rows):
@@ -500,7 +508,7 @@ FractionDecomposition
 HCDEnergy
 """.split()
 # Insert ProMS headers immediately before PeptideSequence
-if proms not in ("None","",None):
+if proms not in ("None","",None) or haveprecarea:
     outheaders.insert(outheaders.index('PeptideSequence'),"PrecursorArea")
     outheaders.insert(outheaders.index('PeptideSequence'),"PrecursorRelAb")
     outheaders.insert(outheaders.index('PeptideSequence'),"RTAtPrecursorHalfElution")
@@ -515,7 +523,7 @@ if opts.get('labeling'):
     outheaders.append(lmd['prefix']+'TotalAb')
 
 # Insert Phospho header at the end (after iTRAQ/TMT if present)
-if opts.get('phospho'):
+if opts.get('phospho') or havePhosphoRSPeptide:
     outheaders.extend('PhosphoRSPeptide	nPhospho	FullyLocalized'.split())
 writer=csv.DictWriter(open(outfile,'w'),fieldnames=outheaders,extrasaction='ignore',dialect='excel-tab')
 writer.writeheader()

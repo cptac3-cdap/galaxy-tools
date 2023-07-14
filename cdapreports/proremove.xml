@@ -15,7 +15,9 @@ ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/proremove1 -d data.psm -f "${fie
         <param name="input" type="data" format="psmdb" label="PSM Data"/>
         <param name="field" type="text" value="" label="Field"/>
         <param name="regex" type="text" value="" label="Regular Expression">
-            <sanitizer santitize="false"/>
+            <sanitizer invalid_char="">
+                <valid initial="string.printable"/>
+            </sanitizer> 
 	</param>
 	<param name="keep" type="boolean" checked="True" truevalue="" falsevalue="-v" label="Keep, not remove, proteins with a matching field"/>
     </inputs>

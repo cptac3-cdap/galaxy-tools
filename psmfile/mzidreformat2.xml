@@ -5,7 +5,7 @@
     </stdio>
     <command>
 <![CDATA[
-	export TMPDIR=`pwd` &&
+        if hostname -a | fgrep -s -q master; then export TMPDIR=`pwd`; fi &&
 	ln -s ${spectra} ${spectra.name} &&
 	ln -s ${input} ${input.name} &&
 	python ${__tool_directory__}/fixseqdb.py ${__tool_directory__}/${advanced.seqconfig} ${__tool_data_path__} > seqdb.ini &&
