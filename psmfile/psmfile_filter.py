@@ -178,6 +178,8 @@ def manipulate_rows(rows,qvalthr):
 	if scan == 'ScanNum':
 	    # extra header row, ignore
 	    continue
+        if qvalue == None:
+            qvalue = r.get('Qvalue')
         qvalue = float(qvalue);
         if qvalue > qvalthr:
             continue
