@@ -461,8 +461,8 @@ def manipulate_rows(rows,qvalthr):
 	elif r['FileName'].endswith('.mzML'):
             r['FileName'] = (r['FileName'][:-4]+'raw')
 
-        global haveprecarea, havePhosphoRSPeptide
-        if r.get("PrecusorArea"):
+        global haveprecarea, havePhosphoRSPeptide 
+        if r.get("PrecursorArea"):
              haveprecarea = True
         if r.get("PhosphoRSPeptide"):
              havePhosphoRSPeptide = True
