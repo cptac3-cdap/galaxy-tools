@@ -15,6 +15,6 @@ ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_peptide_summary1 -d data.p
         <param name="input" type="data" format="psmdb" label="PSM Data"/>
     </inputs>
     <outputs>
-        <data name="output" format="tabular" label="${input.name.split('.',1)[0]}.peptides.tsv" from_work_dir="data.tsv" />
+        <data name="output" format="tabular" label="${input.name.rsplit('.',1)[0]}.peptides.tsv" from_work_dir="data.tsv" />
     </outputs>
 </tool>

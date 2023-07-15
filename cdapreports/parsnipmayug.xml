@@ -10,7 +10,7 @@
 cp -f ${input} data.psm &&
 NGENE=`awk -F, '{print $2}' ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinMapping/${genemap} | sort -u | wc -l` &&
 echo "Total genes: \$NGENE" &&
-DATA="${input.name.split('.',1)[0]}" &&
+DATA="${input.name.rsplit('.',1)[0]}" &&
 FDR="${specfdr}" &&
 export TMPDIR=\$PWD &&
 ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/parsnip1 -d data.psm -U ${unique} -T ${specfdr} -C ${speccnt} 
@@ -48,6 +48,6 @@ awk -v F="\$DATA" -v T="\$FDR" '{printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\n",F,T,$4,$5
         <param name="pracc" type="text" value="" label="Gene Name Heuristic"/>
     </inputs>
     <outputs>
-        <data name="mayu" format="tabular" label="${input.name.split('.',1)[0]}-${specfdr}.mayu.tsv" from_work_dir="data.pars.mayu.tsv"/>
+        <data name="mayu" format="tabular" label="${input.name.rsplit('.',1)[0]}-${specfdr}.mayu.tsv" from_work_dir="data.pars.mayu.tsv"/>
     </outputs>
 </tool>

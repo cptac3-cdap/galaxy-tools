@@ -16,6 +16,6 @@ ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_precursor_area ${bygene} -
 	<param name="bygene" type="boolean" truevalue="--bygene" falsevalue="" checked="False" label="Gene, not Protein, Summary"/>
     </inputs>
     <outputs>
-        <data name="output" format="tabular" label="${input.name.split('.',1)[0]}.precursor_area.tsv" from_work_dir="data.tsv" />
+        <data name="output" format="tabular" label="${input.name.rsplit('.',1)[0]}.precursor_area.tsv" from_work_dir="data.tsv" />
     </outputs>
 </tool>
