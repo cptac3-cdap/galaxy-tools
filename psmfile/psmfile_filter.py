@@ -192,6 +192,8 @@ def manipulate_rows(rows,qvalthr):
             rank = 1; trank = 1
         lastscan = scan; lastscore = score
         for k,v in r.items():
+            if k in ('PrecursorArea','PrecursorRelAb','RTAtPrecursorHalfElution','OriginalPrecursorMz','Evalue','Qvalue','PepQvalue','QueryPrecursorMz'):
+                continue
             try:
                 r[k] = float(v)
                 r[k] = int(v)
