@@ -479,7 +479,8 @@ def setambig(scans,rows):
 
 def addproms(proms,rows):
     for r in rows:
-	r.update(dict(zip(('PrecursorArea','PrecursorRelAb','RTAtPrecursorHalfElution'),proms[r['ScanNum']])))
+        if proms not in (None,"","None"):
+	    r.update(dict(zip(('PrecursorArea','PrecursorRelAb','RTAtPrecursorHalfElution'),proms[r['ScanNum']])))
 	yield r
 
 # Sorted forces all rows to be instatiated, so ambigscans is set by the time it is used...
