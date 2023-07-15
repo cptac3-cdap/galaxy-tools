@@ -16,6 +16,6 @@ ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/labeldecoy data.psm ${decoyprefi
         <param name="decoyprefix" type="text" value="XXX_" label="Decoy Protein Accession Prefix"/>
     </inputs>
     <outputs>
-        <data name="output" format="psmdb" label="${input.name.rsplit('.',1)[0]}.decoylabel.psm" from_work_dir="data.psm" />
+        <data name="output" format="psmdb" label="${input.name.split('.',1)[0]}.decoylabel.psm" from_work_dir="data.psm" />
     </outputs>
 </tool>

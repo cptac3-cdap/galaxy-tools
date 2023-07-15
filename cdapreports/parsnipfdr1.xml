@@ -61,6 +61,6 @@ python ${__tool_directory__}/parsnipfdr.py data.psm params.txt
         </section>
     </inputs>
     <outputs>
-        <data name="mayu" format="tabular" label="${input.name.rsplit('.',1)[0]}.mayu.tsv" from_work_dir="data.mayu.tsv"/>
+        <data name="mayu" format="tabular" label="${input.name.split('.',1)[0]}.mayu.tsv" from_work_dir="data.mayu.tsv"/>
     </outputs>
 </tool>

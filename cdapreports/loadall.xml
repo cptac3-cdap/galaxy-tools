@@ -38,8 +38,8 @@ python3 ${__tool_directory__}/loadall.py ${input} "${sample}" "${labels[0].input
         </conditional>
     </inputs>
     <outputs>
-        <data name="output" format="psmdb" label="${input.name.rsplit('/',1)[-1].rsplit('.',1)[0]}.psm" from_work_dir="output.psm" />
-        <data name="samplecsv" format="csv" label="${input.name.rsplit('/',1)[-1].rsplit('.',1)[0]}.sample.csv" from_work_dir="sample.csv" >
+        <data name="output" format="psmdb" label="${input.name.rsplit('/',1)[-1].split('.',1)[0]}.psm" from_work_dir="output.psm" />
+        <data name="samplecsv" format="csv" label="${input.name.rsplit('/',1)[-1].split('.',1)[0]}.sample.csv" from_work_dir="sample.csv" >
 	  <filter>sample</filter>
 	</data>
     </outputs>

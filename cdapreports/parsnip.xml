@@ -50,16 +50,16 @@ ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/parsnip1 -d data.psm -U ${unique
     <param name="specfdrselect" type="data" format="tabular" optional="true" label="Spec. FDR Selection Result"/>
     </inputs>
     <outputs>
-        <data name="output" format="psmdb" label="${input.name.rsplit('.',1)[0]}.pars.psm" from_work_dir="data.pars.psm" >
+        <data name="output" format="psmdb" label="${input.name.split('.',1)[0]}.pars.psm" from_work_dir="data.pars.psm" >
 	    <filter>'Filter' in mode or 'Annotate' in mode</filter>
         </data>
-        <data name="logfile" format="txt" label="${input.name.rsplit('.',1)[0]}.pars.log" from_work_dir="data.pars.log">
+        <data name="logfile" format="txt" label="${input.name.split('.',1)[0]}.pars.log" from_work_dir="data.pars.log">
 	    <filter>'Stats' in mode</filter>
         </data>
-        <data name="matrix" format="csv" label="${input.name.rsplit('.',1)[0]}.pars.csv" from_work_dir="data.pars.csv">
+        <data name="matrix" format="csv" label="${input.name.split('.',1)[0]}.pars.csv" from_work_dir="data.pars.csv">
 	    <filter>'Matrix' in mode</filter>
         </data>
-        <data name="accessions" format="txt" label="${input.name.rsplit('.',1)[0]}.pars.txt" from_work_dir="data.pars.txt">
+        <data name="accessions" format="txt" label="${input.name.split('.',1)[0]}.pars.txt" from_work_dir="data.pars.txt">
 	    <filter>'Dump' in mode</filter>
         </data>
     </outputs>

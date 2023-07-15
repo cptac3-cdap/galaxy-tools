@@ -22,6 +22,6 @@ ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/peptrypterm1 -d data.psm ${mode}
         </param>
     </inputs>
     <outputs>
-        <data name="output" format="psmdb" label="${input.name.rsplit('.',1)[0]}.tryp.psm" from_work_dir="data.psm" />
+        <data name="output" format="psmdb" label="${input.name.split('.',1)[0]}.tryp.psm" from_work_dir="data.psm" />
     </outputs>
 </tool>
