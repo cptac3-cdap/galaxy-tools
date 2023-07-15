@@ -477,10 +477,10 @@ def setambig(scans,rows):
             r['AmbiguousMatch'] = 0
         yield r
 
-def addproms(proms,rows):
+def addproms(promsdata,rows):
     for r in rows:
         if proms not in (None,"","None"):
-	    r.update(dict(zip(('PrecursorArea','PrecursorRelAb','RTAtPrecursorHalfElution'),proms[r['ScanNum']])))
+	    r.update(dict(zip(('PrecursorArea','PrecursorRelAb','RTAtPrecursorHalfElution'),promsdata[r['ScanNum']])))
 	yield r
 
 # Sorted forces all rows to be instatiated, so ambigscans is set by the time it is used...
