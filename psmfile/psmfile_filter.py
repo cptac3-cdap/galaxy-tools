@@ -153,6 +153,7 @@ simplefieldre = re.compile(r'^(\w+):(\d+(\.\d+)?(eV|\?)?)$')
 ambigscans = set()
 
 haveprecarea = False
+haveambigmatch = False
 havePhosphoRSPeptide = False
 
 # These fields are renamed in psm file format...
@@ -463,9 +464,11 @@ def manipulate_rows(rows,qvalthr):
 	elif r['FileName'].endswith('.mzML'):
             r['FileName'] = (r['FileName'][:-4]+'raw')
 
-        global haveprecarea, havePhosphoRSPeptide 
+        global haveprecarea, haveambigmatch, havePhosphoRSPeptide 
         if r.get("PrecursorArea"):
              haveprecarea = True
+        if r.get("AmbiguousMatch"):
+             haveambigmatch = True
         if r.get("PhosphoRSPeptide"):
              havePhosphoRSPeptide = True
 
@@ -473,10 +476,11 @@ def manipulate_rows(rows,qvalthr):
 
 def setambig(scans,rows):
     for r in rows:
-        if r['ScanNum'] in scans:
-            r['AmbiguousMatch'] = 1
-        else:
-            r['AmbiguousMatch'] = 0
+        if not haveambigmatch:
+            if r['ScanNum'] in scans:
+                r['AmbiguousMatch'] = 1
+            else:
+                r['AmbiguousMatch'] = 0
         yield r
 
 def addproms(promsdata,rows):
