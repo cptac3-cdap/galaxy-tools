@@ -1,4 +1,4 @@
-<tool id="psmversions" name="PSM Analysis Versions" version="1.1">
+<tool id="psmliftoverversions" name="PSM LiftOver Analysis Versions" version="1.0">
     <stdio>
         <exit_code range="1:" level="fatal" description="Job Failed" />
     </stdio>
