@@ -30,21 +30,22 @@ PWIZ1=`getmzmlversion pwiz $MZMLGZ`
 THERMO=`getmzmlversion Xcalibur $MZMLGZ`
 
 MZIDGZ="$2"
-MSGF=`getmzidversion "MS-GF+" $MZIDGZ`
+# MSGF=`getmzidversion "MS-GF+" $MZIDGZ`
 CPTAC_CDAP=`getmzidversion "CPTAC-CDAP" $MZIDGZ`
 CPTAC_DCC_MZID=`getmzidversion "CPTAC-DCC:mzIdentML" $MZIDGZ`
 PWIZ2=`getmzidversion "ProteoWizard" $MZIDGZ`
 REFSEQ=`getmziddbversion "RefSeq:Human" $MZIDGZ`
 UNIPROT=`getmziddbversion "UniProt:Human" $MZIDGZ`
 
-MSGFID="$3"
-SEQDB=`fgrep '<SearchDatabase ' $MSGFID | sed -e 's/^.*location="//' -e 's/" .*$//' -e 's/^.*\///'`
-SPEC=`fgrep '<SpectraData ' $MSGFID | sed -e 's/^.*location="//' -e 's/" .*$//' -e 's/^.*\///'`
+# MSGFID="$3"
+# SEQDB=`fgrep '<SearchDatabase ' $MSGFID | sed -e 's/^.*location="//' -e 's/" .*$//' -e 's/^.*\///'`
+# SPEC=`fgrep '<SpectraData ' $MSGFID | sed -e 's/^.*location="//' -e 's/" .*$//' -e 's/^.*\///'`
 
-MSGFLOG="$4"
-MSGFCMD=`grep "^COMMAND-LINE: " $MSGFLOG | sed 's/^[^ ]* //'`
+# MSGFLOG="$4"
+# MSGFCMD=`grep "^COMMAND-LINE: " $MSGFLOG | sed 's/^[^ ]* //'`
 
-shift; shift; shift; shift;
+shift; shift
+# shift; shift; shift; shift;
 
 echo "CPTAC-Galaxy:" $CPTAC_GALAXY
 echo "CPTAC-Tools:" $CPTAC_TOOLS
@@ -54,10 +55,10 @@ echo "CPTAC-DCC mzIdentML:" $CPTAC_DCC_MZID
 echo "CPTAC CDAP:" $CPTAC_CDAP
 echo "msconvert ProteoWizard:" $PWIZ1
 echo "textpsm2mzid ProteoWizard:" $PWIZ2
-echo "MS-GF+:" $MSGF
-echo "Search Database:" $SEQDB
-echo "Spectra File:" $SPEC
-echo "MS-GF+ CMD:" $MSGFCMD
+# echo "MS-GF+:" $MSGF
+# echo "Search Database:" $SEQDB
+# echo "Spectra File:" $SPEC
+# echo "MS-GF+ CMD:" $MSGFCMD
 echo "mzIdentML RefSeq:" $REFSEQ
 echo "mzIdentML UniProt:" $UNIPROT
 echo "CPTAC Reports:" $CPTAC_REPORTS

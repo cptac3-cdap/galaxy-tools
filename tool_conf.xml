@@ -31,6 +31,7 @@
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/qcmetrics/qcmetrics.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cptac_version/mzmlversion.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cptac_version/psmversion.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cptac_version/psmliftoverversion.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cptac_version/psmversion11.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cptacdcc/cksumpsmfiles.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cptacdcc/cksumfiles1.xml" />
