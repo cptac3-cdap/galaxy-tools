@@ -36,6 +36,8 @@ CPTAC_DCC_MZID=`getmzidversion "CPTAC-DCC:mzIdentML" $MZIDGZ`
 PWIZ2=`getmzidversion "ProteoWizard" $MZIDGZ`
 REFSEQ=`getmziddbversion "RefSeq:Human" $MZIDGZ`
 UNIPROT=`getmziddbversion "UniProt:Human" $MZIDGZ`
+GENCODEHUM=`getmziddbversion "Gencode:Human" $MZIDGZ`
+GENCODEMUS=`getmziddbversion "Gencode:Mouse" $MZIDGZ`
 
 MSGFID="$3"
 SEQDB=`fgrep '<SearchDatabase ' $MSGFID | sed -e 's/^.*location="//' -e 's/" .*$//' -e 's/^.*\///'`
@@ -60,6 +62,12 @@ echo "Spectra File:" $SPEC
 echo "MS-GF+ CMD:" $MSGFCMD
 echo "mzIdentML RefSeq:" $REFSEQ
 echo "mzIdentML UniProt:" $UNIPROT
+if [ "$GENCODEHUM" != "" ]; then
+  echo "mzIdentML Gencode Human:" $GENCODEHUM
+fi
+if [ "$GENCODEMUS" != "" ]; then
+  echo "mzIdentML Gencode Mouse:" $GENCODEMUS
+fi
 echo "CPTAC Reports:" $CPTAC_REPORTS
 echo "CPTAC Prot2Gene:" $CPTAC_REPORTS_GENEMAP
 for l in "$@"; do
