@@ -8,7 +8,7 @@
     <command>
 <![CDATA[
 cp -f ${input} data.psm &&
-${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_peptideion_tmt10 -d data.psm -o data.tsv --report ${report_selector.report} --labels ${labels}
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_peptideion_tmt10_wrap.sh -d data.psm -o data.tsv --report ${report_selector.report} --labels ${labels}
 #if $report_selector.report in ('Phosphopeptide','PhosphositeCombination')
     ${report_selector.localized}
     ${report_selector.specific}
