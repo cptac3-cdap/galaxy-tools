@@ -8,15 +8,19 @@
     <command>
 <![CDATA[
 cp -f ${input} data.psm &&
-${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_peptideion_tmt10_wrap.sh -d data.psm -o data.tsv --report ${report_selector.report} --labels ${labels}
+#if $report_selector.report in ('Peptide',)
+    ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_peptideion_tmt10_wrap.sh
+#else
+    ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/cptac_peptideion_tmt10
+#end if
+    -d data.psm -o data.tsv --report ${report_selector.report} --labels ${labels}
 #if $report_selector.report in ('Phosphopeptide','PhosphositeCombination')
     ${report_selector.localized}
-    ${report_selector.specific}
 #end if 
-#if $report_selector.report in ('Glycopeptide','GlycositeCombination','Acetylpeptide','AcetylsiteCombination','Ubiquitylpeptide','UbiquitylsiteCombination')
-    ${report_selector.specific}
+#if $report_selector.report in ('Phosphopeptide','PhosphositeCombination','Glycopeptide','GlycositeCombination','Acetylpeptide','AcetylsiteCombination','Ubiquitylpeptide','UbiquitylsiteCombination')
+    ${report_selector.specific}                                                                                          
 #end if 
-${nocorrection}
+    ${nocorrection}
 ]]>
     </command>
     <inputs>
