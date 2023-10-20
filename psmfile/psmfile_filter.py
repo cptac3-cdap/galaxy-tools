@@ -146,7 +146,18 @@ if reporterfile not in ("None","",None):
         data[lmd['prefix']+"TotalAb"] = ("%.6g"%round_to_n(sum(abvals),6)).replace('e+','e+0')        
         reporterdata[targetscan]= data
 
-inrows = csv.DictReader(open(infile),dialect='excel-tab')
+# csv module cannot handle fields with very large numbers of characters in them. Why?
+def mytsvdictreader(fh):
+    headers = None
+    for l in fh:
+        sl = l.rstrip().split('\t')
+        if not headers:
+            headers = sl
+            continue
+        yield dict(zip(headers,sl))
+
+# inrows = csv.DictReader(open(infile),dialect='excel-tab')
+inrows = mytsvdictreader(open(infile))
 
 simplefieldre = re.compile(r'^(\w+):(\d+(\.\d+)?(eV|\?)?)$')
 

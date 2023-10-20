@@ -161,17 +161,29 @@ def barepepseq(pepseq):
 	barepepseq += modpep[i]
     return barepepseq
 
+# csv module cannot handle fields with very large numbers of characters in them. Why?
+def mytsvdictreader(fh):
+    headers = None
+    for l in fh:
+        sl = l.rstrip().split('\t')
+        if not headers:
+            headers = sl
+            continue
+        yield dict(zip(headers,sl))
+
 pepmap = None
 mappedpeptides = set()
 if opts.get('deglycopeptide') and opts.get('seqdb'):
-    for row in csv.DictReader(open(infile),dialect='excel-tab'):
+    # for row in csv.DictReader(open(infile),dialect='excel-tab'):
+    for row in mytsvdictreader(open(infile)):
 	pepseq = row['Peptide']
 	m = re.search(r'N([+-]\d+(\.\d+)?)$',pepseq)
 	if m and abs(float(m.group(1)) - 0.984016) < 1e-2:
 	    mappedpeptides.add(barepepseq(pepseq))
     pepmap = PeptideRemapper(list(mappedpeptides),opts.get('seqdb'),FirstWord(),preprocess=True)
 
-inrows = csv.DictReader(open(infile),dialect='excel-tab')
+# inrows = csv.DictReader(open(infile),dialect='excel-tab')
+inrows = mytsvdictreader(open(infile)):
 
 simplefieldre = re.compile(r'^(\w+):(\d+(\.\d+)?(eV|\?)?)$')
 
