@@ -1,0 +1,57 @@
+<tool id="cdapreports_protorth1" name="Add/remove genes/proteins representing orthologs." version="1.1">
+    <description>
+       Add/remove faux genes/proteins representing pairs of orthologous genes/proteins.
+    </description>
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Fatal error. Non-zero exit code." />
+    </stdio>
+    <command>
+<![CDATA[
+cp -f ${input} data.psm &&
+${__tool_directory__}/../lib/CPTAC-CDAP-Reports/protortho1 -d data.psm 
+#if $bygene_selector.bygene
+--bygene
+#if $advanced.genemapdate.strip() != ""
+--orthmap ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinMapping/mousegene2humangene-${advanced.genemapdate}.csv 
+#else
+--orthmap ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinMapping/mousegene2humangene.csv 
+#end if
+#else
+#if $advanced.genemapdate.strip() != ""
+--orthmap ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinMapping/${bygene_selector.proteins}mouse2${bygene_selector.proteins}human-${advanced.genemapdate}.csv 
+#else
+--orthmap ${__tool_directory__}/../lib/CPTAC-CDAP-Reports/ProteinMapping/${bygene_selector.proteins}mouse2${bygene_selector.proteins}human.csv 
+#end if
+#end if
+#if $operation_selector.remove
+--undo
+#else
+--decoyprefix ${operation_selector.decoyprefix} 
+#end if
+]]>
+    </command>
+    <inputs>
+        <param name="input" type="data" format="psmdb" label="PSM Data"/>
+        <conditional name="bygene_selector">
+            <param name="bygene" type="boolean" checked="False" label="Add/Remove Genes, not Proteins"/>
+            <when value="false">
+                <param name="proteins" type="select" label="Protein Source">                                           
+                    <option value="rs" selected="true">RefSeq</option>
+                    <option value="gc">Gencode</option>
+                </param>
+            </when>
+        </conditional>
+        <conditional name="operation_selector">
+            <param name="remove" type="boolean" label="Remove, not Add" checked="False"/>
+            <when value="false">
+               <param name="decoyprefix" type="text" value="XXX_" label="Decoy Gene Accession Prefix"/>
+	        </when>
+        </conditional>
+        <section name="advanced" title="Advanced Options">
+            <param name="genemapdate" label="Gene-Protein Mapping Version" type="text" value=""/>
+        </section>
+    </inputs>
+    <outputs>
+        <data name="output" format="psmdb" label="${input.name.split('.',1)[0]}.ortho.psm" from_work_dir="data.psm" />
+    </outputs>
+</tool>

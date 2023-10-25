@@ -46,6 +46,7 @@
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/genemap.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/genemap1.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/orth.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/orth1.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/assayannotate.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/assayannotate1.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/parsnip.xml" />
