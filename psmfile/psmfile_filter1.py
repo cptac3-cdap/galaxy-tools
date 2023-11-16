@@ -183,11 +183,15 @@ if opts.get('deglycopeptide') and opts.get('seqdb'):
     pepmap = PeptideRemapper(list(mappedpeptides),opts.get('seqdb'),FirstWord(),preprocess=True)
 
 # inrows = csv.DictReader(open(infile),dialect='excel-tab')
-inrows = mytsvdictreader(open(infile)):
+inrows = mytsvdictreader(open(infile))
 
 simplefieldre = re.compile(r'^(\w+):(\d+(\.\d+)?(eV|\?)?)$')
 
 ambigscans = set()
+
+haveprecarea = False
+haveambigmatch = False
+havePhosphoRSPeptide = False
 
 # These fields are renamed in psm file format...
 headermapping = """
@@ -212,6 +216,8 @@ def manipulate_rows(rows,qvalthr):
 	if scan == 'ScanNum':
 	    # extra header row, ignore
 	    continue
+        if qvalue == None:
+            qvalue = r.get('Qvalue')
         qvalue = float(qvalue);
         if qvalue > qvalthr:
             continue
@@ -267,6 +273,8 @@ def manipulate_rows(rows,qvalthr):
             rank = 1; trank = 1
         lastscan = scan; lastscore = score
         for k,v in r.items():
+            if k in ('PrecursorArea','PrecursorRelAb','RTAtPrecursorHalfElution'):
+                continue
             try:
                 r[k] = float(v)
                 r[k] = int(v)
@@ -536,19 +544,29 @@ def manipulate_rows(rows,qvalthr):
 	elif r['FileName'].endswith('.mzML'):
             r['FileName'] = (r['FileName'][:-4]+'raw')
 
+        global haveprecarea, haveambigmatch, havePhosphoRSPeptide 
+        if r.get("PrecursorArea"):
+             haveprecarea = True
+        if r.get("AmbiguousMatch"):
+             haveambigmatch = True
+        if r.get("PhosphoRSPeptide"):
+             havePhosphoRSPeptide = True
+
         yield r
 
 def setambig(scans,rows):
     for r in rows:
-        if r['ScanNum'] in scans:
-            r['AmbiguousMatch'] = 1
-        else:
-            r['AmbiguousMatch'] = 0
+        if not haveambigmatch:
+            if r['ScanNum'] in scans:
+                r['AmbiguousMatch'] = 1
+            else:
+                r['AmbiguousMatch'] = 0
         yield r
 
-def addproms(proms,rows):
+def addproms(promsdata,rows):
     for r in rows:
-	r.update(dict(zip(('PrecursorArea','PrecursorRelAb','RTAtPrecursorHalfElution'),proms[r['ScanNum']])))
+        if proms not in (None,"","None"):
+	    r.update(dict(zip(('PrecursorArea','PrecursorRelAb','RTAtPrecursorHalfElution'),promsdata[r['ScanNum']])))
 	yield r
 
 # Sorted forces all rows to be instatiated, so ambigscans is set by the time it is used...
@@ -580,7 +598,7 @@ FractionDecomposition
 HCDEnergy
 """.split()
 # Insert ProMS headers immediately before PeptideSequence
-if proms not in ("None","",None):
+if proms not in ("None","",None) or haveprecarea:
     outheaders.insert(outheaders.index('PeptideSequence'),"PrecursorArea")
     outheaders.insert(outheaders.index('PeptideSequence'),"PrecursorRelAb")
     outheaders.insert(outheaders.index('PeptideSequence'),"RTAtPrecursorHalfElution")
@@ -595,7 +613,7 @@ if opts.get('labeling'):
     outheaders.append(lmd['prefix']+'TotalAb')
 
 # Insert Phospho header at the end (after iTRAQ/TMT if present)
-if opts.get('phospho'):
+if opts.get('phospho') or havePhosphoRSPeptide:
     outheaders.extend('PhosphoRSPeptide	nPhospho	FullyLocalized'.split())
 writer=csv.DictWriter(open(outfile,'w'),fieldnames=outheaders,extrasaction='ignore',dialect='excel-tab')
 writer.writeheader()
