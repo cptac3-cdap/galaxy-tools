@@ -15,6 +15,12 @@ case "$MZID" in
   *.mzid) BASE=`basename "$MZID" .mzid`;;
 esac
 
+if fgrep -q -s GlyGly "$MZID"; then
+  python $DIR/fixglyglymzid.py < "$MZID" > tmp.mzid;
+  rm -f "$MZID"
+  mv -f tmp.mzid "$MZID"
+fi
+
 case "$INST" in
   HIRESMS1) FEATFINDER="-extract:mz_window 10  -extract:n_isotopes 3";;
          *) echo "Bad INSTRUMENT parameter" 1>&2; exit 1;;
