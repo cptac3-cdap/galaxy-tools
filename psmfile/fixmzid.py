@@ -29,22 +29,35 @@ for pep in root.getiterator(ns+'Peptide'):
         if mod.find(ns+'cvParam').get('name') == 'TMT6plex':
             pos = int(mod.get('location'))
             if pos not in dblmods:
-                dblmods[pos] = [None,None]
+                dblmods[pos] = [None,None,None]
             dblmods[pos][0] = mod
         elif mod.find(ns+'cvParam').get('value') == 'GlyGlyInsteadOfTMT6plex':
             pos = int(mod.get('location'))
             if pos not in dblmods:
-                dblmods[pos] = [None,None]
+                dblmods[pos] = [None,None,None]
             dblmods[pos][1] = mod
-    for pos,(m1,m2) in dblmods.items():
-        if m2 is None:
+        elif mod.find(ns+'cvParam').get('value') == 'AcetylInsteadOfTMT6plex':
+            pos = int(mod.get('location'))
+            if pos not in dblmods:
+                dblmods[pos] = [None,None,None]
+            dblmods[pos][2] = mod
+    for pos,(m1,m2,m3) in dblmods.items():
+        if m2 is None and m3 is None:
             continue
         assert(m1 is not None)
-        pep.remove(m2)
-        m1.set('monoisotopicMassDelta','114.042927')
-        cvp = m1.find(ns+'cvParam')
-        cvp.set('accession','UNIMOD:121')
-        cvp.set('name','GG')
+        assert(m2 is None or m3 is None)
+        if m2 is not None:
+            pep.remove(m2)
+            m1.set('monoisotopicMassDelta','114.042927')
+            cvp = m1.find(ns+'cvParam')
+            cvp.set('accession','UNIMOD:121')
+            cvp.set('name','GG')
+        elif m3 is not None:
+            pep.remove(m3)
+            m1.set('monoisotopicMassDelta','42.010565')
+            cvp = m1.find(ns+'cvParam')
+            cvp.set('accession','UNIMOD:1')
+            cvp.set('name','Acetyl')
 
 # <SearchModification fixedMod="true" massDelta="229.16293" residues="K">
 #   <cvParam cvRef="UNIMOD" accession="UNIMOD:737" name="TMT6plex"/>
@@ -64,5 +77,12 @@ for sm in root.getiterator(ns+'SearchModification'):
         cvp.set('name','GG')
         cvp.attrib.pop('value',None)
         sm.set('massDelta','114.042927')
+    elif sm.find(ns+'cvParam').get('value') == "AceytlInsteadOfTMT6plex":
+        cvp = sm.find(ns+'cvParam')
+        cvp.set('cvRef','UNIMOD')
+        cvp.set('accession','UNIMOD:1')
+        cvp.set('name','GG')
+        cvp.attrib.pop('value',None)
+        sm.set('massDelta','42.010565')
 
 print(ET.tostring(root, encoding='utf8')) 
