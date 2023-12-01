@@ -77,11 +77,11 @@ for sm in root.getiterator(ns+'SearchModification'):
         cvp.set('name','GG')
         cvp.attrib.pop('value',None)
         sm.set('massDelta','114.042927')
-    elif sm.find(ns+'cvParam').get('value') == "AceytlInsteadOfTMT6plex":
+    elif sm.find(ns+'cvParam').get('value') == "AcetylInsteadOfTMT6plex":
         cvp = sm.find(ns+'cvParam')
         cvp.set('cvRef','UNIMOD')
         cvp.set('accession','UNIMOD:1')
-        cvp.set('name','GG')
+        cvp.set('name','Acetyl')
         cvp.attrib.pop('value',None)
         sm.set('massDelta','42.010565')
 
