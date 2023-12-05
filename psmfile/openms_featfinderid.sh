@@ -15,7 +15,7 @@ case "$MZID" in
   *.mzid) BASE=`basename "$MZID" .mzid`;;
 esac
 
-if fgrep -q -s InsteadOfTMT6plex "$MZID"; then
+if fgrep -q -s InsteadOfTMT "$MZID"; then
   python $DIR/fixmzid.py < "$MZID" > tmp.mzid;
   rm -f "$MZID"
   mv -f tmp.mzid "$MZID"

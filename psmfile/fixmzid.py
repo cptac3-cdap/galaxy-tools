@@ -26,17 +26,17 @@ for pep in root.getiterator(ns+'Peptide'):
     # print(ET.tostring(pep, encoding='utf8')) 
     dblmods = dict()
     for mod in pep.findall(ns+'Modification'):
-        if mod.find(ns+'cvParam').get('name') == 'TMT6plex':
+        if mod.find(ns+'cvParam').get('name') in ('TMT6plex','TMTpro'):
             pos = int(mod.get('location'))
             if pos not in dblmods:
                 dblmods[pos] = [None,None,None]
             dblmods[pos][0] = mod
-        elif mod.find(ns+'cvParam').get('value') == 'GlyGlyInsteadOfTMT6plex':
+        elif mod.find(ns+'cvParam').get('value') in ('GlyGlyInsteadOfTMT6plex','GlyGlyInsteadOfTMTpro'):
             pos = int(mod.get('location'))
             if pos not in dblmods:
                 dblmods[pos] = [None,None,None]
             dblmods[pos][1] = mod
-        elif mod.find(ns+'cvParam').get('value') == 'AcetylInsteadOfTMT6plex':
+        elif mod.find(ns+'cvParam').get('value') in ('AcetylInsteadOfTMT6plex','AcetylInsteadOfTMTpro'):
             pos = int(mod.get('location'))
             if pos not in dblmods:
                 dblmods[pos] = [None,None,None]
@@ -68,16 +68,16 @@ for pep in root.getiterator(ns+'Peptide'):
 
 
 for sm in root.getiterator(ns+'SearchModification'):
-    if sm.find(ns+'cvParam').get('name') == "TMT6plex":
+    if sm.find(ns+'cvParam').get('name') in ("TMT6plex","TMTpro"):
         sm.set('fixedMod','false')
-    elif sm.find(ns+'cvParam').get('value') == "GlyGlyInsteadOfTMT6plex":
+    elif sm.find(ns+'cvParam').get('value') in ("GlyGlyInsteadOfTMT6plex","GlyGlyInsteadOfTMTpro"):
         cvp = sm.find(ns+'cvParam')
         cvp.set('cvRef','UNIMOD')
         cvp.set('accession','UNIMOD:121')
         cvp.set('name','GG')
         cvp.attrib.pop('value',None)
         sm.set('massDelta','114.042927')
-    elif sm.find(ns+'cvParam').get('value') == "AcetylInsteadOfTMT6plex":
+    elif sm.find(ns+'cvParam').get('value') in ("AcetylInsteadOfTMT6plex","AcetylInsteadOfTMTpro"):
         cvp = sm.find(ns+'cvParam')
         cvp.set('cvRef','UNIMOD')
         cvp.set('accession','UNIMOD:1')
