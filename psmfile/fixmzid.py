@@ -31,6 +31,11 @@ for pep in root.getiterator(ns+'Peptide'):
             if pos not in dblmods:
                 dblmods[pos] = [None,None,None]
             dblmods[pos][0] = mod
+        elif mod.find(ns+'cvParam').get('value') in ('TMT6plex','TMTpro'):
+            pos = int(mod.get('location'))
+            if pos not in dblmods:
+                dblmods[pos] = [None,None,None]
+            dblmods[pos][0] = mod
         elif mod.find(ns+'cvParam').get('value') in ('GlyGlyInsteadOfTMT6plex','GlyGlyInsteadOfTMTpro'):
             pos = int(mod.get('location'))
             if pos not in dblmods:
@@ -42,6 +47,7 @@ for pep in root.getiterator(ns+'Peptide'):
                 dblmods[pos] = [None,None,None]
             dblmods[pos][2] = mod
     for pos,(m1,m2,m3) in dblmods.items():
+        # print(pos,m1,m2,m3)
         if m2 is None and m3 is None:
             continue
         assert(m1 is not None)
@@ -69,6 +75,8 @@ for pep in root.getiterator(ns+'Peptide'):
 
 for sm in root.getiterator(ns+'SearchModification'):
     if sm.find(ns+'cvParam').get('name') in ("TMT6plex","TMTpro"):
+        sm.set('fixedMod','false')
+    elif sm.find(ns+'cvParam').get('value') in ("TMT6plex","TMTpro"):
         sm.set('fixedMod','false')
     elif sm.find(ns+'cvParam').get('value') in ("GlyGlyInsteadOfTMT6plex","GlyGlyInsteadOfTMTpro"):
         cvp = sm.find(ns+'cvParam')
