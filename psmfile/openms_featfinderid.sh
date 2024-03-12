@@ -21,6 +21,13 @@ if fgrep -q -s InsteadOfTMT "$MZID"; then
   mv -f tmp.mzid "$MZID"
 fi
 
+if fgrep -q -s SpectrumIdentificationItem "$MSID"; then
+    true
+else
+    /bin/echo -e "Scan\tRT\tMZ\tCharge\tPeptide\tCalcMZ\tArea\tIntensity\tFWHM\tStatus" > $OUT
+    exit 0
+fi
+
 case "$INST" in
   HIRESMS1) FEATFINDER="-extract:mz_window 10  -extract:n_isotopes 3";;
          *) echo "Bad INSTRUMENT parameter" 1>&2; exit 1;;
