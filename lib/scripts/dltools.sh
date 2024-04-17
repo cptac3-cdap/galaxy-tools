@@ -71,3 +71,4 @@ else
 fi
 ( cd $GALAXY_APPROOT; $SUDOGALAXY $GALAXY_APPROOT/.venv/bin/python $GALAXY_TOOLS/extratools/lib/scripts/adduser.py "$AD" "$PW" $KY) 
 ( cd $GALAXY_APPROOT; $SUDOGALAXY ./rolling_restart.sh  ) &
+sleep 30
