@@ -50,8 +50,8 @@
        <destination id="slurm_master_only" runner="slurm">
             <param id="nativeSpecification">-w master --mem=3000</param>
        </destination>
-       <destination id="slurm_cluster_mem3_time20mins" runner="slurm">
-            <param id="nativeSpecification">-t 00:20:00 --mem=3000</param>
+       <destination id="slurm_cluster_mem3_time60mins" runner="slurm">
+            <param id="nativeSpecification">-t 00:60:00 --mem=3000</param>
        </destination>
        <!-- <destination id="pulsar_mq" tags="win_pulsar" runner="pulsar_mq" action="replace" match="id">
           <param id="default_file_action">remote_transfer</param>
@@ -64,7 +64,7 @@
         <tool id="msconvert_wiff_pulsar" destination="win_pulsar" action="replace" match="id"/>
         <tool id="ReAdw4Mascot2_raw_pulsar" destination="win_pulsar" action="replace" match="id"/>
         <tool id="ProMS_pulsar" destination="win_pulsar" action="replace" match="id"/>
-	<tool id="cptacraw" destination="local_runner" action="replace" match="id"/>
+	<tool id="cptacraw" destination="slurm_cluster" action="replace" match="id"/>
 	<tool id="psmversions" destination="local_runner" action="replace" match="id"/>
 	<tool id="mzmlversions" destination="local_runner" action="replace" match="id"/>
 	<tool id="data_manager_pulsar_nodes_local" destination="local_runner" action="replace" match="id"/>
@@ -74,7 +74,7 @@
         <tool id="msgfplus4" destination="slurm_cluster_mem5" action="replace" match="id"/>
         <tool id="msgfplus6" destination="slurm_cluster_mem3" action="replace" match="id"/>
         <tool id="OpenMS_PrecursorAbundance" destination="slurm_cluster_mem8" action="replace" match="id"/>
-        <tool id="msconvert_raw_docker_wine" destination="slurm_cluster_mem3_time20mins" action="replace" match="id"/>
+        <tool id="msconvert_raw_docker_wine" destination="slurm_cluster_mem3_time60mins" action="replace" match="id"/>
         <tool id="mzidreformat" destination="slurm_cluster_mem4" action="replace" match="id"/>
         <tool id="cdapreports_pepiontmt10" destination="slurm_master_only_alone" action="replace" match="id"/>
         <tool id="cdapreports_tmt10" destination="slurm_master_only_alone" action="replace" match="id"/>
