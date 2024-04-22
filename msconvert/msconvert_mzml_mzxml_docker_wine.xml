@@ -10,7 +10,7 @@
     </requirements>
     <command>
 <![CDATA[
-  cp -f ${input} ${input.name} &&
+  ln -s ${input} ${input.name} &&
   chmod a+w . &&
   #if $outfmt.value.endswith('.gz')
   docker run -v `pwd`:/data/ --rm chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:${advanced.tag} wine msconvert ${centroid} ${zlib} --${outfmt.value.split('.',1)[0]} --gzip /data/${input.name} &&
