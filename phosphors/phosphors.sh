@@ -31,7 +31,7 @@ RELINT="$7"
 OUTPUT="$8"
 
 date
-"$MZML" write_phosphors "$MZMLFILE" "$PSMFILE" "$MASSTABLE" "$FRAGMODE" "$TOLERANCE" "$TOPN" "$RELINT" > "$BASENAME.xml" || exit 1
+"$MZML" write_phosphors "$MZMLFILE" "$PSMFILE" "$MASSTABLE" "$TOLERANCE" "$FRAGMODE" "$TOPN" "$RELINT" > "$BASENAME.xml" || exit 1
 date
 "$JAVAPROG" -Xmx2048m -jar "$PHOSPHORSJAR" "$BASENAME.xml" "$BASENAME.phospho.xml" || exit 1
 date
