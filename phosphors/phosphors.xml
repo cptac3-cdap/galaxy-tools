@@ -1,11 +1,11 @@
 <tool id="phosphors" name="PhosphoRS" version="1.0">
     <command>
     <![CDATA[
-    ${__tool_directory__}/phosphors.sh "${psminput.name.rsplit('.',1)[0]}" "${mzmlinput}" "${psminput}" "${fragmode}" "${tolerance}" "${topn}" "${relint}" "${psmoutput}" && test -s "${psmoutput}" || exit 1
+    ${__tool_directory__}/phosphors.sh "${psminput.name.rsplit('.',1)[0]}" "${mgfinput}" "${psminput}" "${fragmode}" "${tolerance}" "${topn}" "${relint}" "${psmoutput}" && test -s "${psmoutput}" || exit 1
     ]]>
     </command>
     <inputs>
-        <param name="mzmlinput" type="data" format="mzml,mzml.gz" label="Spectral Datafile"/>
+        <param name="mgfinput" type="data" format="mzml,mzml.gz" label="Spectral Datafile"/>
 	<param name="psminput" type="data" format="psm" label="PSM File"/>
 	<param name="fragmode" type="select" label="Fragmentation mode">
             <option value="CID">CID</option>
