@@ -21,7 +21,7 @@ if fgrep -q -s InsteadOfTMT "$MZID"; then
   mv -f tmp.mzid "$MZID"
 fi
 
-if fgrep -q -s SpectrumIdentificationItem "$MSID"; then
+if fgrep -q -s SpectrumIdentificationItem "$MZID"; then
     true
 else
     /bin/echo -e "Scan\tRT\tMZ\tCharge\tPeptide\tCalcMZ\tArea\tIntensity\tFWHM\tStatus" > $OUT
