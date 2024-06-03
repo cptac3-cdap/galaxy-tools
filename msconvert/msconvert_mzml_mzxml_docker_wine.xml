@@ -13,10 +13,11 @@
   ln -s ${input.file_name.replace('/mnt/galaxy','')} ${input.name} &&
   chmod a+w . &&
   #if $outfmt.value.endswith('.gz')
-  docker run -v `pwd`:/data/ -v /mnt/galaxy/files:/files/ --rm chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:${advanced.tag} wine msconvert ${centroid} ${zlib} --${outfmt.value.split('.',1)[0]} --gzip /data/${input.name} &&
+  ${__tool_directory__}/docker_run_with_timeout.sh 55m -v `pwd`:/data/ -v /mnt/galaxy/files:/files/ chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:${advanced.tag} wine msconvert ${centroid} ${zlib} --${outfmt.value.split('.',1)[0]} --gzip /data/${input.name} &&
   #else
-  docker run -v `pwd`:/data/ -v /mnt/galaxy/files:/files/ --rm chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:${advanced.tag} wine msconvert ${centroid} ${zlib} --${outfmt.split('.',1)[0]} /data/${input.name} &&
+  ${__tool_directory__}/docker_run_with_timeout.sh 55m docker run -v `pwd`:/data/ -v /mnt/galaxy/files:/files/ chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:${advanced.tag} wine msconvert ${centroid} ${zlib} --${outfmt.split('.',1)[0]} /data/${input.name} &&
   #end if
+  test -s ${input.name.rsplit('.',1)[0]}.${outfmt} &&
   cp -f ${input.name.rsplit('.',1)[0]}.${outfmt} ${output}
 ]]>
     </command>
