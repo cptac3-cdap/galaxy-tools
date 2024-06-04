@@ -1,5 +1,9 @@
 <tool id="cptacraw" name="Download CPTAC data files" version="1.0">
-    <command interpreter="python3">cptacraw.py "${resource}" "${input}" "${output}" "${md5hash}" "${sha1hash}" "${sizehash}" "${user}" "${__tool_data_path__}" </command>
+    <command interpreter="python3">cptacraw.py "${resource}" "${input}" "${output}" "${md5hash}" "${sha1hash}" "${sizehash}" "${user}" "${__tool_data_path__}"
+         <stdio>
+              <exit_code range="1:" level="fatal" description="Job Failed, non-zero exit code." />
+         </stdio>
+    </command>
     <inputs>
 	<param name="resource" type="select" label="Resource">
           <!-- <option value="portal">CPTAC Public Portal (Aspera)</option> -->
