@@ -98,7 +98,7 @@ def geturlfile(url,filename):
             exception = True
         print("URL: %s, Failed Attempt: %d"%(url,attempt),file=sys.stderr)
         time.sleep(10)
-    if exception or not os.path.exists(filename):                                                          
+    if exception or not os.path.exists(filename):
         print("URL: %s, Download Failed."%(url,),file=sys.stderr)
     assert(os.path.exists(filename))    
     assert(not exception)
