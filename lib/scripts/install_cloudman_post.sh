@@ -1,6 +1,6 @@
 
-# /mnt/galaxy/tool_dependencies/_conda/bin/conda clean --index-cache
-# /mnt/galaxy/tool_dependencies/_conda/bin/python /mnt/galaxy/tool_dependencies/_conda/bin/conda create -y --override-channels --channel iuc --channel bioconda --channel conda-forge --channel defaults --name __bcftools@1.5 bcftools=1.5
+/mnt/galaxy/tool_dependencies/_conda/bin/conda clean --index-cache
+/mnt/galaxy/tool_dependencies/_conda/bin/python /mnt/galaxy/tool_dependencies/_conda/bin/conda create -y --override-channels --channel iuc --channel bioconda --channel conda-forge --channel defaults --name __bcftools@1.5 bcftools=1.5
 
 # Construct galaxy URL from local ip...
 # LOCALIP=`wget -q -O - http://169.254.169.254/latest/meta-data/local-ipv4`
