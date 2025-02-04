@@ -29,7 +29,7 @@ def getdccfile(path,filename):
     attempt = 0
     while attempt < maxattempts:
         attempt += 1
-        retcode = subprocess.call(args,stdin=None,shell=False)
+        retcode = subprocess.call(args,stdin=None,shell=False,env=dict(os.environ, NONINTERACTIVE="1")))
         if retcode == 0 and os.path.exists(filename):
             break
         print("DCC Path: %s, Failed Attempt: %d"%(os.path.join(path,filename),attempt),file=sys.stderr)
