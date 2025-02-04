@@ -207,6 +207,8 @@ if resource in ("dcc","dcctr"):
         inifile = "cptactransfer.ini"
     wh = open(inifile,'w')
     print("""
+[Aspera]
+Docker = True
 [Portal]
 User = %s
 Password = %s

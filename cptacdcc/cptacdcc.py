@@ -45,6 +45,8 @@ for l in h:
 h.close()
 wh = open("cptacdcc.ini",'w')
 print >>wh, """
+[Aspera]
+Docker = True
 [Portal]
 User = %s
 Password = %s
