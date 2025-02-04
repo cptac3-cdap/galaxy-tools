@@ -1,6 +1,6 @@
 #!/bin/env python27
 
-import sys, os, os.path
+import sys, os, os.path, copy
 import subprocess, hashlib, shutil, time, traceback
 import urllib.request
 from urllib.parse import quote as urlquote
