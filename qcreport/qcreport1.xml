@@ -1,4 +1,4 @@
-<tool id="qcreport" name="QCReport" version="1.0">
+<tool id="qcreport" name="QCReport" version="1.1">
     <command>
     <![CDATA[
     rm -f "${qcmetricsinput.name}" && 
@@ -32,5 +32,6 @@
     </inputs>
     <outputs> 
         <data format="html" name="htmlreport" label="${qcmetricsinput.name.rsplit('.',1)[0]}.html"/>
+        <data name="expdesign" format="tabular" label="${qcmetricsinput.name.split('.',2)[0]}.expdesign.tsv"/>
     </outputs>
 </tool>

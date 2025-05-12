@@ -68,5 +68,6 @@
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/pepiontmt10.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/cdapreports/pepiontmt10.1.xml" />
     <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/qcreport/qcreport.xml" />
+    <tool file="XXXXX_GALAXY_TOOLS_XXXXX/extratools/qcreport/qcreport1.xml" />
   </section>
 </toolbox>
