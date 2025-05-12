@@ -16,7 +16,8 @@
     rm -f "${htmlreport.name}" && 
     ${__tool_directory__}/generate_all.sh ${dochecks} "${qcmetricsinput.name}" &&
     test -s "${htmlreport.name}" && 
-    cp "${htmlreport.name}" "${htmlreport}"
+    cp "${htmlreport.name}" "${htmlreport}" &&
+    cp "${expdesign.name}" "${espdesign}"
     || cat debug.log 1>&2 && exit 1
     ]]>
     </command>
@@ -31,5 +32,6 @@
     </inputs>
     <outputs> 
         <data format="html" name="htmlreport" label="${qcmetricsinput.name.rsplit('.',1)[0]}.html"/>
+        <data name="expdesign" format="tabular" label="${qcmetricsinput.name.split('.',2)[0]}.expdesign.tsv"/>
     </outputs>
 </tool>
