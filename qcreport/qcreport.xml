@@ -14,10 +14,9 @@
     rm -f "${expdesinput.name}" && 
     cp -f "${expdesinput}" "${expdesinput.name}" &&
     rm -f "${htmlreport.name}" && 
-    ${__tool_directory__}/generate_all.sh ${dochecks} "${qcmetricsinput.name}" &&
+    ${__tool_directory__}/generate_all.sh --noexpdesign ${dochecks} "${qcmetricsinput.name}" &&
     test -s "${htmlreport.name}" && 
-    cp "${htmlreport.name}" "${htmlreport}" &&
-    cp "${expdesign.name}" "${espdesign}"
+    cp "${htmlreport.name}" "${htmlreport}"
     || cat debug.log 1>&2 && exit 1
     ]]>
     </command>
