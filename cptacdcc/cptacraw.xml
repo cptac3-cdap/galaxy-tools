@@ -3,6 +3,9 @@
     <stdio>
           <exit_code range="1:" level="fatal" description="Job Failed" />
     </stdio>
+<requirements>
+        <container type="docker">cptacdcc/cptacdcc_ascp:latest</container>              
+    </requirements>
     <inputs>
 	<param name="resource" type="select" label="Resource">
           <!-- <option value="portal">CPTAC Public Portal (Aspera)</option> -->
