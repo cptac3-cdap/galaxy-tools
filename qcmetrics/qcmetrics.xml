@@ -6,9 +6,9 @@
     <![CDATA[
     rm -f "${mzmlinput.name}" && 
     #if $mzmlinput.name.endswith('.gz')
-      gunzip -c "${mzmlinput}" | egrep -v ' accession="MS:(1003028|1003029|1002732|1002877)" ' | gzip -c > "${mzmlinput.name}" &&
+      gunzip -c "${mzmlinput}" | egrep -w -v 'name="([^ ]* )?(Orbitrap|Velos|Exactive)( [^ ]*)?"' | egrep -w -v 'accession="MS:(1003028|1003029|1002732|1002877|1003356)"' | gzip -c > "${mzmlinput.name}" &&
     #else
-      cat "${mzmlinput}" | egrep -v ' accession="MS:(1003028|1003029|1002732|1002877)" ' > "${mzmlinput.name}" &&
+      cat "${mzmlinput}" | egrep -w -v 'name="([^ ]* )?(Orbitrap|Velos|Exactive)( [^ ]*)?"' | egrep -w -v 'accession="MS:(1003028|1003029|1002732|1002877|1003356)"' > "${mzmlinput.name}" &&
     #end if
     rm -f "${mzidinput.name}" && 
     ln -s "${mzidinput}" "${mzidinput.name}" &&
