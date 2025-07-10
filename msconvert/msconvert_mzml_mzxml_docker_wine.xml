@@ -10,7 +10,6 @@
     </requirements>
     <command>
 <![CDATA[
-  ln -s ${input.file_name.replace('/mnt/galaxy','')} ${input.name} &&
   chmod a+w . &&
   #if $outfmt.value.endswith('.gz')
   ${__tool_directory__}/docker_run_with_timeout.sh 55m -v `pwd`:/data/ -v "${input.file_name}:/data/${input.name}" chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:${advanced.tag} wine msconvert ${centroid} ${zlib} --${outfmt.value.split('.',1)[0]} --gzip /data/${input.name} &&
